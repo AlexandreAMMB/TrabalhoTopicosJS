@@ -147,8 +147,20 @@
 
             <br><br>
             <font face="Tahoma" color="white">
+
               <div align="center">
-              ---- PRODUTOS NO SISTEMA -----
+                ---- PRODUTOS NO SISTEMA -----
+              </div>
+              <div class="php-email-form"><button type="submit"  id="btnCarrinho">Carrinho</button></div>
+
+              <!-- Modal -->
+              <div id="modalCarrinho" style="display: none;" align="right">
+                <h2>Carrinho</h2>
+                <ul id="listaProdutos"></ul>
+              </div>
+              <br><br>
+              <div align="center">
+
               
             
             <table id="tabelaProdutos" border="1" align="center" cellspacing="2" cellpadding="1" width="80%"  class="table table-dark">
@@ -158,6 +170,7 @@
                         <th>Nome</th>
                         <th>descrição</th>
                         <th>Preço Unitário</th>
+                        <th>Opções do produto</th>
                     </tr>
                     
                      <tbody id="corpoTabela"></tbody>

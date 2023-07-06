@@ -92,6 +92,7 @@ fetch("http://localhost:3003/produtos")
       //Event listener para os botões
       comprarButton.addEventListener("click", function() {
         adicionarAoCarrinho(produto.codigo);
+        exibirProdutosCarrinho(1);
         console.log(carrinho);
       });
 
@@ -134,7 +135,7 @@ function obterDetalhesProduto(codigo) {
 
 
 // Função para exibir os produtos do carrinho na modal
-function exibirProdutosCarrinho() {
+function exibirProdutosCarrinho(exibir) {
     const listaProdutos = document.getElementById("listaProdutos");
     listaProdutos.innerHTML = ""; // Limpa a lista antes de preencher novamente
 
@@ -196,7 +197,6 @@ function exibirProdutosCarrinho() {
                   itemProdutoQuantidade.textContent = quantidade;
                   itemProdutoTotal.textContent = `R$ ${total}`;
 
-                  exibirProdutosCarrinho();
 
             }
 
@@ -204,10 +204,11 @@ function exibirProdutosCarrinho() {
     });
 
     // Exibe a modal
-    const modalCarrinho = document.getElementById("modalCarrinho");
-    modalCarrinho.style.display = "block";
-
-
+    if(exibir == 0){
+        const modalCarrinho = document.getElementById("modalCarrinho");
+        modalCarrinho.style.display = "block";
+    }
+    
 
 }
 

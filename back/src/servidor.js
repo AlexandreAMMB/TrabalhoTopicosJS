@@ -27,26 +27,44 @@ app.get('/produtos/:codigo', (req, res, next) => {
 
 //Salva 1 produto
 app.post('/produtos',(req, res, next) => {
-    // Lê a imagem como um ArrayBuffer
-    const imagemBuffer = fs.readFileSync("../figura1empreendedorismo.png")
+    // // Lê a imagem como um ArrayBuffer
+    // const imagemBuffer = fs.readFileSync("../figura1empreendedorismo.png")
 
-    console.log(imagemBuffer)
+    // console.log(imagemBuffer)
 
-    // Converte o ArrayBuffer em um Uint8Array
-    const imagemArray = new Uint8Array(imagemBuffer)
+    // // Converte o ArrayBuffer em um Uint8Array
+    // const imagemArray = new Uint8Array(imagemBuffer)
 
-    // Converte o Uint8Array em uma string Base64
-    const imagemBase64 = base64.fromByteArray(imagemArray)
+    // // Converte o Uint8Array em uma string Base64
+    // const imagemBase64 = base64.fromByteArray(imagemArray)
 
-    const produto = bancoDados.salvarProduto({
+    const produto = bancoDados.salvarProduto(req.body.imagem, {
         codigo: req.body.codigo,
         nome: req.body.nome,
         descricao: req.body.descricao,
-        preco: req.body.preco,
-        imagem: imagemBase64
+        preco: req.body.preco
+        //imagem: imagemBase64
     })
     //res.send("O produto ${produto.nome} foi inserido");
     res.send(produto)
+})
+
+app.post('/produtos/imagem', (req, res, next) =>  {
+
+    bancoDados.salvarImagem("./../figura1empreendedorismo.png")
+
+    res.send("ok")
+})
+
+//Altera 1 produto
+app.put('/produtos/:codigo', (req, res, next) => {
+    const produto = bancoDados.atualizarProduto(req.params['codigo'], req.body.imagem, {
+        codigo: req.body.codigo,
+        nome: req.body.nome,
+        descricao: req.body.descricao,
+        preco: req.body.preco
+    })
+    res.send(produto);
 })
 
 //Exclui 1 produto

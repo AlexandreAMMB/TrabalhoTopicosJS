@@ -92,6 +92,7 @@ fetch("http://localhost:3003/produtos")
       //Event listener para os botões
       comprarButton.addEventListener("click", function() {
         adicionarAoCarrinho(produto.codigo);
+        console.log(carrinho);
       });
 
       
@@ -109,8 +110,6 @@ fetch("http://localhost:3003/produtos")
 
 
 
-        
-
 
     });
   })
@@ -124,40 +123,96 @@ function adicionarAoCarrinho(codigo) {
 }
 
 
-    const btnCarrinho = document.getElementById("btnCarrinho");
-    btnCarrinho.addEventListener("click", console.log(carrinho));
+// Função para obter os detalhes de um produto pelo código
+function obterDetalhesProduto(codigo) {
+    return fetch(`http://localhost:3003/produtos/${codigo}`)
+    .then(response => response.json())
+    .catch(error => {
+        console.error(`Erro ao obter detalhes do produto ${codigo}:`, error);
+    });
+}
 
 
-// // Função para obter os detalhes de um produto pelo código
-// function obterDetalhesProduto(codigo) {
-//     return fetch(`http://localhost:3003/produtos/${codigo}`)
-//       .then(response => response.json())
-//       .catch(error => {
-//         console.error(`Erro ao obter detalhes do produto ${codigo}:`, error);
-//       });
-//   }
-  
-//   // Função para exibir os produtos do carrinho na modal
-//   function exibirProdutosCarrinho() {
-//     const listaProdutos = document.getElementById("listaProdutos");
-//     listaProdutos.innerHTML = ""; // Limpa a lista antes de preencher novamente
-  
-//     carrinho.forEach(codigo => {
-//       obterDetalhesProduto(codigo)
-//         .then(produto => {
-//           const itemProduto = document.createElement("li");
-//           itemProduto.textContent = `${produto.nome} - R$ ${produto.preco.toFixed(2)}`;
-//           listaProdutos.appendChild(itemProduto);
-//         });
-//     });
-  
-//     // Exibe a modal
-//     const modalCarrinho = document.getElementById("modalCarrinho");
-//     modalCarrinho.style.display = "block";
-//   }
-  
-//   // Evento de clique no botão "Carrinho"
+// Função para exibir os produtos do carrinho na modal
+function exibirProdutosCarrinho() {
+    const listaProdutos = document.getElementById("listaProdutos");
+    listaProdutos.innerHTML = ""; // Limpa a lista antes de preencher novamente
+
+    const codigosExibidos = {};
+
+    carrinho.forEach(codigo => {
+    obterDetalhesProduto(codigo)
+        .then(produto => {
+
+            if (!codigosExibidos[codigo]) {
+                codigosExibidos[codigo] = true; 
+
+                const quantidade = carrinho.reduce((count, codigo) => {
+                    if (codigo === produto.codigo) {
+                    return count + 1;
+                    }
+                    return count;
+                }, 0);
+                
+                preco = parseFloat(produto.preco);
+                total = preco*quantidade;
+
+                const row = document.createElement("tr");
+            
+                const itemProduto = document.createElement("td");
+                itemProduto.textContent = `${produto.nome}`;
+                row.appendChild(itemProduto);
+
+                const itemProdutoPreco = document.createElement("td");
+                itemProdutoPreco.textContent = `R$ ${preco} `;
+                row.appendChild(itemProdutoPreco);
+
+                const itemProdutoquantidade = document.createElement("td");
+                itemProdutoquantidade.textContent = quantidade;
+                row.appendChild(itemProdutoquantidade);
+
+                const itemProdutoTotal = document.createElement("td");
+                itemProdutoTotal.textContent = `R$ ${total} `;
+                row.appendChild(itemProdutoTotal);
+
+                listaProdutos.appendChild(row);
+            } else {
+                const linhaExistente = document.querySelector(
+                    `#listaProdutos tr[data-codigo="${codigo}"]`
+                  );
+                  const itemProdutoQuantidade = linhaExistente.querySelector("td:nth-child(3)");
+                  const itemProdutoTotal = linhaExistente.querySelector("td:nth-child(4)");
+          
+                  const quantidade = carrinho.reduce((count, c) => {
+                    if (c === codigo) {
+                      return count + 1;
+                    }
+                    return count;
+                  }, 0);
+          
+                  const preco = parseFloat(produto.preco);
+                  const total = preco * quantidade;
+          
+                  itemProdutoQuantidade.textContent = quantidade;
+                  itemProdutoTotal.textContent = `R$ ${total}`;
+
+                  exibirProdutosCarrinho();
+
+            }
+
+        });
+    });
+
+    // Exibe a modal
+    const modalCarrinho = document.getElementById("modalCarrinho");
+    modalCarrinho.style.display = "block";
+
+
+
+}
+
+
     
-  
+
 
 

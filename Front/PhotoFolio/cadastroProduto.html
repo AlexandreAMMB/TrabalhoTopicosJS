@@ -131,7 +131,7 @@
               </div>
               <div class="form-group mt-3">
                 Preço Unitário:
-                <input type="text" class="form-control" name="preco" id="preco"  placeholder="Preço Unitário" required>
+                <input type="number" class="form-control" name="preco" id="preco"  placeholder="Preço Unitário" required>
               </div>
               <div class="form-group mt-3">
                 Imagem:
@@ -151,12 +151,32 @@
               <div align="center">
                 ---- PRODUTOS NO SISTEMA -----
               </div>
-              <div class="php-email-form"><button type="submit"  id="btnCarrinho">Carrinho</button></div>
+              <div class="php-email-form"><button type="submit"  id="btnCarrinho" onclick="exibirProdutosCarrinho()">Carrinho</button></div>
 
               <!-- Modal -->
               <div id="modalCarrinho" style="display: none;" align="right">
                 <h2>Carrinho</h2>
-                <ul id="listaProdutos"></ul>
+                
+                <table id="tabelaProdutos" border="1" align="center" cellspacing="2" cellpadding="1" width="80%"  class="table table-dark">
+                  <tr align="center">
+                      <th>Produto</th>
+                      <th>Preço Unitário</th>
+                      <th>Quantidade</th>
+                      <th>Total</th>
+                  </tr>
+                  
+                   <tbody id="listaProdutos" align="center"></tbody>
+                
+                </div>
+          </font>
+          </table>
+
+
+
+
+
+
+
               </div>
               <br><br>
               <div align="center">
@@ -173,7 +193,7 @@
                         <th>Opções do produto</th>
                     </tr>
                     
-                     <tbody id="corpoTabela"></tbody>
+                     <tbody id="corpoTabela" align="center"></tbody>
                   
                   </div>
             </font>

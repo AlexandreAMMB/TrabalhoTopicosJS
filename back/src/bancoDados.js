@@ -16,33 +16,46 @@ function getProduto(codigo) {
     }
 }
 
+// function salvarImagem(caminho) {
+//     fs.copyFileSync(caminho, './../imagens/imagem.png')
+//     console.log("imagem salva")
+// }
+
 //Salva um produto na no final do arquivo JSON
-function salvarProduto(produto) {
+function salvarProduto(imagem, produto) {
+    //Insere o produto novo no buffer do arquivo
+    produtos.push(produto)
 
-   
-    if(produtos.includes(produto)) {
-        produtos.indexOf(produto)
+    fs.copyFileSync(imagem, `./../imagens/${produto.codigo}.png`)
 
-        fs.writeFile("produtos.json", JSON.stringify(produtos), err => {
+    //Sobrescreve o arquivo com a nova lista de produtos
+    fs.writeFile("produtos.json", JSON.stringify(produtos), err => {
 
-            if(err) throw err
-    
-            console.log("Produto Salvo!")
-        })
-    } else {
-        //Insere o produto novo no buffer do arquivo
-        produtos.push(produto)
+        if(err) throw err
 
-        //Sobrescreve o arquivo com a nova lista de produtos
-        fs.writeFile("produtos.json", JSON.stringify(produtos), err => {
-
-            if(err) throw err
-
-            console.log("Produto Salvo!")
-        })
-    }
-
+        console.log("Produto Salvo!")
+    })
     return produto
+}
+
+function atualizarProduto(codigo, imagem, produtoNovo) {
+    for(let produto of produtos) {
+        if(produto.codigo == codigo) {
+            produto = produtoNovo
+
+            fs.copyFileSync(imagem, `./../imagens/${produto.codigo}.png`)
+
+            fs.unlink(imagem, err => {
+                if(err)
+                    console.log('Erro ao carregar a imagem', err)
+                else
+                    console.log('Imagem apagada com sucesso!')
+            })
+
+            console.log(`Produto foi atualizado!`)
+            return produto
+        }
+    }
 }
 
 //Exclui do arquivo JSON o produto com o codigo informado
@@ -107,8 +120,10 @@ function escrever(){
 //exporta a função
 module.exports = {
     //escrever
+    //salvarImagem,
     getProdutos,
     getProduto,
+    atualizarProduto,
     salvarProduto,
     excluirProduto
 }

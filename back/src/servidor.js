@@ -1,6 +1,8 @@
 const porta = 3003
 
 const express = require('express')
+const cors = require('cors');
+const multer = require('multer');
 const app = express()
 //excluir dps
 const bodyParser = require('body-parser') //para usar o body do postman
@@ -9,9 +11,15 @@ const base64 = require('base64-js')
 
 const bancoDados = require('./bancoDados')
 
+//Controle de origem
+app.use(cors());
+
+const upload = multer({ dest: '../imagens' }); // Define o diretório de destino para o upload
+
 //exluir dps
 app.use(bodyParser.urlencoded({ extended: true }))//Utilização do body parser para conversão de linhas de codigo do body para um objeto que pode ser lido pelo postman
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+app.use(express.json());
 
 //Retorna todos os produtos cadastrados
 app.get('/produtos', (req, res, next) => {
@@ -26,7 +34,7 @@ app.get('/produtos/:codigo', (req, res, next) => {
 })
 
 //Salva 1 produto
-app.post('/produtos',(req, res, next) => {
+app.post('/produtos',upload.single('imagem'),(req, res, next) => {
     // // Lê a imagem como um ArrayBuffer
     // const imagemBuffer = fs.readFileSync("../figura1empreendedorismo.png")
 
@@ -38,7 +46,7 @@ app.post('/produtos',(req, res, next) => {
     // // Converte o Uint8Array em uma string Base64
     // const imagemBase64 = base64.fromByteArray(imagemArray)
 
-    const produto = bancoDados.salvarProduto(req.body.imagem, {
+    const produto = bancoDados.salvarProduto(req.file.path, {
         codigo: req.body.codigo,
         nome: req.body.nome,
         descricao: req.body.descricao,

@@ -29,6 +29,8 @@
   <link href="assets/css/main.css" rel="stylesheet">
 
   <!-- Javascript -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../PhotoFolio/js/RequisicoesCliente.js"></script>
   
 
   <!-- =======================================================
@@ -112,7 +114,7 @@
         <div class="row justify-content-center mt-4">
 
           <div class="col-lg-9">
-            <form onsubmit="salvarProduto(event)" method="post" role="form" class="php-email-form">
+            <form  action="cadastroProduto.html" method="post" role="form" class="php-email-form">
               <div class="row">
                 <div class="col-md-6 form-group">
                   Código:
@@ -140,8 +142,43 @@
                 <div class="error-message"></div>
                 <div class="sent-message">Your message has been sent. Thank you!</div>
               </div>
-              <div class="text-center"><button type="submit">Cadastrar</button></div>
+              <div class="text-center"><button type="submit" onclick="enviarFormulario()">Cadastrar</button></div>
             </form>
+
+            <br><br>
+            <font face="Tahoma" color="white">
+              <div align="center">
+              ---- PRODUTOS NO SISTEMA -----
+              
+            
+            <table id="tabelaProdutos" border="1" align="center" cellspacing="2" cellpadding="1" width="80%"  class="table table-dark">
+                    <tr align="center">
+                        <th>Foto</th>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>descrição</th>
+                        <th>Preço Unitário</th>
+                    </tr>
+                    
+                     <tbody id="corpoTabela"></tbody>
+                  
+                  </div>
+            </font>
+            </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           </div><!-- End Contact Form -->
 
         </div>

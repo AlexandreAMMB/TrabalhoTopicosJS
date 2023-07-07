@@ -332,6 +332,9 @@ function exibirTotal(totalQuantidade,totalValor, opcao){
     }else if(opcao == 0){
         ttCalc -= parseFloat(totalValor);
         ttquant -= totalQuantidade;
+    }else{
+        ttCalc -= parseFloat(totalValor);
+        ttquant -= totalQuantidade;
     }
     
 

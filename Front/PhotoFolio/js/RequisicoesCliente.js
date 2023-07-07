@@ -207,7 +207,8 @@ function obterDetalhesProduto(codigo) {
 function exibirProdutosCarrinho(exibir) {
     const listaProdutos = document.getElementById("listaProdutos");
     listaProdutos.innerHTML = ""; // Limpa a lista antes de preencher novamente
-
+    var totalValor=0;
+    var totalQuantidade=0;
     const codigosExibidos = {};
 
     carrinho.forEach(codigo => {
@@ -226,6 +227,7 @@ function exibirProdutosCarrinho(exibir) {
                 
                 preco = parseFloat(produto.preco);
                 total = preco*quantidade;
+                totalValor += total;
 
                 const row = document.createElement("tr");
                 
@@ -289,44 +291,14 @@ function exibirProdutosCarrinho(exibir) {
 
             }
 
-            
-
 
 
         });
 
     });
 
-    //Faz a soma dos totais
 
-    const totais = document.createElement("tr");
-
-    const labelTotal = document.createElement("td");
-        labelTotal.textContent = "Total Calculado:";
-        totais.appendChild(labelTotal);
-
-        const item1 = document.createElement("td");
-        item1.textContent = "";
-        totais.appendChild(item1);
-
-        const QuantidadeTotal = document.createElement("td");
-        QuantidadeTotal .textContent = "QuantidadeTotal ";
-        totais.appendChild(QuantidadeTotal );
-
-        const TotalCalculado = document.createElement("td");
-        TotalCalculado.textContent = "Total Calculado";
-        totais.appendChild(TotalCalculado);
-
-        const acoesCell = document.createElement("td");
-        const excluirButton = document.createElement("button");
-        excluirButton.textContent = "Excluir";
-        acoesCell.appendChild(excluirButton);
-        totais.appendChild(acoesCell);
-
-
-        listaProdutos.appendChild(totais);
-
-
+    exibirTotal(totalQuantidade,totalValor);
 
     // Exibe a modal
     if(exibir == 0){
@@ -338,6 +310,25 @@ function exibirProdutosCarrinho(exibir) {
 
 
     
+function exibirTotal(quantidadeT,total){
+    const listaTotal = document.getElementById("Totais");
+    listaTotal.innerHTML = ""; // Limpa a lista antes de preencher novamente
+
+    const row = document.createElement("tr");
+                
+            
+    const itemQuant = document.createElement("td");
+    itemQuant .textContent = `${quantidadeT}`;
+    row.appendChild(itemQuant );
+
+    const itemProdutoPreco = document.createElement("td");
+    itemProdutoPreco.textContent = `${total}`;
+    row.appendChild(itemProdutoPreco);
+
+    listaTotal.appendChild(row);
+
+
+}
 
 
 

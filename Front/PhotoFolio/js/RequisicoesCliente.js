@@ -104,6 +104,8 @@ fetch("http://localhost:3003/produtos")
         comprarButton.addEventListener("click", function() {
           adicionarAoCarrinho(produto.codigo);
           exibirProdutosCarrinho(1);
+
+          exibirTotal(1,produto.preco, 1);
           console.log(carrinho);
         });
   
@@ -118,6 +120,7 @@ fetch("http://localhost:3003/produtos")
           excluirDoCarrinho(produto.codigo);
           excluirProduto(produto.codigo , 1);
           exibirProdutosCarrinho(1);
+          exibirTotal(1,produto.preco, 0);
           console.log(carrinho);
         });
   
@@ -202,13 +205,13 @@ function obterDetalhesProduto(codigo) {
     });
 }
 
-
+var totalValor=0;
+var totalQuantidade=0;
 // Função para exibir os produtos do carrinho na modal
 function exibirProdutosCarrinho(exibir) {
     const listaProdutos = document.getElementById("listaProdutos");
     listaProdutos.innerHTML = ""; // Limpa a lista antes de preencher novamente
-    var totalValor=0;
-    var totalQuantidade=0;
+   
     const codigosExibidos = {};
 
     carrinho.forEach(codigo => {
@@ -227,7 +230,7 @@ function exibirProdutosCarrinho(exibir) {
                 
                 preco = parseFloat(produto.preco);
                 total = preco*quantidade;
-                totalValor += total;
+               
 
                 const row = document.createElement("tr");
                 
@@ -265,6 +268,8 @@ function exibirProdutosCarrinho(exibir) {
 
 
                 listaProdutos.appendChild(row);
+                
+                
 
 
 
@@ -287,9 +292,15 @@ function exibirProdutosCarrinho(exibir) {
           
                   itemProdutoQuantidade.textContent = quantidade;
                   itemProdutoTotal.textContent = `R$ ${total}`;
+                  
+                  
+                
 
 
             }
+
+            
+            
 
 
 
@@ -298,7 +309,7 @@ function exibirProdutosCarrinho(exibir) {
     });
 
 
-    exibirTotal(totalQuantidade,totalValor);
+    
 
     // Exibe a modal
     if(exibir == 0){
@@ -309,20 +320,36 @@ function exibirProdutosCarrinho(exibir) {
 }
 
 
-    
-function exibirTotal(quantidadeT,total){
+    ttCalc = 0;
+    ttquant = 0;
+function exibirTotal(totalQuantidade,totalValor, opcao){
     const listaTotal = document.getElementById("Totais");
     listaTotal.innerHTML = ""; // Limpa a lista antes de preencher novamente
 
+    ttCalc += parseFloat(totalValor);
+    ttquant += totalQuantidade;
+
     const row = document.createElement("tr");
+
+    const item = document.createElement("td");
+    item .textContent = "----------";
+    row.appendChild(item );
+
+    const item2 = document.createElement("td");
+    item2.textContent = "----------";
+    row.appendChild(item2);
+
+    const item3 = document.createElement("td");
+    item3.textContent = "----------";
+    row.appendChild(item3);
                 
             
     const itemQuant = document.createElement("td");
-    itemQuant .textContent = `${quantidadeT}`;
+    itemQuant .textContent = `${ttquant}`;
     row.appendChild(itemQuant );
 
     const itemProdutoPreco = document.createElement("td");
-    itemProdutoPreco.textContent = `${total}`;
+    itemProdutoPreco.textContent = `R$ ${ ttCalc}`;
     row.appendChild(itemProdutoPreco);
 
     listaTotal.appendChild(row);

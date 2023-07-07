@@ -1,4 +1,5 @@
 var carrinho = [];
+var exibir = 0;
 
 
 function enviarFormulario() {
@@ -17,13 +18,13 @@ function enviarFormulario() {
     };
 
     var formData = new FormData();
-  formData.append("imagem", imagem.files[0]); // Adiciona a imagem ao objeto FormData
+   formData.append("imagem", imagem.files[0]); // Adiciona a imagem ao objeto FormData
 
     console.log(imagem.files[0]);
 
-  for (var key in produto) {
-    formData.append(key, produto[key]); // Adiciona os outros campos do produto ao objeto FormData
-  }
+   for (var key in produto) {
+     formData.append(key, produto[key]); // Adiciona os outros campos do produto ao objeto FormData
+   }
 
   fetch("http://localhost:3003/produtos", {
     method: "POST",
@@ -45,82 +46,150 @@ function enviarFormulario() {
       // Lógica para tratar erros
     });
 
+    AtualizarTabelaProdutos();
 
+}
+
+if(exibir == 0){
+    AtualizarTabelaProdutos();
+    exibir = 1;
 }
 
 
 
+
+function AtualizarTabelaProdutos(){
+
 fetch("http://localhost:3003/produtos")
-  .then(response => response.json())
-  .then(data => {
-    const corpoTabela = document.getElementById("corpoTabela");
+    .then(response => response.json())
+    .then(data => {
+       const corpoTabela = document.getElementById("corpoTabela");
+       corpoTabela.innerHTML = '';
+  
+      data.forEach(produto => {
+        const row = document.createElement("tr");
+  
+        const imagemCell = document.createElement("td");
+        const imagem = document.createElement("img");
+        imagem.src = `../../../back/imagens/789.png`;
+        imagemCell.appendChild(imagem);
+        row.appendChild(imagemCell);
+  
+        const codigoCell = document.createElement("td");
+        codigoCell.textContent = produto.codigo;
+        row.appendChild(codigoCell);
+  
+        const nomeCell = document.createElement("td");
+        nomeCell.textContent = produto.nome;
+        row.appendChild(nomeCell);
+  
+        const descricaoCell = document.createElement("td");
+        descricaoCell.textContent = produto.descricao;
+        row.appendChild(descricaoCell);
+  
+        const precoCell = document.createElement("td");
+        precoCell.textContent = produto.preco;
+        row.appendChild(precoCell);
+  
+        corpoTabela.appendChild(row);
+  
+  
+        const acoesCell = document.createElement("td");
+  
+        const comprarButton = document.createElement("button");
+        comprarButton.textContent = "Comprar";
+        acoesCell.appendChild(comprarButton);
+  
+        //Event listener para os botões
+        comprarButton.addEventListener("click", function() {
+          adicionarAoCarrinho(produto.codigo);
+          exibirProdutosCarrinho(1);
+          console.log(carrinho);
+        });
+  
+        
+  
+  
+        const excluirButton = document.createElement("button");
+        excluirButton.textContent = "Excluir";
+        acoesCell.appendChild(excluirButton);
+  
+        excluirButton.addEventListener("click", function() {
+          excluirDoCarrinho(produto.codigo);
+          excluirProduto(produto.codigo , 1);
+          exibirProdutosCarrinho(1);
+          console.log(carrinho);
+        });
+  
+        const editarButton = document.createElement("button");
+        editarButton.textContent = "Editar";
+        acoesCell.appendChild(editarButton);
+  
+        row.appendChild(acoesCell);
+  
+  
+  
+  
+      });
+    })
+    .catch(error => {
+      console.error("Erro ao obter os produtos:", error);
+  });
 
-    data.forEach(produto => {
-      const row = document.createElement("tr");
-
-      const imagemCell = document.createElement("td");
-      const imagem = document.createElement("img");
-      imagem.src = `../../../back/imagens/789.png`;
-      imagemCell.appendChild(imagem);
-      row.appendChild(imagemCell);
-
-      const codigoCell = document.createElement("td");
-      codigoCell.textContent = produto.codigo;
-      row.appendChild(codigoCell);
-
-      const nomeCell = document.createElement("td");
-      nomeCell.textContent = produto.nome;
-      row.appendChild(nomeCell);
-
-      const descricaoCell = document.createElement("td");
-      descricaoCell.textContent = produto.descricao;
-      row.appendChild(descricaoCell);
-
-      const precoCell = document.createElement("td");
-      precoCell.textContent = produto.preco;
-      row.appendChild(precoCell);
-
-      corpoTabela.appendChild(row);
+}
 
 
-      const acoesCell = document.createElement("td");
+// function AtualizarTabelaProdutos(){
 
-      const comprarButton = document.createElement("button");
-      comprarButton.textContent = "Comprar";
-      acoesCell.appendChild(comprarButton);
+//     fetch("http://localhost:3003/produtos")
+//     .then(response => response.json())
+//     .then(data => {
+//       corpoTabela = document.getElementById("corpoTabela");
+  
+     
+//     })
+//     .catch(error => {
+//       console.error("Erro ao obter os produtos:", error);
+//   });
 
-      //Event listener para os botões
-      comprarButton.addEventListener("click", function() {
-        adicionarAoCarrinho(produto.codigo);
-        exibirProdutosCarrinho(1);
-        console.log(carrinho);
+// }
+
+
+
+
+function excluirProduto(codigo) {
+    fetch(`http://localhost:3003/produtos/${codigo}`, {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (response.ok) {
+          console.log('Produto excluído com sucesso');
+        } else {
+          console.error('Erro ao excluir o produto');
+        }
+      })
+      .catch(error => {
+        console.error('Erro ao excluir o produto:', error);
       });
 
-      
+      AtualizarTabelaProdutos();
+}
 
 
-      const excluirButton = document.createElement("button");
-      excluirButton.textContent = "Excluir";
-      acoesCell.appendChild(excluirButton);
-
-      const editarButton = document.createElement("button");
-      editarButton.textContent = "Editar";
-      acoesCell.appendChild(editarButton);
-
-      row.appendChild(acoesCell);
-
-
-
-
-    });
-  })
-  .catch(error => {
-    console.error("Erro ao obter os produtos:", error);
-});
 
 
 function adicionarAoCarrinho(codigo) {
     carrinho.push(codigo);
+}
+
+function excluirDoCarrinho(codigo, excluirtudo) {
+
+    const indice = carrinho.findIndex(item => item === codigo);
+    if (indice !== -1 || excluirtudo == 1) {
+      carrinho.splice(indice, 1); // Remove o código do carrinho
+      exibirProdutosCarrinho(); // Atualiza a exibição do carrinho
+    }
+    
 }
 
 
@@ -159,6 +228,7 @@ function exibirProdutosCarrinho(exibir) {
                 total = preco*quantidade;
 
                 const row = document.createElement("tr");
+                
             
                 const itemProduto = document.createElement("td");
                 itemProduto.textContent = `${produto.nome}`;
@@ -176,7 +246,26 @@ function exibirProdutosCarrinho(exibir) {
                 itemProdutoTotal.textContent = `R$ ${total} `;
                 row.appendChild(itemProdutoTotal);
 
+                const acoesCell = document.createElement("td");
+                const excluirButton = document.createElement("button");
+                excluirButton.textContent = "Excluir";
+                acoesCell.appendChild(excluirButton);
+                row.appendChild(acoesCell);
+
+                
+
+
+                excluirButton.addEventListener("click", function() {
+                    excluirDoCarrinho(codigo , 0);
+                    
+                    console.log(carrinho);
+                });
+
+
                 listaProdutos.appendChild(row);
+
+
+
             } else {
                 const linhaExistente = document.querySelector(
                     `#listaProdutos tr[data-codigo="${codigo}"]`
@@ -200,15 +289,50 @@ function exibirProdutosCarrinho(exibir) {
 
             }
 
+            
+
+
+
         });
+
     });
+
+    //Faz a soma dos totais
+
+    const totais = document.createElement("tr");
+
+    const labelTotal = document.createElement("td");
+        labelTotal.textContent = "Total Calculado:";
+        totais.appendChild(labelTotal);
+
+        const item1 = document.createElement("td");
+        item1.textContent = "";
+        totais.appendChild(item1);
+
+        const QuantidadeTotal = document.createElement("td");
+        QuantidadeTotal .textContent = "QuantidadeTotal ";
+        totais.appendChild(QuantidadeTotal );
+
+        const TotalCalculado = document.createElement("td");
+        TotalCalculado.textContent = "Total Calculado";
+        totais.appendChild(TotalCalculado);
+
+        const acoesCell = document.createElement("td");
+        const excluirButton = document.createElement("button");
+        excluirButton.textContent = "Excluir";
+        acoesCell.appendChild(excluirButton);
+        totais.appendChild(acoesCell);
+
+
+        listaProdutos.appendChild(totais);
+
+
 
     // Exibe a modal
     if(exibir == 0){
         const modalCarrinho = document.getElementById("modalCarrinho");
         modalCarrinho.style.display = "block";
     }
-    
 
 }
 

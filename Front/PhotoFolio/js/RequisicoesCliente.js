@@ -120,7 +120,7 @@ fetch("http://localhost:3003/produtos")
           excluirDoCarrinho(produto.codigo);
           excluirProduto(produto.codigo , 1);
           exibirProdutosCarrinho(1);
-          exibirTotal(1,produto.preco, 0);
+          exibirTotal(1,produto.preco, 6);
           console.log(carrinho);
         });
   
@@ -262,7 +262,7 @@ function exibirProdutosCarrinho(exibir) {
 
                 excluirButton.addEventListener("click", function() {
                     excluirDoCarrinho(codigo , 0);
-                    
+                    exibirTotal(1,produto.preco, 0);
                     console.log(carrinho);
                 });
 
@@ -326,8 +326,14 @@ function exibirTotal(totalQuantidade,totalValor, opcao){
     const listaTotal = document.getElementById("Totais");
     listaTotal.innerHTML = ""; // Limpa a lista antes de preencher novamente
 
-    ttCalc += parseFloat(totalValor);
-    ttquant += totalQuantidade;
+    if(opcao == 1){
+        ttCalc += parseFloat(totalValor);
+        ttquant += totalQuantidade;
+    }else if(opcao == 0){
+        ttCalc -= parseFloat(totalValor);
+        ttquant -= totalQuantidade;
+    }
+    
 
     const row = document.createElement("tr");
 

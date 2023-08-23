@@ -70,20 +70,25 @@ fetch("http://localhost:3003/produtos")
         const row = document.createElement("tr");
   
         const imagemCell = document.createElement("td");
+        imagemCell.classList.add("tabela-celula");
         const imagem = document.createElement("img");
-        imagem.src = `../../../back/imagens/789.png`;
+        imagem.src = `../../../back/imagens/${produto.codigo}.png`;
+        imagem.classList.add("imagem-celula");
         imagemCell.appendChild(imagem);
         row.appendChild(imagemCell);
   
         const codigoCell = document.createElement("td");
+        imagemCell.classList.add("tabela-celula");
         codigoCell.textContent = produto.codigo;
         row.appendChild(codigoCell);
   
         const nomeCell = document.createElement("td");
+        imagemCell.classList.add("tabela-celula");
         nomeCell.textContent = produto.nome;
         row.appendChild(nomeCell);
   
         const descricaoCell = document.createElement("td");
+        imagemCell.classList.add("tabela-celula");
         descricaoCell.textContent = produto.descricao;
         row.appendChild(descricaoCell);
   

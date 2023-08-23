@@ -1239,6 +1239,29 @@ h6 {
 }
 
 /*--------------------------------------------------------------
+# Tabelas
+--------------------------------------------------------------*/
+.tabela-celula {
+  width: 20%;
+  height: 20%;/* Porcentagem ajustável para suas necessidades */
+ 
+    
+    background-size: cover;
+    background-position: center;
+}
+
+
+.tabela-celula img {
+  width: 100%; /* Porcentagem ajustável para suas necessidades */
+  
+    padding: 1px;
+    
+    background-size: cover;
+    background-position: center;
+}
+
+
+/*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
 .footer {

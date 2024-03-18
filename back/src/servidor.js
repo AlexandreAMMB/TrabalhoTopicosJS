@@ -1,8 +1,13 @@
 const porta = 3003
 
 const express = require('express')
+const path = require('path');
 const cors = require('cors');
 const multer = require('multer');
+const session = require('express-session');
+const Connection = require('../src/dao/connection.js');
+const controlerLogin = require('../src/Controlers/controlerLogin.js');
+const Sequelize = require('sequelize');
 const app = express()
 //excluir dps
 const bodyParser = require('body-parser') //para usar o body do postman
@@ -11,79 +16,46 @@ const base64 = require('base64-js')
 
 const bancoDados = require('./bancoDados')
 
+module.exports = new Sequelize('panc', 'root', 'P@mell@1999', {
+    host: 'localhost',
+    dialect: 'mysql',
+    // Outras opções de configuração, se necessário
+});
+
 //Controle de origem
 app.use(cors());
 
-const upload = multer({ dest: '../imagens' }); // Define o diretório de destino para o upload
+app.use(express.static(path.join(__dirname)));
 
-//exluir dps
-app.use(bodyParser.urlencoded({ extended: true }))//Utilização do body parser para conversão de linhas de codigo do body para um objeto que pode ser lido pelo postman
-app.use(bodyParser.json());
-app.use(express.json());
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
-//Retorna todos os produtos cadastrados
-app.get('/produtos', (req, res, next) => {
-    res.send(bancoDados.getProdutos())
-    //convertida em string JSON
-})
+app.use(session({
+    secret: 'P@mell@1999',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+  }));
+  
+app.use(bodyParser.urlencoded({ extended: true }));
 
-//Retorna 1 produto
-app.get('/produtos/:codigo', (req, res, next) => {
-    res.send(bancoDados.getProduto(req.params['codigo']))
-    //convertida em string JSON
-})
 
-//Salva 1 produto
-app.post('/produtos',upload.single('imagem'),(req, res, next) => {
-    // // Lê a imagem como um ArrayBuffer
-    // const imagemBuffer = fs.readFileSync("../figura1empreendedorismo.png")
+app.all('/login', (req, res) => {
+    if (req.method === 'GET') {
+        
+    } else if (req.method === 'POST') {
+        // console.log(req,res);
+        controlerLogin.login(req, res);
+    }
+});
 
-    // console.log(imagemBuffer)
+// app.get('/login', (req, res) => {
+//     // Handle GET requests to /login
+// });
 
-    // // Converte o ArrayBuffer em um Uint8Array
-    // const imagemArray = new Uint8Array(imagemBuffer)
+// app.post('/login', controlerLogin.login);
 
-    // // Converte o Uint8Array em uma string Base64
-    // const imagemBase64 = base64.fromByteArray(imagemArray)
-
-    const produto = bancoDados.salvarProduto(req.file.path, {
-        codigo: req.body.codigo,
-        nome: req.body.nome,
-        descricao: req.body.descricao,
-        preco: req.body.preco
-        //imagem: imagemBase64
-    })
-    //res.send("O produto ${produto.nome} foi inserido");
-    res.send(produto)
-})
-
-app.post('/produtos/imagem', (req, res, next) =>  {
-
-    bancoDados.salvarImagem("./../figura1empreendedorismo.png")
-
-    res.send("ok")
-})
-
-//Altera 1 produto
-app.put('/produtos/:codigo', (req, res, next) => {
-    const produto = bancoDados.atualizarProduto(req.params['codigo'], req.body.imagem, {
-        codigo: req.body.codigo,
-        nome: req.body.nome,
-        descricao: req.body.descricao,
-        preco: req.body.preco
-    })
-    res.send(produto);
-})
-
-//Exclui 1 produto
-app.delete('/produtos/:codigo', (req, res) =>{
-    const produto = bancoDados.excluirProduto(req.params['codigo'])
-    res.send(produto)
-})
-
-app.use((req, res, next) => {
-    res.send("URL não reconhecida")
-})
 
 app.listen(porta, () => {
     console.log(`Servidor agora executando na porta ${porta}.`)

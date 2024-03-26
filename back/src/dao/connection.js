@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise');
 
+
 class Connection{
     constructor() {
         this.connection = null;
@@ -26,4 +27,5 @@ class Connection{
       }
     }
 }
+
 module.exports = Connection;

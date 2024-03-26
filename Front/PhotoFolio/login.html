@@ -91,14 +91,14 @@
     
 
     <!-- ======= Login Section ======= -->
-    <section id="contact" class="contact">
+    <section id="login-form" class="contact">
       <div class="container">
 
         <div class="container position-relative">
           <div class="row justify-content-center mt-4">
 
             <div class="col-lg-9">
-              <form action="login.html" method="post" role="form" class="php-email-form">
+              <form action="/login" method="post" role="form" class="php-email-form">
                 
               
                   
@@ -120,6 +120,18 @@
             
 
               </form>
+              <script>
+                function sendLoginRequest() {
+                  const formData = new FormData(document.getElementById('login-form'));
+                  const xhr = new XMLHttpRequest();
+                  xhr.open('POST', encodeURI(formData.get('login')), true);
+                  xhr.send(formData);
+                }
+                document.getElementById('login-form').addEventListener('submit', (e) => {
+                  e.preventDefault();
+                  sendLoginRequest();
+                });
+              </script>
               
               <p>
                   

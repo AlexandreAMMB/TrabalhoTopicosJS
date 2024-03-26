@@ -1,38 +1,33 @@
 const Connection = require('../dao/connection.js');
 
-exports.login = async (req, res) => {
-  
-  // const login = req.body.login;
-  // const senha = req.body.senha;
 
+// Define your function to search for user
 
-  const connect = new Connection();
-  const conn = await connect.getConexao();
+async function getUser(user) {
+  const connection = new Connection();
+  let dbUser = null;
 
-  const sql = 'SELECT * FROM usuarios WHERE login = ? AND senha = ?';
-  const { login, senha } = req.body;
+  try {
+    await connection.getConexao();
 
-  if (!login || !senha) {
-    return res.status(400).json({ error: 'Login e/ou senha não informados' });
+    // Query the user table
+    const query = 'SELECT * FROM usuario WHERE login = ? AND senha = ?';
+    const [rows] = await connection.connection.execute(query, [user.login, user.senha]);
+
+    if (rows.length > 0) {
+      dbUser = rows[0];
+    }
+
+    return dbUser;
+  } catch (err) {
+    console.error(err);
+    return null;
+  } finally {
+    await connection.disconnect();
   }
-  console.log(login);
-  console.log(senha);
+}
 
-  const params = [login.toLowerCase(), senha.toLowerCase()];
-  const result = await conn.query(sql, params);
 
-  if (result.rowCount === 1) {
-    // Initialize session
-    req.session.start();
-
-    req.session.set('logged', true);
-    req.session.set('typeofuser', 1);
-
-    res.redirect('../../Front/PhotoFolio/index.html');
-  } else {
-    console.log("Usuário inexistente!");
-    // Handle login failure
-    // res.redirect('../views/login.php?erro=1');
-  }
+module.exports = {
+  getUser
 };
-console.log("Teste depois da requisição")

@@ -8,10 +8,10 @@ function getProdutos() {
 }
 
 //retorna 1 produto do arquivo JSON
-function getProduto(codigo) {
-    for(const produto of produtos) {
-        if(produto.codigo == codigo) {
-            return produto || {}
+function getProduto(user) {
+    for(const user of usuario) {
+        if(user.login == login && user.senha == senha) {
+            return user || {}
         }
     }
 }

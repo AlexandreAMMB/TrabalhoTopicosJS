@@ -1,18 +1,15 @@
-var carrinho = [];
-var exibir = 0;
 
 
 function enviarFormulario() {
-  const login = document.getElementById("login").value;
-  const senha = document.getElementById("senha").value;
+  
+  var login = document.getElementById("login").value;
+  var senha = document.getElementById("senha").value;
 
-  const user = {
+  var user = {
       login: login,
       senha: senha,
   };
-
-  console.log(user.login);
-  console.log(user.senha);
+  console.log('cheguei ate as requisições');
 
   fetch('http://localhost:5500/login', {
     method: 'POST',
@@ -30,368 +27,296 @@ function enviarFormulario() {
   .then(data=> {
     if (data.isLoggedIn) {
       // Redirect to the desired URL
+      console.log('teste')
       window.location.href = data.newUrl;
     }
   })
   .catch(error => {
     // Handle the rejected value
+    console.error('Erro ao enviar requisição', error);
+  });
+
+  return false;
+
+}
+
+
+function enviarFormularioCurso() {
+  var nomeDoCurso = document.getElementById("courseName").value;
+  var statusDoCurso = document.getElementById("courseStatus").value;
+  
+  var curso = {
+    nomeDoCurso: nomeDoCurso,
+    statusDoCurso: statusDoCurso
+  };
+
+  
+  fetch('http://localhost:5500/cursos', {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(curso)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Erro na resposta do servidor');
+    }
+    return response.json();
+  })
+  .then(data=> {
+    if (data.isSave) {
+      // Redirect to the desired URL
+      if (document.getElementById('modal') !== null){
+        document.getElementById('modal').style.display = 'none';
+        
+      }
+
+      if(document.getElementById('tabelaCursos') !== null){
+        AtualizarTabelaCursos();
+      }
+      
+    }
+  })
+ .catch(error => {
     console.error(error);
   });
 
   return false;
+
 }
 
-  //   var formData = new FormData();
-
-  //  for (var key in usuario) {
-  //    formData.append(key, usuario[key]); // Adiciona os outros campos do produto ao objeto FormData
-  //  }
-
-  // fetch("http://localhost:3003/login", {
-  //   method: "POST",
-  //   body: formData
-  // })
-  //   .then(response => {
-  //     if (response.ok) {
-  //       console.log("TesteRequisiçaõ");
-  //       // A requisição foi bem-sucedida
-  //       return response.json();
-  //     } else {
-  //       // A requisição falhou
-  //       throw new Error("Erro na requisição.");
-  //     }
-  //   })
-  //   .then(data => {
-  //     // Lógica para manipular a resposta da requisição
-  //   })
-  //   .catch(error => {
-  //     // Lógica para tratar erros
-  //   });
-
-    // AtualizarTabelaProdutos();
-
-// }
-
-// if(exibir == 0){
-//     AtualizarTabelaProdutos();
-//     exibir = 1;
-// }
 
 
 
+function AtualizarTabelaCursos(){
+  
 
-// function AtualizarTabelaProdutos(){
+  fetch("http://localhost:5500/cursos")
 
-// fetch("http://localhost:3003/produtos")
-//     .then(response => response.json())
-//     .then(data => {
-//        const corpoTabela = document.getElementById("corpoTabela");
-//        corpoTabela.innerHTML = '';
-  
-//       data.forEach(produto => {
-//         const row = document.createElement("tr");
-  
-//         const imagemCell = document.createElement("td");
-//         imagemCell.classList.add("tabela-celula");
-//         const imagem = document.createElement("img");
-//         imagem.src = `../../../back/imagens/${produto.codigo}.png`;
-//         imagem.classList.add("imagem-celula");
-//         imagemCell.appendChild(imagem);
-//         row.appendChild(imagemCell);
-  
-//         const codigoCell = document.createElement("td");
-//         imagemCell.classList.add("tabela-celula");
-//         codigoCell.textContent = produto.codigo;
-//         row.appendChild(codigoCell);
-  
-//         const nomeCell = document.createElement("td");
-//         imagemCell.classList.add("tabela-celula");
-//         nomeCell.textContent = produto.nome;
-//         row.appendChild(nomeCell);
-  
-//         const descricaoCell = document.createElement("td");
-//         imagemCell.classList.add("tabela-celula");
-//         descricaoCell.textContent = produto.descricao;
-//         row.appendChild(descricaoCell);
-  
-//         const precoCell = document.createElement("td");
-//         precoCell.textContent = produto.preco;
-//         row.appendChild(precoCell);
-  
-//         corpoTabela.appendChild(row);
-  
-  
-//         const acoesCell = document.createElement("td");
-  
-//         const comprarButton = document.createElement("button");
-//         comprarButton.textContent = "Comprar";
-//         acoesCell.appendChild(comprarButton);
-  
-//         //Event listener para os botões
-//         comprarButton.addEventListener("click", function() {
-//           adicionarAoCarrinho(produto.codigo);
-//           exibirProdutosCarrinho(1);
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro na resposta do servidor');
+      }
+      return response.json();
+    })
+    .then(data => {
+      
+       const corpoTabelaCursos = document.getElementById("corpoTabelaCursos");
+       const modalEditar = document.getElementById('modal-edit');
+       const salvarBtn = document.getElementById('btnSalvar');
+       let selectedCourseId = null;
 
-//           exibirTotal(1,produto.preco, 1);
-//           console.log(carrinho);
-//         });
+       corpoTabelaCursos.innerHTML = '';
+  
+      data.forEach(cursos => {
+        const row = document.createElement("tr");
+  
+  
+        const idCell = document.createElement("td");
+        idCell.textContent = cursos.idCurso;
+        row.appendChild(idCell);
+  
+        const nomeCursoCell = document.createElement("td");
+        nomeCursoCell.textContent = cursos.nome;
+        row.appendChild(nomeCursoCell);
+  
+        const statusCell = document.createElement("td");
+        statusCell.textContent = cursos.status;
+        row.appendChild(statusCell);
+  
+        corpoTabelaCursos.appendChild(row);
+  
+  
+        const opcoesCell = document.createElement("td");
+
+        const editarButton = document.createElement("button");
+        editarButton.textContent = "";
+          editarButton.className = "btn-lapis";
+          const buttonUrl = getComputedStyle(editarButton).backgroundImage;
+          const imageUrl = buttonUrl + '/back/imagens/iconesDoSistema/icons8-editar-24.png';
+
+          editarButton.style.backgroundImage = `url('${imageUrl}')`;
+        opcoesCell.appendChild(editarButton);
+
+        editarButton.addEventListener("click", function() {
+          modalEditar.style.display = 'block';
+          selectedCourseId = cursos.idCurso;//Armazeno em uma variavel pra que não sobrecreva no loop
+        });
+
+
+        salvarBtn.addEventListener('click', () => {
+          if (selectedCourseId !== null) { // valido se o curso foi selecionado
+            editarCurso(selectedCourseId); // chamo editar curso para o id selecionado
+            modalEditar.style.display = 'none'; // fecho a modal
+            selectedCourseId = null; // Reset a variavel local do curso selecionado.
+          }
+        });
+  
+  
+        const excluirButton = document.createElement("button");
+        excluirButton.textContent = "";
+          excluirButton.className = "btn-lixo";
+          const imagelixoUrl = buttonUrl + '/back/imagens/iconesDoSistema/icons8-trash-can-24.png';
+
+          excluirButton.style.backgroundImage = `url('${imagelixoUrl}')`;
+  
+        opcoesCell.appendChild(excluirButton);
+  
+        excluirButton.addEventListener("click", function() {
+          excluircurso(cursos.idCurso);
+          
+        });
   
         
+
+        
+
+
   
-  
-//         const excluirButton = document.createElement("button");
-//         excluirButton.textContent = "Excluir";
-//         acoesCell.appendChild(excluirButton);
-  
-//         excluirButton.addEventListener("click", function() {
-//           excluirDoCarrinho(produto.codigo);
-//           excluirProduto(produto.codigo , 1);
-//           exibirProdutosCarrinho(1);
-//           exibirTotal(1,produto.preco, 6);
-//           console.log(carrinho);
-//         });
-  
-//         const editarButton = document.createElement("button");
-//         editarButton.textContent = "Editar";
-//         acoesCell.appendChild(editarButton);
-  
-//         row.appendChild(acoesCell);
+        row.appendChild(opcoesCell);
   
   
   
-  
-//       });
-//     })
-//     .catch(error => {
-//       console.error("Erro ao obter os produtos:", error);
-//   });
+      });
+    })
+    .catch(error => {
+      console.error("Erro ao obter os cursos:", error);
+  });
 
-// }
+}
 
+function excluircurso(idCurso) {
+    fetch(`http://localhost:5500/cursos/${idCurso}`, {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (response.ok) {
+          console.log('curso excluído com sucesso');
+          AtualizarTabelaCursos();
+        } else {
+          console.error('Erro ao excluir o curso');
+        }
+      })
+      .catch(error => {
+        console.error('Erro ao excluir o curso:', error);
+      });
 
-// // function AtualizarTabelaProdutos(){
+      
+}
 
-// //     fetch("http://localhost:3003/produtos")
-// //     .then(response => response.json())
-// //     .then(data => {
-// //       corpoTabela = document.getElementById("corpoTabela");
-  
-     
-// //     })
-// //     .catch(error => {
-// //       console.error("Erro ao obter os produtos:", error);
-// //   });
+function editarCurso(idCurso) {
+  var nomeDoCurso = document.getElementById("courseNameedit").value;
+  var statusDoCurso = document.getElementById("courseStatusedit").value;
+        
+  var curso = {
+    id: idCurso,
+    nome: nomeDoCurso,
+    status: statusDoCurso
+  };
 
-// // }
-
-
-
-
-// function excluirProduto(codigo) {
-//     fetch(`http://localhost:3003/produtos/${codigo}`, {
-//       method: 'DELETE'
-//     })
-//       .then(response => {
-//         if (response.ok) {
-//           console.log('Produto excluído com sucesso');
-//         } else {
-//           console.error('Erro ao excluir o produto');
-//         }
-//       })
-//       .catch(error => {
-//         console.error('Erro ao excluir o produto:', error);
-//       });
-
-//       AtualizarTabelaProdutos();
-// }
-
-
-
-
-// function adicionarAoCarrinho(codigo) {
-//     carrinho.push(codigo);
-// }
-
-// function excluirDoCarrinho(codigo, excluirtudo) {
-
-//     const indice = carrinho.findIndex(item => item === codigo);
-//     if (indice !== -1 || excluirtudo == 1) {
-//       carrinho.splice(indice, 1); // Remove o código do carrinho
-//       exibirProdutosCarrinho(); // Atualiza a exibição do carrinho
-//     }
-    
-// }
-
-
-// // Função para obter os detalhes de um produto pelo código
-// function obterDetalhesProduto(codigo) {
-//     return fetch(`http://localhost:3003/produtos/${codigo}`)
-//     .then(response => response.json())
-//     .catch(error => {
-//         console.error(`Erro ao obter detalhes do produto ${codigo}:`, error);
-//     });
-// }
-
-// var totalValor=0;
-// var totalQuantidade=0;
-// // Função para exibir os produtos do carrinho na modal
-// function exibirProdutosCarrinho(exibir) {
-//     const listaProdutos = document.getElementById("listaProdutos");
-//     listaProdutos.innerHTML = ""; // Limpa a lista antes de preencher novamente
-   
-//     const codigosExibidos = {};
-
-//     carrinho.forEach(codigo => {
-//     obterDetalhesProduto(codigo)
-//         .then(produto => {
-
-//             if (!codigosExibidos[codigo]) {
-//                 codigosExibidos[codigo] = true; 
-
-//                 const quantidade = carrinho.reduce((count, codigo) => {
-//                     if (codigo === produto.codigo) {
-//                     return count + 1;
-//                     }
-//                     return count;
-//                 }, 0);
-                
-//                 preco = parseFloat(produto.preco);
-//                 total = preco*quantidade;
-               
-
-//                 const row = document.createElement("tr");
-                
-            
-//                 const itemProduto = document.createElement("td");
-//                 itemProduto.textContent = `${produto.nome}`;
-//                 row.appendChild(itemProduto);
-
-//                 const itemProdutoPreco = document.createElement("td");
-//                 itemProdutoPreco.textContent = `R$ ${preco} `;
-//                 row.appendChild(itemProdutoPreco);
-
-//                 const itemProdutoquantidade = document.createElement("td");
-//                 itemProdutoquantidade.textContent = quantidade;
-//                 row.appendChild(itemProdutoquantidade);
-
-//                 const itemProdutoTotal = document.createElement("td");
-//                 itemProdutoTotal.textContent = `R$ ${total} `;
-//                 row.appendChild(itemProdutoTotal);
-
-//                 const acoesCell = document.createElement("td");
-//                 const excluirButton = document.createElement("button");
-//                 excluirButton.textContent = "Excluir";
-//                 acoesCell.appendChild(excluirButton);
-//                 row.appendChild(acoesCell);
-
-                
-
-
-//                 excluirButton.addEventListener("click", function() {
-//                     excluirDoCarrinho(codigo , 0);
-//                     exibirTotal(1,produto.preco, 0);
-//                     console.log(carrinho);
-//                 });
-
-
-//                 listaProdutos.appendChild(row);
-                
-                
-
-
-
-//             } else {
-//                 const linhaExistente = document.querySelector(
-//                     `#listaProdutos tr[data-codigo="${codigo}"]`
-//                   );
-//                   const itemProdutoQuantidade = linhaExistente.querySelector("td:nth-child(3)");
-//                   const itemProdutoTotal = linhaExistente.querySelector("td:nth-child(4)");
-          
-//                   const quantidade = carrinho.reduce((count, c) => {
-//                     if (c === codigo) {
-//                       return count + 1;
-//                     }
-//                     return count;
-//                   }, 0);
-          
-//                   const preco = parseFloat(produto.preco);
-//                   const total = preco * quantidade;
-          
-//                   itemProdutoQuantidade.textContent = quantidade;
-//                   itemProdutoTotal.textContent = `R$ ${total}`;
-                  
-                  
-                
-
-
-//             }
-
-            
-            
-
-
-
-//         });
-
-//     });
-
+  fetch(`http://localhost:5500/cursos/${idCurso}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(curso)
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Erro ao editar o curso');
+      }
+    })
+    .then(data => {
+      console.log('Curso editado com sucesso:', data);
+      AtualizarTabelaCursos(); // Call the function to update the table
+    })
+    .catch(error => {
+      console.error('Erro ao editar o curso:', error);
+    });
 
     
-
-//     // Exibe a modal
-//     if(exibir == 0){
-//         const modalCarrinho = document.getElementById("modalCarrinho");
-//         modalCarrinho.style.display = "block";
-//     }
-
-// }
+}
 
 
-//     ttCalc = 0;
-//     ttquant = 0;
-// function exibirTotal(totalQuantidade,totalValor, opcao){
-//     const listaTotal = document.getElementById("Totais");
-//     listaTotal.innerHTML = ""; // Limpa a lista antes de preencher novamente
-
-//     if(opcao == 1){
-//         ttCalc += parseFloat(totalValor);
-//         ttquant += totalQuantidade;
-//     }else if(opcao == 0){
-//         ttCalc -= parseFloat(totalValor);
-//         ttquant -= totalQuantidade;
-//     }else{
-//         ttCalc -= parseFloat(totalValor);
-//         ttquant -= totalQuantidade;
-//     }
-    
-
-//     const row = document.createElement("tr");
-
-//     const item = document.createElement("td");
-//     item .textContent = "----------";
-//     row.appendChild(item );
-
-//     const item2 = document.createElement("td");
-//     item2.textContent = "----------";
-//     row.appendChild(item2);
-
-//     const item3 = document.createElement("td");
-//     item3.textContent = "----------";
-//     row.appendChild(item3);
-                
-            
-//     const itemQuant = document.createElement("td");
-//     itemQuant .textContent = `${ttquant}`;
-//     row.appendChild(itemQuant );
-
-//     const itemProdutoPreco = document.createElement("td");
-//     itemProdutoPreco.textContent = `R$ ${ ttCalc}`;
-//     row.appendChild(itemProdutoPreco);
-
-//     listaTotal.appendChild(row);
 
 
-// }
+function SelectCursos(modalSelectDeExibicaoCursos){
+
+  fetch("http://localhost:5500/cursos")
+
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro na resposta do servidor');
+      }
+      return response.json();
+    })
+    .then(data => {
+      
+      const selectCursos = document.getElementById(modalSelectDeExibicaoCursos);
+      
+
+      // Limpa o select antes de adicionar as opções
+      selectCursos.innerHTML = '';
+
+      data.forEach(cursos => {
+        
+        const option = document.createElement('option');
+        option.value = cursos.idCurso;
+        option.text = cursos.nome;
+
+        if(cursos.status == 'Ativo'){
+          selectCursos.appendChild(option);
+        }
+
+  
+      });
+    })
+    .catch(error => {
+      console.error("Erro ao obter os cursos:", error);
+  });
+
+}
+
+function SelectAdmin(SelectDeExibicaoAdm){
+
+  fetch("http://localhost:5500/Administrador")
+
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro na resposta do servidor');
+      }
+      return response.json();
+    })
+    .then(data => {
+      
+      const selectAdmin = document.getElementById(SelectDeExibicaoAdm);
+      
+
+      // Limpa o select antes de adicionar as opções
+      selectAdmin.innerHTML = '';
+
+      data.forEach(Adm => {
+        
+        const option = document.createElement('option');
+        option.value = Adm.idAdministrador;
+        option.text = Adm.nomeAD;
+
+        selectAdmin.appendChild(option);
+  
+      });
+    })
+    .catch(error => {
+      console.error("Erro ao obter os Administradores:", error);
+  });
+
+}
+
+
+
+
 
 
 

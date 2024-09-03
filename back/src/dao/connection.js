@@ -14,7 +14,7 @@ class Connection{
           password: 'P@mell@1999',
           database: 'panc'
         });
-          console.log('Connected to MySQL!');
+          // console.log('Connected to MySQL!');
       } catch (error) {
           console.error('Error connecting to MySQL:', error);
         }
@@ -23,7 +23,7 @@ class Connection{
     async disconnect() {
       if (this.connection) {
         await this.connection.end();
-          console.log('Disconnected from MySQL!');
+          // console.log('Disconnected from MySQL!');
       }
     }
 }

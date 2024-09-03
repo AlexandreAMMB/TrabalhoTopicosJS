@@ -66,14 +66,14 @@ h6 {
 # AutoPlay Gallery
 --------------------------------------------------------------*/
 
-#autoplay {
+.autoplay {
   overflow: auto;
   white-space: nowrap;
   padding: 10px;
   z-index: -1;
 }
 
-#autoplay img {
+.autoplay img {
   width: 48%;
   height: 50rem;
   opacity: 30%;

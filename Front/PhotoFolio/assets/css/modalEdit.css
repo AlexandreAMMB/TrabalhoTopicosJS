@@ -1,0 +1,53 @@
+
+#modal-edit {
+  width: 30rem;
+  height: 15rem;
+  background-color: #fff;
+  color: black;
+  border-radius: 8px;
+  padding: 20px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  
+}
+
+
+
+
+#Close-modal-edit {
+  box-shadow : 0px 0 0px 0px white;
+  border-radius: 20px;
+  background-color: white;
+  border-color: white;
+  z-index: 2;
+  height: 2rem;
+  width: 2rem;
+ 
+}
+
+#Modaltituloedit{
+  color: gray;
+}
+
+#btnCancelaredit{
+  margin-right: 10px;
+}
+
+
+#courseNameedit {
+  background-color: whitesmoke;
+  color: black;
+}
+
+#modal-curso-content-edit{
+  margin-left: -7rem;
+
+}

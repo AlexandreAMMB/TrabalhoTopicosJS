@@ -1,0 +1,36 @@
+.emailAdm{
+    width: 10%;
+}
+
+.TabelaAdministradores button{
+    border-radius: 5rem;
+    height: 2rem;
+    width: 2re,;
+    margin-right: 0.5rem;
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.btn-lapis {
+ 
+    background-size: 24px 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    border: none;
+    cursor: pointer;
+}
+
+
+.btn-lixo {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+   
+    width: 24px;
+    height: 24px;
+    border: none;
+    cursor: pointer;
+}

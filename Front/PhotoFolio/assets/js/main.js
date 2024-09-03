@@ -1,6 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-  "use strict";
+  // "use strict";
 
   /**
    * Preloader

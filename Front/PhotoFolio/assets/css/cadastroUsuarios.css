@@ -1,0 +1,232 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+header {
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.backform{
+    margin-top: -5rem;
+    background-color: rgb(32, 31, 31);
+    padding: 5rem;
+    border-radius: 2rem;
+}
+
+button {
+    background-color: #4CAF50;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px; 
+}
+
+#admin-form label {
+    display: block;
+    text-align: left;
+    margin-bottom: 10px; /* add some margin between the label and input */
+}
+
+#user-form label {
+    display: block;
+    text-align: left;
+    margin-bottom: 10px; /* add some margin between the label and input */
+}
+
+.form-linha-completa{
+    width: 30rem;
+}
+.form-linha-completa input{
+    display: block;
+    width: 100%;
+}
+
+.form-linhaVcampos{
+    
+    width: 30rem;
+    display: flex;
+}
+
+.form-linhaVcampos input{
+    
+    width: 14.75rem;
+    display: flex;
+}
+
+.form-linhaVcampos select{
+    
+    width: 14.75rem;
+    display: flex;
+}
+
+
+#admin-form input {
+    flex: 1; /* to make the inputs equal width */
+    margin-bottom: 20px;
+}
+
+#user-form input {
+    
+    flex: 1; /* to make the inputs equal width */
+    margin-bottom: 20px;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-right: 0.5rem; /* add some margin between the groups */
+}
+  
+.form-group label {
+    text-align: left;
+    margin-bottom: 10px; /* add some margin between the label and input */
+}
+
+
+
+.listUsers {
+    margin-top: -3rem;
+    margin-left: 63.5%;
+    max-width: fit-content;
+    padding: 20px;
+    color: #ddd;
+    align-items: right;
+   
+  }
+
+  .listUsers ul li{
+    border-color: white;
+    border: 2px;
+  }
+
+  @media (min-width: 360px) {
+    .listUsers {
+      padding: 0;
+    }
+  
+    .listUsers ul {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      list-style: none;
+      align-items: center;
+    }
+  
+    .listUsers li {
+      position: relative;
+    }
+  
+    .listUsers a,
+    .listUsers a:focus {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0 10px 30px;
+      font-family: var(--font-primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.5);
+      white-space: nowrap;
+      transition: 0.3s;
+    }
+  
+    .listUsers a i,
+    .listUsers a:focus i {
+      font-size: 12px;
+      line-height: 0;
+      margin-left: 5px;
+    }
+  
+    .listUsers a:hover,
+    .listUsers .active,
+    .listUsers .active:focus,
+    .listUsers li:hover>a {
+      color: #fff;
+    }
+  
+    .listUsers .dropdown ul {
+      display: block;
+      position: absolute;
+      left: 14px;
+      top: calc(100% + 30px);
+      margin: 0;
+      padding: 10px 0;
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      background: var(--color-secondary);
+      transition: 0.3s;
+      border-radius: 4px;
+    }
+  
+    .listUsers .dropdown ul li {
+      min-width: 200px;
+    }
+  
+    .listUsers .dropdown ul a {
+      padding: 10px 20px;
+      font-size: 15px;
+      text-transform: none;
+      font-weight: 400;
+    }
+  
+    .listUsers .dropdown ul a i {
+      font-size: 12px;
+    }
+  
+    .listUsers .dropdown ul a:hover,
+    .listUsers .dropdown ul .active:hover,
+    .listUsers .dropdown ul li:hover>a {
+      color: #fff;
+    }
+  
+    .listUsers .dropdown:hover>ul {
+      opacity: 1;
+      top: 100%;
+      visibility: visible;
+    }
+  
+    .listUsers .dropdown .dropdown ul {
+      top: 0;
+      left: calc(100% - 30px);
+      visibility: hidden;
+    }
+  
+    .listUsers .dropdown .dropdown:hover>ul {
+      opacity: 1;
+      top: 0;
+      left: 100%;
+      visibility: visible;
+    }
+  }
+  
+  @media (min-width: 1280px) and (max-width: 1366px) {
+    .listUsers .dropdown .dropdown ul {
+      left: -90%;
+    }
+  
+    .listUsers .dropdown .dropdown:hover>ul {
+      left: -100%;
+    }
+  }
+  
+ 
+

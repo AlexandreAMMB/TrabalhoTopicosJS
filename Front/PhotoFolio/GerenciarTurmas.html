@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>PANC</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/gallery/PancLogo.png" rel="icon">
+  <link href="assets/img/gallery/PancLogo.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/css/home.css" rel="stylesheet">
+  <link href="assets/css/gerenciarTurmas.css" rel="stylesheet">
+  <link href="assets/css/modal.css" rel="stylesheet">
+  <link href="assets/css/modalTurmas.css" rel="stylesheet">
+  <link href="assets/css/modalTurmasEdit.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css">
+
+   <!-- Javascript -->
+   <script src="../../back/src/dao/connection.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   <script src="../PhotoFolio/js/RequisicoesUsuario.js"></script>
+   <script src="../PhotoFolio/js/RequisicoesUsuarioTurmas.js"></script>
+   <script type="module" src="../../back/src/Controlers/controlerCursos.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/js/multi-select-tag.js"></script>
+   <script src="../PhotoFolio/assets/js/buttonsNewUser.js"></script>
+   
+   <script src="../PhotoFolio/assets/js/modal.js"></script>
+
+   
+  
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+
+      <a href="indexADM.html" class="logo d-flex align-items-center  me-auto me-lg-0">
+        <img src="assets/img/gallery/PancLogo.png" alt="Projeto Arte Na Comunidade">
+        
+        <h1>PANC</h1>
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="indexADM.html" class="active">Inicio</a></li>
+          <li><a href="#">Calendário</a></li>
+          <li><a href="#">Galeria</a></li>
+          <li class="dropdown"><a href="#"><span>Controle</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+            <ul>
+              <li class="dropdown"><a href="#"><span>Cadastro de usuário</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                <ul>
+                  <li id="admin-btn"><a href="#">Administrador</a></li>
+                  <li id="gestor-btn"><a href="#">Gestor</a></li>
+                  <li id="user-btn"><a href="#">Aluno</a></li>
+                 </ul>
+              </li>
+              <li><a href="GerenciarTurmas.html">Turmas</a></li>
+              <li class="dropdown"><a href="#"><span>Relatórios</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                <ul>
+                  <li><a href="#">Frequencia</a></li>
+                  <li><a href="#">Notas</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li><a href="#">Notificações</a></li>
+          
+  
+        </ul>
+      </nav><!-- .navbar -->
+
+      <div class="header-social-links">
+        <a href="index.html" id="logoutButton">Sair <img src="../../back/imagens/iconesDoSistema/logout.png" alt="Log out"></a>
+      </div>
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+
+    </div>
+  </header><!-- End Header -->
+
+<body>
+
+  <!-- ======= Header ======= -->
+
+  <main id="main" data-aos="fade" data-aos-delay="1500">
+
+    <!-- ======= End Page Header ======= -->
+    <div class="page-header d-flex align-items-center">
+      <div class="container position-relative">
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-6 text-center">
+            <h2>Gerenciar Turmas</h2>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Page Header -->
+
+    <!-- ======= Contact Section ======= -->
+
+    <!-- ======= Modal de cadastro de Curso ======= -->
+    <section id="contact" class="contact">
+      <div id="modal" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="Modaltitulo">Cadastrar Curso</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="Close-modal">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form role="form" class="php-email-form">
+
+                <div class="row">
+                  <div class="col-md-6 form-group" id="modal-curso-content">
+                    <label for="courseName">Nome do Curso:</label><br>
+                    <input type="text" name="courseName" class="form-control" id="courseName" placeholder="Nome do Curso" required>
+                  </div>
+                  <div class="col-md-6 form-group mt-3 mt-md-0">
+                    <label for="courseStatus">Status:</label>
+                    <select id="courseStatus" name="courseStatus" class="form-control" placeholder="Nome do Produto">
+                      <option value="Ativo">Ativo</option>
+                      <option value="Inativo">Inativo</option>
+                    </select><br>
+                  </div>
+                </div>
+            </div>  
+            
+            <div class="modal-footer">
+              <button type="reset" class="btn btn-secondary" data-dismiss="modal" id="btnCancelar">Cancelar</button>
+              <button type="submit" value="Submit" class="btn btn-primary" id="btnCadastrar" onclick="enviarFormularioCurso()">Cadastrar</button>
+            </div>
+          
+          </form>
+          <script>
+            document.getElementById('curso-form').addEventListener('submit', (e) => {
+              e.preventDefault();
+            });
+          </script>
+          </div>
+        </div>
+      </div>
+      <!-- ======= Modal de cadastro de Curso END ======= -->
+
+
+
+      <!-- ======= Modal de cadastro de Turma ======= -->
+    <section id="contactTurma" class="contact">
+      <div id="modalTurma" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="ModaltituloTurma">Cadastrar Turma</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="Close-modal-Turma">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body-Turma">
+              <form id="turma-form" role="form" class="php-email-form" >
+               
+                <div class="row">
+                  <div class="col-md-6 form-group modal-Turma-content" id="horarioTurma">
+                    <label for="turmaHorario">Horario:</label><br>
+                    <input type="time" name="turmaHorario" class="form-control" id="turmaHorario" placeholder="00:00" required>
+                  </div>
+                 
+                </div>
+
+
+                <div class="row">
+                  <div class="col-md-6 form-group modal-Turma-content" id="rowModalTurma" >
+                    <label for="turmaHorario">Selecione os Dias de Aula:</label><br>
+                    <select name="DiasDeAula" id="DiasDeAula" class="DiasDeAula" multiple>
+                      <option value="segunda">Segunda</option>
+                      <option value="terça">Terça</option>
+                      <option value="Quarta">Quarta</option>
+                      <option value="Quinta">Quinta</option>
+                      <option value="Sexta">Sexta</option>
+                      <option value="Sábado">Sábado</option>
+                      <option value="domingo">Domingo</option>
+                    </select>
+                    <script>
+                      new MultiSelectTag('DiasDeAula', {
+                          rounded: true,    // default true
+                          shadow: true,      // default false
+                          placeholder: 'Search',  // default Search...
+                          tagColor: {
+                              textColor: '#327b2c',
+                              borderColor: '#92e681',
+                              bgColor: '#eaffe6',
+                          },
+                          onChange: function(values) {
+                              console.log(values)
+                          }
+                      })
+                    </script>
+                  </div>
+
+
+                  <div class="col-md-6 form-group modal-Turma-content" id="rowModalTurmaCurso" >
+                    <label for="turmaHorario">curso:</label><br>
+                    <select name="Select-Curso" id="Select-Curso" class="DiasDeAula" required>
+                    
+                    </select>
+                    
+                  </div>
+                  
+                 
+                </div>
+
+                
+                
+
+              
+
+              
+              
+            </div>
+
+            <div class="modal-footer-Turma">
+              <!-- <button type="reset" class="btn btn-secondary" data-dismiss="modal" id="btnCancelarTurma">Cancelar</button> -->
+              <button type="submit" value="Submit" class="btn btn-primary" id="btnCadastrarTurma" onclick="enviarFormularioTurma()">Cadastrar</button>
+            </div>
+            </form>
+            <script>
+              window.onload = AtualizarTabelaTurmas;
+              document.getElementById('turma-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+              });
+              
+            </script> 
+            
+          </div> 
+          
+          </div>
+        </div>
+      </div>
+      <!-- ======= Modal de cadastro de Turma END ======= -->
+     
+
+       <!-- ======= Modal de Editar Turma ======= -->
+    <section id="contactTurma" class="contact">
+      <div id="modalTurmaEdit" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="ModaltituloTurma-Edit">Editar Turma</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="Close-modal-Turma-Edit">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body-Turma">
+              <form id="turma-form-edit" role="form" class="php-email-form" >
+               
+                <div class="row">
+                  <div class="col-md-6 form-group modal-Turma-content" id="horarioTurma-Edit">
+                    <label for="turmaHorario-Edit">Horario:</label><br>
+                    <input type="time" name="turmaHorario-Edit" class="form-control" id="turmaHorario-Edit" placeholder="00:00" required>
+                  </div>
+                 
+                </div>
+
+
+                <div class="row">
+                  <div class="col-md-6 form-group modal-Turma-content" id="rowModalTurma-Edit" >
+                    <label for="turmaHorario">Selecione os Dias de Aula:</label><br>
+                    <select name="DiasDeAula-Edit" id="DiasDeAula-Edit" class="DiasDeAula" multiple required>
+                      <option value="segunda">Segunda</option>
+                      <option value="terça">Terça</option>
+                      <option value="Quarta">Quarta</option>
+                      <option value="Quinta">Quinta</option>
+                      <option value="Sexta">Sexta</option>
+                      <option value="Sábado">Sábado</option>
+                      <option value="domingo">Domingo</option>
+                    </select>
+                    <script>
+                      new MultiSelectTag('DiasDeAula-Edit', {
+                          rounded: true,    // default true
+                          shadow: true,      // default false
+                          placeholder: 'Search',  // default Search...
+                          tagColor: {
+                              textColor: '#327b2c',
+                              borderColor: '#92e681',
+                              bgColor: '#eaffe6',
+                          },
+                          onChange: function(values) {
+                              console.log(values)
+                          }
+                      })
+                    </script>
+                  </div>
+
+
+                  <div class="col-md-6 form-group modal-Turma-content" id="rowModalTurmaCurso-Edit" >
+                    <label for="turmaHorario-Edit">curso:</label><br>
+                    <select name="Select-Curso-Edit" id="Select-Curso-Edit" class="DiasDeAula" required>
+                    
+                    </select>
+                    
+                  </div>
+                  
+                 
+                </div>
+
+                
+                
+
+              
+
+              
+              
+            </div>
+
+            <div class="modal-footer-Turma">
+              <!-- <button type="reset" class="btn btn-secondary" data-dismiss="modal" id="btnCancelarTurma">Cancelar</button> -->
+              <button type="submit" value="Submit" class="btn btn-primary" id="btnEditarTurma">Salvar</button>
+            </div>
+            </form>
+            <script>
+              window.onload = AtualizarTabelaTurmas;
+              document.getElementById('turma-form-edit').addEventListener('submit', (e) => {
+                e.preventDefault();
+              });
+              
+            </script> 
+            
+          </div> 
+          
+          </div>
+        </div>
+      </div>
+      <!-- ======= Modal de Editar Turma END ======= -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <nav id="navbar" class="menuLateralTurmas">
+
+        
+
+        <ul>
+          <li><a href="#" id="Open-modal-Turma">Cadastrar Turma</a></li>
+          <li class="dropdown"><a href="#"><span>Gerenciar Cursos</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+            <ul>
+              <li><a href="#" id="Open-modal" >Cadastrar Curso</a></li>
+              <li><a href="GerenciarCursos.html">Lista de Cursos</a></li>
+            </ul>
+          </li>
+          
+  
+        </ul>
+      </nav>
+
+      
+      
+      
+
+      <div class="container">
+        <div class="row justify-content-center mt-4">
+
+          <div class="col-lg-9">
+
+            <font face="Tahoma" color="white">
+              <table id="tabelaTurmas" border="1" align="center" cellspacing="2" cellpadding="1" width="80%"  class="table table-dark TabelaDeTurmas">
+                      <tr align="center">
+                          <th>Turma</th>
+                          <th>Horário</th>
+                          <th>Dias de Aula</th>
+                          <th>Opções</th>
+                      </tr>
+                      
+                      <tbody id="corpoTabelaTurmas" align="center"></tbody>
+                    
+                    </div>
+            
+              </table>
+            </font>
+            <script>
+              window.onload = AtualizarTabelaTurmas;
+              document.getElementById('tabelaTurmas').addEventListener('submit', (e) => {
+                e.preventDefault();
+              });
+            </script>
+
+
+          </div><!-- End Contact Form -->
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="container">
+      <div class="copyright">
+        &copy;<strong><span>Projeto Arte Na Comunidade</span></strong>
+      </div>
+      <div class="credits">
+        <p>R. Muniz Freire, 1129 - Itaquari, Cariacica - ES, 29151-560</p>
+        <p>Projetopanc@hotmail.com</p>
+        2024
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader">
+    <div class="line"></div>
+  </div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

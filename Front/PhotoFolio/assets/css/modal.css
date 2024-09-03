@@ -1,0 +1,90 @@
+
+#modal {
+  width: 30rem;
+  height: 15rem;
+  background-color: #fff;
+  color: black;
+  border-radius: 8px;
+  padding: 20px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  
+}
+
+.modal-dialog{
+  height: 100%;
+  width: 100%;
+  
+}
+
+.modal-content {
+  height: 100%;
+  
+}
+
+.modal-header{
+  height: 3rem;
+  
+}
+
+.modal-body{
+  font-family:Arial, Helvetica, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+
+
+#Close-modal {
+  box-shadow : 0px 0 0px 0px white;
+  border-radius: 20px;
+  background-color: white;
+  border-color: white;
+  z-index: 2;
+  height: 2rem;
+  width: 2rem;
+ 
+}
+
+#Modaltitulo{
+  color: gray;
+}
+
+#btnCancelar{
+  margin-right: 10px;
+}
+
+
+#courseName {
+  background-color: whitesmoke;
+  color: black;
+}
+
+#modal-curso-content{
+  margin-left: -7rem;
+
+}
+
+.modal-body-Turma{
+  padding-top: 4rem;
+  height: 10rem;
+}
+
+.modal-footer-Turma{
+  padding-top: 3rem;
+}
+
+#btnCadastrarTurma{
+  margin-right: 2rem;
+  margin-left: 24rem;
+}

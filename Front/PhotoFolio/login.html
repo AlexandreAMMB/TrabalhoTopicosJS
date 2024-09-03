@@ -5,13 +5,13 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>PhotoFolio Bootstrap Template - Services</title>
+  <title>PANC</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="assets/img/gallery/PancLogo.png" rel="icon">
+  <link href="assets/img/gallery/PancLogo.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,7 +53,7 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="index.html" class="active">Inicio</a></li>
           <li><a href="about.html">Sobre</a></li>
           <li><a href="contact.html">Contato</a></li>
           <li><a href="login.html">Entrar</a></li>
@@ -98,7 +98,7 @@
           <div class="row justify-content-center mt-4">
 
             <div class="col-lg-9">
-              <form action="/login" method="post" role="form" class="php-email-form">
+              <form role="form" class="php-email-form">
                 
               
                   
@@ -121,18 +121,11 @@
 
               </form>
               <script>
-                function sendLoginRequest() {
-                  const formData = new FormData(document.getElementById('login-form'));
-                  const xhr = new XMLHttpRequest();
-                  xhr.open('POST', encodeURI(formData.get('login')), true);
-                  xhr.send(formData);
-                }
                 document.getElementById('login-form').addEventListener('submit', (e) => {
                   e.preventDefault();
-                  sendLoginRequest();
                 });
               </script>
-              
+             
               <p>
                   
               </p>

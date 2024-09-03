@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>PANC</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/gallery/PancLogo.png" rel="icon">
+  <link href="assets/img/gallery/PancLogo.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/css/home.css" rel="stylesheet">
+  <link href="assets/css/gerenciarTurmas.css" rel="stylesheet">
+  <link href="assets/css/modal.css" rel="stylesheet">
+  <link href="assets/css/modalEdit.css" rel="stylesheet">
+
+   <!-- Javascript -->
+   <script src="../../back/src/dao/connection.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   <script src="../PhotoFolio/js/RequisicoesUsuario.js"></script>
+   <script type="module" src="../../back/src/Controlers/controlerCursos.js"></script>
+   <script src="../PhotoFolio/assets/js/buttonsNewUser.js"></script>
+   
+   <script src="../PhotoFolio/assets/js/modal.js"></script>
+
+   
+  
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+
+      <a href="indexADM.html" class="logo d-flex align-items-center  me-auto me-lg-0">
+        <img src="assets/img/gallery/PancLogo.png" alt="Projeto Arte Na Comunidade">
+        
+        <h1>PANC</h1>
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="indexADM.html" class="active">Inicio</a></li>
+          <li><a href="#">Calendário</a></li>
+          <li><a href="#">Galeria</a></li>
+          <li class="dropdown"><a href="#"><span>Controle</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+            <ul>
+              <li class="dropdown"><a href="#"><span>Cadastro de usuário</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                <ul>
+                  <li id="admin-btn"><a href="#">Administrador</a></li>
+                  <li id="gestor-btn"><a href="#">Gestor</a></li>
+                  <li id="user-btn"><a href="#">Aluno</a></li>
+                </ul>
+              </li>
+              <li><a href="GerenciarTurmas.html">Turmas</a></li>
+              <li class="dropdown"><a href="#"><span>Relatórios</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                <ul>
+                  <li><a href="#">Frequencia</a></li>
+                  <li><a href="#">Notas</a></li>
+                </ul>
+              </li>
+            </ul>
+            <li><a href="#">Notificações</a></li>
+          </li>
+          
+  
+        </ul>
+      </nav><!-- .navbar -->
+
+      <div class="header-social-links">
+        <a href="index.html" id="logoutButton">Sair <img src="../../back/imagens/iconesDoSistema/logout.png" alt="Log out"></a>
+      </div>
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+
+    </div>
+  </header><!-- End Header -->
+
+<body>
+
+  <!-- ======= Header ======= -->
+
+  <main id="main" data-aos="fade" data-aos-delay="1500">
+
+    <!-- ======= End Page Header ======= -->
+    <div class="page-header d-flex align-items-center">
+      <div class="container position-relative">
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-6 text-center">
+            <h2>Gerenciar Cursos</h2>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Page Header -->
+
+    <!-- ======= Contact Section ======= -->
+
+
+
+    <!-- ======= Modal de cadastro de Curso ======= -->
+    <section id="contact" class="contact">
+      <div id="modal" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="Modaltitulo">Cadastrar Curso</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="Close-modal">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="curso-form" role="form" class="php-email-form">
+
+                <div class="row">
+                  <div class="col-md-6 form-group" id="modal-curso-content">
+                    <label for="courseName">Nome do Curso:</label><br>
+                    <input type="text" name="courseName" class="form-control" id="courseName" placeholder="Nome do Curso" required>
+                  </div>
+                  <div class="col-md-6 form-group mt-3 mt-md-0">
+                    <label for="courseStatus">Status:</label>
+                    <select id="courseStatus" name="courseStatus" class="form-control" placeholder="Nome do Produto">
+                      <option value="Ativo">Ativo</option>
+                      <option value="Inativo">Inativo</option>
+                    </select><br>
+                  </div>
+                </div>
+              
+            </div>
+            <div class="modal-footer">
+              <button type="reset" class="btn btn-secondary" data-dismiss="modal" id="btnCancelar">Cancelar</button>
+              <button type="submit" value="Submit" class="btn btn-primary" id="btnCadastrar" onclick="enviarFormularioCurso()">Cadastrar</button>
+            </div>
+          </form>
+          <script>
+            document.getElementById('curso-form').addEventListener('submit', (e) => {
+              e.preventDefault();
+            });
+          </script>
+          </div>
+        </div>
+      </div>
+      <!-- ======= Modal end ======= -->
+
+      <!-- ======= Modal de EDITAR de Curso ======= -->
+    <section id="contact" class="contact">
+      <div id="modal-edit" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="Modaltituloedit">Cadastrar Curso</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="Close-modal-edit">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="curso-form-edit" role="form" class="php-email-form">
+
+                <div class="row">
+                  <div class="col-md-6 form-group" id="modal-curso-content-edit">
+                    <label for="courseNameedit">Nome do Curso:</label><br>
+                    <input type="text" name="courseNameedit" class="form-control" id="courseNameedit" placeholder="Nome do Curso" required>
+                  </div>
+                  <div class="col-md-6 form-group mt-3 mt-md-0">
+                    <label for="courseStatusedit">Status:</label>
+                    <select id="courseStatusedit" name="courseStatusedit" class="form-control" placeholder="Nome do Produto">
+                      <option value="Ativo">Ativo</option>
+                      <option value="Inativo">Inativo</option>
+                    </select><br>
+                  </div>
+                </div>
+              
+            </div>
+            <div class="modal-footer">
+              <button type="reset" class="btn btn-secondary" data-dismiss="modal" id="btnCancelaredit">Cancelar</button>
+              <button type="submit" value="Submit" class="btn btn-primary" id="btnSalvar">Salvar</button>
+            </div>
+          </form>
+          <script>
+            document.getElementById('curso-form-edit').addEventListener('submit', (e) => {
+              e.preventDefault();
+            });
+          </script>
+          </div>
+        </div>
+      </div>
+      <!-- ======= Modal end ======= -->
+
+
+
+
+      
+     
+      <nav id="navbar" class="menuLateralTurmas" >
+
+        <ul>
+          <li><a href="#" id="Open-modal" >Cadastrar Curso</a></li>
+        </ul>
+      </nav>
+      
+
+      
+      <div class="container">
+        <div class="row justify-content-center mt-4">
+
+          <div class="col-lg-9">
+
+            <font face="Tahoma" color="white">
+              <table id="tabelaCursos" border="1" align="center" cellspacing="2" cellpadding="1" width="80%"  class="table table-dark TabelaDeCursos">
+                      <tr align="center">
+                        <th>Id</th>
+                        <th>Curso</th>
+                        <th>Status</th>
+                        <th>Opções</th>
+                      </tr>
+                      
+                      <tbody id="corpoTabelaCursos" align="center"></tbody>
+                    
+                    </div>
+            
+              </table>
+            </font>
+            <script>
+              window.onload = AtualizarTabelaCursos;
+              document.getElementById('tabelaCursos').addEventListener('submit', (e) => {
+                e.preventDefault();
+              });
+            </script>
+
+
+          </div><!-- End Contact Form -->
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="container">
+      <div class="copyright">
+        &copy;<strong><span>Projeto Arte Na Comunidade</span></strong>
+      </div>
+      <div class="credits">
+        <p>R. Muniz Freire, 1129 - Itaquari, Cariacica - ES, 29151-560</p>
+        <p>Projetopanc@hotmail.com</p>
+        2024
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader">
+    <div class="line"></div>
+  </div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

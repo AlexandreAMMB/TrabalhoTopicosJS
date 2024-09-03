@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>PANC</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/gallery/PancLogo.png" rel="icon">
+  <link href="assets/img/gallery/PancLogo.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/css/home.css" rel="stylesheet">
+  <link href="assets/css/gerenciarTurmas.css" rel="stylesheet">
+  <link href="assets/css/modal.css" rel="stylesheet">
+  <link href="assets/css/modalTurmas.css" rel="stylesheet">
+  <link href="assets/css/modalTurmasEdit.css" rel="stylesheet">
+  <link href="assets/css/cadastroUsuarios.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css">
+
+   <!-- Javascript -->
+   <script src="../../back/src/dao/connection.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/js/multi-select-tag.js"></script>
+   <script src="../../Front/PhotoFolio/assets/js/buttonsNewUser.js"></script>
+   <script src="../../Front/PhotoFolio/assets/js/cadastroDeUsuario.js"></script>
+   <script src="../PhotoFolio/js/RequisicoesAdministrador.js"></script>
+
+   
+  
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+
+      <a href="indexADM.html" class="logo d-flex align-items-center  me-auto me-lg-0">
+        <img src="assets/img/gallery/PancLogo.png" alt="Projeto Arte Na Comunidade">
+        
+        <h1>PANC</h1>
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="indexADM.html" class="active">Inicio</a></li>
+          <li><a href="#">Calendário</a></li>
+          <li><a href="#">Galeria</a></li>
+          <li class="dropdown"><a href="#"><span>Controle</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+            <ul>
+              <!-- <li><a href="CadastroUsuario.html">Cadastro de usuário</a></li> -->
+              <li class="dropdown"><a href="#"><span>Cadastro de usuário</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                <ul>
+                  <li id="admin-btn"><a href="#">Administrador</a></li>
+                  <li id="gestor-btn"><a href="#">Gestor</a></li>
+                  <li id="user-btn"><a href="#">Aluno</a></li>
+                </ul>
+              </li>
+              <li><a href="GerenciarTurmas.html">Turmas</a></li>
+              <li class="dropdown"><a href="#"><span>Relatórios</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+                <ul>
+                  <li><a href="#">Frequencia</a></li>
+                  <li><a href="#">Notas</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li><a href="#">Notificações</a></li>
+          
+  
+        </ul>
+      </nav><!-- .navbar -->
+
+      <div class="header-social-links">
+        <a href="index.html" id="logoutButton">Sair <img src="../../back/imagens/iconesDoSistema/logout.png" alt="Log out"></a>
+      </div>
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+
+    </div>
+  </header><!-- End Header -->
+
+<body>
+
+  <!-- ======= Header ======= -->
+
+  <main id="main" data-aos="fade" data-aos-delay="1500">
+
+    <!-- ======= End Page Header ======= -->
+    <div class="page-header d-flex align-items-center">
+      <div class="container position-relative">
+        <div class="row d-flex justify-content-center">
+            <h2>Cadastro de Usuários</h2>
+        </div>
+      </div>
+    </div><!-- End Page Header -->
+
+    <!-- ======= Contact Section ======= -->
+    
+    <section class="forms">
+      
+      <div class="container">
+        
+        <div class="container position-relative">
+          <div class="row justify-content-center mt-4">
+            <div class="backform">
+              <nav id="navbar" class="listUsers">
+                <ul>
+                  <li><a href="GerenciarUsuarios.html" id="listaDeUsuarios">Lista de Usuários</a></li>
+                </ul>
+              </nav>
+              <!-- ======= Cadastro de Administardor ======= -->
+              <form id="admin-form" role="form" class="php-email-form" method="post">
+                
+          
+                  <h2>Administrador</h2>
+
+                  <div class="form-linha-completa">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nomeAdm" name="nome" class="form-control" placeholder="Insira o nome do administrador" required><br><br>
+                  </div>
+                  
+                  <div class="form-linhaVcampos">
+                    <div class="form-group">
+                      <label for="email">Email:</label>
+                      <input type="email" id="emailAdm" name="email" class="form-control" placeholder="emailExemplo@gmail.com" required><br><br>
+                    </div>
+                    <div class="form-group">
+                      <label for="telefone">Telefone:</label>
+                      <input type="tel" id="telefoneAdm" name="telefone" class="form-control" placeholder="(xx) xxxxx-xxxx" required><br><br>
+                    </div>
+                  </div>
+
+                  <h2>Defina o login e senha</h2>
+
+
+                  <div class="form-linha-completa">
+                    <p>Login</p>
+                    <input type="text" class="form-control" name="loginAmd" id="loginAdm" placeholder="Insira seu Login" required><br>
+                  </div>
+                  <div class="form-linhaVcampos">
+                    
+                    <div class="form-group">
+                      <p>Senha</p>
+                      <input type="password" class="form-control" name="senha" id="senhaAdm" placeholder="Insira sua senha" required><br>
+                    </div>
+                    <div class="form-group">
+                      <p>Confirmar Senha</p>
+                      <input type="password" class="form-control" name="Confirm-senha" id="Confirm-senhaAdm" placeholder="Confirme sua senha" required><br>
+                    </div>
+                  </div>
+                  <div id="error-message"></div>
+
+
+                  <div class="text-center"><button type="submit" onclick="inserirAdm_gerente()">Cadastrar</button></div>
+                
+              </form>
+              <script>
+                document.getElementById('admin-form').addEventListener('submit', (e) => {
+                  e.preventDefault();
+                });
+              </script>
+            
+              <!-- ======= Cadastro de Gestor ======= -->
+              <form id="gestor-form" role="form" class="php-email-form" method="post">
+                  <h2>Gestor</h2>
+                  <div class="form-linha-completa">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nomeGestor" name="nome" class="form-control" placeholder="Insira o nome do Aluno" required><br><br>
+                  </div>
+
+                  <div class="form-linhaVcampos">
+                    <div class="form-group">
+                      <label for="email">Email:</label>
+                      <input type="email" id="emailGestor" name="email" class="form-control" placeholder="exemploEmail@gmail.com" required><br><br>
+                    </div>
+                    <div class="form-group">
+                      <label for="telefone">Telefone:</label>
+                      <input type="tel" id="telefoneGestor" name="telefone" class="form-control" placeholder="xxxxx-xxxx" required><br><br>
+                    </div>
+                  </div>
+
+                  <div class="form-linhaVcampos">
+                    <div class="form-group">
+                      <label for="area">Área:</label>
+                      <input type="text" id="areaGestor" name="area" class="form-control" placeholder="Insira área de atuação" required><br><br>
+                    </div>
+                    <div class="form-group">
+                      <label for="telefone">Administrador Responsável:</label>
+                      <select name="Select-Admin" id="Select-Admin" class="form-control" placeholder="Responsável pelo Gestor" required>
+                    
+                      </select>
+                    </div>
+                  </div>
+
+                  
+                  
+
+                  <h2>Defina o login e senha do Gestor</h2>
+
+
+                  <div class="form-linha-completa">
+                    <p>Login</p>
+                    <input type="text" class="form-control" name="login" id="loginGestor" placeholder="Insira seu Login" required><br>
+                  </div>
+                  <div class="form-linhaVcampos">
+                    
+                    <div class="form-group">
+                      <p>Senha</p>
+                      <input type="password" class="form-control" name="senha" id="senhaGestor" placeholder="Insira sua senha" required><br>
+                    </div>
+                    <div class="form-group">
+                      <p>Confirmar Senha</p>
+                      <input type="password" class="form-control" name="Confirm-senha" id="Confirm-senhaGestor" placeholder="Confirme sua senha" required><br>
+                    </div>
+                  </div>
+                  <div id="error-message"></div>
+
+                  <div class="text-center"><button type="submit">Cadastrar</button></div>
+
+
+              </form> 
+
+              <!-- ======= Cadastro de Aluno ======= -->
+               <form id="user-form" role="form" class="php-email-form" method="post">
+
+                <h2>Aluno</h2>
+                <div class="form-linha-completa">
+                  <label for="nome">Nome:</label>
+                  <input type="text" id="nomeAluno" name="nome" class="form-control" placeholder="Insira o nome do Aluno" required><br><br>
+                </div>
+                
+                  <div class="form-linhaVcampos">
+                    <div class="form-group">
+                      <label for="cpf">CPF:</label>
+                      <input type="text" id="cpfAluno" name="cpf" class="form-control" placeholder="xxx.xxx.xxx-xx"><br><br>
+                    </div>
+                    <div class="form-group">
+                      <label for="idade">Idade:</label>
+                      <input type="number" id="idadeAluno" name="idade" class="form-control" placeholder="Idade do aluno" required><br><br>
+                    </div>
+                  </div>
+
+                  <div class="form-linhaVcampos">
+                    <div class="form-group">
+                      <label for="email">Email:</label>
+                      <input type="email" id="emailAluno" name="email" class="form-control" placeholder="exemploEmail@gmail.com"><br><br>
+                    </div>
+                    <div class="form-group">
+                      <label for="telefone">Telefone:</label>
+                      <input type="tel" id="telefoneAluno" name="telefone" class="form-control" placeholder="xxxxx-xxxx" required><br><br>
+                    </div>
+                  </div>
+
+                  <div class="form-linha-completa">
+                    <label for="endereco">Endereço:</label>
+                    <input type="text" id="enderecoAluno" name="endereco" class="form-control" placeholder="Endereço do aluno" ><br><br>
+                  </div>
+
+                  
+                  
+                  
+                  
+                  
+                  
+                  <h3>Dados do Responsável pelo Aluno</h3>
+                  <div class="form-linha-completa">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nomeResponsavel" name="nome" class="form-control" placeholder="Insira o nome do contato responsável pelo aluno" required><br><br>
+                  </div>
+
+                  <div class="form-linhaVcampos">
+                    <div class="form-group">
+                      <label for="email">Email:</label>
+                      <input type="email" id="emailResponsavel" name="email" class="form-control" placeholder="exemploEmail@gmail.com" ><br><br>
+                    </div>
+                    <div class="form-group">
+                      <label for="telefone">Telefone:</label>
+                      <input type="tel" id="telefoneResponsavel" name="telefone" class="form-control" placeholder="xxxxx-xxxx" required><br><br>
+                    </div>
+                  </div>
+
+                  <div class="form-linha-completa">
+                    <label for="endereco">Endereço:</label>
+                    <input type="text" id="enderecoResponsavel" name="endereco" class="form-control" placeholder="Endereço do responsável pelo aluno" ><br><br>
+                  </div>
+
+
+                  <h2>Defina o login e senha do Aluno</h2>
+
+
+                  <div class="form-linha-completa">
+                    <p>Login</p>
+                    <input type="text" class="form-control" name="loginAluno" id="login" placeholder="Insira seu Login" required><br>
+                  </div>
+                  <div class="form-linhaVcampos">
+                    
+                    <div class="form-group">
+                      <p>Senha</p>
+                      <input type="password" class="form-control" name="senha" id="senhaAluno" placeholder="Insira sua senha" required><br>
+                    </div>
+                    <div class="form-group">
+                      <p>Confirmar Senha</p>
+                      <input type="password" class="form-control" name="Confirm-senha" id="Confirm-senhaAluno" placeholder="Confirme sua senha" required><br>
+                    </div>
+                  </div>
+                  <div id="error-message"></div>
+                  
+                  <div class="text-center"><button type="submit">Cadastrar</button></div> 
+              </form>
+            </div> 
+          </div>
+        </div>
+      </div>
+
+
+
+
+    
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="container">
+      <div class="copyright">
+        &copy;<strong><span>Projeto Arte Na Comunidade</span></strong>
+      </div>
+      <div class="credits">
+        <p>R. Muniz Freire, 1129 - Itaquari, Cariacica - ES, 29151-560</p>
+        <p>Projetopanc@hotmail.com</p>
+        2024
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader">
+    <div class="line"></div>
+  </div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

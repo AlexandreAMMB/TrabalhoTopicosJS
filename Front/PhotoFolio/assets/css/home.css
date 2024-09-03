@@ -1,0 +1,99 @@
+/*--------------------------------------------------------------
+# body
+--------------------------------------------------------------*/
+
+.backbody {
+    background-image: url(../img/gallery/backgoundhome.jpg);
+    background-position: center center;
+    background-size: 100% 100%;
+    padding-top: 14.2rem;
+    background-color: gainsboro; 
+    height: 50rem;
+    width: 100%;
+    /* padding-left: 10rem;
+    padding-right: 10rem; */
+    display: flex;
+    justify-content: center;
+    z-index: -1;
+   
+}
+
+
+
+.BemVindo{
+    /* margin-top: 12rem; */
+    background-color: aqua;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 25rem;
+    height: 20rem;
+    border-radius: 50%;
+    background-color: transparent;
+    background-size: cover;
+    background-position: center;
+}
+
+
+h2#preto-h2{
+    color: black;
+    width: 150%;
+    justify-content: left;
+    
+    
+}
+
+p#preto-p{
+    color: black;
+    width: 14rem;
+    margin-left: 1.2rem;
+ 
+}
+
+.alinhar{
+    margin-left: 3.5rem;
+}
+
+.centralizar{
+    margin-left: -10rem;
+    margin-top: -4rem;
+}
+
+#BemVindo{
+    
+    width: 20rem;
+    background-color: white;
+    justify-content: center;
+  
+}
+
+@media (max-width: 1000px){
+    .backbody{
+        background-size: 300% 200%;
+        height: 30rem;
+    }
+
+    .BemVindo{
+        margin-top: -5rem;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        width: 15rem;
+        height: 15rem;
+       
+    }
+    p#preto-p{
+        
+        margin-left: 3rem;
+     
+    }
+
+    .alinhar{
+        margin-left: 5.5rem;
+    }
+
+    .centralizar{
+        margin-left: -1rem;
+        margin-top: -1rem;
+    }
+}

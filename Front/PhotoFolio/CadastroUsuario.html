@@ -33,6 +33,7 @@
   <link href="assets/css/modalTurmas.css" rel="stylesheet">
   <link href="assets/css/modalTurmasEdit.css" rel="stylesheet">
   <link href="assets/css/cadastroUsuarios.css" rel="stylesheet">
+  <link href="assets/css/check.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css">
 
    <!-- Javascript -->
@@ -66,15 +67,15 @@
           <li><a href="#">Galeria</a></li>
           <li class="dropdown"><a href="#"><span>Controle</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
-              <!-- <li><a href="CadastroUsuario.html">Cadastro de usuário</a></li> -->
+              <li><a href="GerenciarTurmas.html">Turmas</a></li>
+              <li><a href="GerenciarUsuarios.html" >Lista de Usuários</a></li>
               <li class="dropdown"><a href="#"><span>Cadastro de usuário</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                 <ul>
                   <li id="admin-btn"><a href="#">Administrador</a></li>
-                  <li id="gestor-btn"><a href="#">Gestor</a></li>
                   <li id="user-btn"><a href="#">Aluno</a></li>
                 </ul>
               </li>
-              <li><a href="GerenciarTurmas.html">Turmas</a></li>
+              
               <li class="dropdown"><a href="#"><span>Relatórios</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                 <ul>
                   <li><a href="#">Frequencia</a></li>
@@ -108,7 +109,7 @@
     <div class="page-header d-flex align-items-center">
       <div class="container position-relative">
         <div class="row d-flex justify-content-center">
-            <h2>Cadastro de Usuários</h2>
+            <h2 id="titulopageCadastroDeUser">Cadastro de Usuários</h2>
         </div>
       </div>
     </div><!-- End Page Header -->
@@ -149,12 +150,31 @@
                     </div>
                   </div>
 
+                  <label class="chekGestor">Permições de um Gestor.
+                    <input type="radio"  name="radio">
+                    <span class="checkmark"></span>
+                  </label>
+
+                    <div class="form-linhaVcampos" id="inputs" style="display: none;">
+                      <div class="form-group">
+                        <label for="identificadorGestor">Identificador Numerico:</label>
+                        <input type="text" id="input1" name="identificadorGestor" class="form-control" placeholder="Identificador unico do gestor" required><br><br>
+                      </div>
+                      <div class="form-group">
+                        <label for="areagestor">Área de atuação do gestor:</label>
+                        <input type="text" id="input2" name="area" class="form-control" placeholder="Area de atuação do gestor" required><br><br>
+                      </div>
+                    </div>
+                  
+                  <br>
+
                   <h2>Defina o login e senha</h2>
 
 
                   <div class="form-linha-completa">
                     <p>Login</p>
-                    <input type="text" class="form-control" name="loginAmd" id="loginAdm" placeholder="Insira seu Login" required><br>
+                    <input type="text" class="form-control" name="loginAdm" id="loginAdm" placeholder="Insira seu Login" required>
+                    <div id="errorLoginExistente" style="color: red; margin-top: -1rem; margin-bottom: 1rem; display: none;">Login já em utilização por outro usuário!</div>
                   </div>
                   <div class="form-linhaVcampos">
                     
@@ -170,7 +190,7 @@
                   <div id="error-message"></div>
 
 
-                  <div class="text-center"><button type="submit" onclick="inserirAdm_gerente()">Cadastrar</button></div>
+                  <div class="text-center"><button type="submit" onclick="storedAdminObject ? editarAdm_gerente() : inserirAdm_gerente()" id="salvarAdm">Cadastrar</button></div>
                 
               </form>
               <script>
@@ -179,65 +199,7 @@
                 });
               </script>
             
-              <!-- ======= Cadastro de Gestor ======= -->
-              <form id="gestor-form" role="form" class="php-email-form" method="post">
-                  <h2>Gestor</h2>
-                  <div class="form-linha-completa">
-                    <label for="nome">Nome:</label>
-                    <input type="text" id="nomeGestor" name="nome" class="form-control" placeholder="Insira o nome do Aluno" required><br><br>
-                  </div>
-
-                  <div class="form-linhaVcampos">
-                    <div class="form-group">
-                      <label for="email">Email:</label>
-                      <input type="email" id="emailGestor" name="email" class="form-control" placeholder="exemploEmail@gmail.com" required><br><br>
-                    </div>
-                    <div class="form-group">
-                      <label for="telefone">Telefone:</label>
-                      <input type="tel" id="telefoneGestor" name="telefone" class="form-control" placeholder="xxxxx-xxxx" required><br><br>
-                    </div>
-                  </div>
-
-                  <div class="form-linhaVcampos">
-                    <div class="form-group">
-                      <label for="area">Área:</label>
-                      <input type="text" id="areaGestor" name="area" class="form-control" placeholder="Insira área de atuação" required><br><br>
-                    </div>
-                    <div class="form-group">
-                      <label for="telefone">Administrador Responsável:</label>
-                      <select name="Select-Admin" id="Select-Admin" class="form-control" placeholder="Responsável pelo Gestor" required>
-                    
-                      </select>
-                    </div>
-                  </div>
-
-                  
-                  
-
-                  <h2>Defina o login e senha do Gestor</h2>
-
-
-                  <div class="form-linha-completa">
-                    <p>Login</p>
-                    <input type="text" class="form-control" name="login" id="loginGestor" placeholder="Insira seu Login" required><br>
-                  </div>
-                  <div class="form-linhaVcampos">
-                    
-                    <div class="form-group">
-                      <p>Senha</p>
-                      <input type="password" class="form-control" name="senha" id="senhaGestor" placeholder="Insira sua senha" required><br>
-                    </div>
-                    <div class="form-group">
-                      <p>Confirmar Senha</p>
-                      <input type="password" class="form-control" name="Confirm-senha" id="Confirm-senhaGestor" placeholder="Confirme sua senha" required><br>
-                    </div>
-                  </div>
-                  <div id="error-message"></div>
-
-                  <div class="text-center"><button type="submit">Cadastrar</button></div>
-
-
-              </form> 
+              
 
               <!-- ======= Cadastro de Aluno ======= -->
                <form id="user-form" role="form" class="php-email-form" method="post">

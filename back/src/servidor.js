@@ -65,7 +65,21 @@ app.options('/usuario', (req, res) => {
 });
 
 // Define a rota OPTIONS para /user
+app.options('/usuarios', (req, res) => {
+  res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.send(200);
+});
+
+// Define a rota OPTIONS para /user
 app.options('/administrador', (req, res) => {
+  res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.send(200);
+});
+
+// Define a rota OPTIONS para /gestor
+app.options('/gestor', (req, res) => {
   res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Content-Type");
   res.send(200);
@@ -332,6 +346,43 @@ app.get('/usuario/:login', (req, res, next) => {
     });
 });
 
+// Busca todos os usuarios
+app.get('/usuarios/:id', (req, res, next) => {
+  const userid = req.params.id;
+  
+  controlerLogin.getUsuarios(userid)
+  .then(response => {
+    if (response.usuarioEncontrado) {
+      res.status(200).json(response.usuarioEncontrado); // Return the usuario data
+    } else {
+      res.status(400).json(response);
+    }
+  })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
+
+// // Edita login e senha do usuario
+app.put('/usuarios/:id', (req, res, next) => {
+  const userId = req.params.id;
+  const usuarioEditado = req.body;
+  
+  controlerLogin.recuperarSenha(userId, usuarioEditado)
+  .then(response => {
+    if (response.isUpdated) {
+      res.status(200).json({ message: 'Usuario atualizado com sucesso' });
+    } else {
+      res.status(404).json({ message: 'Usuario não encontrado' });
+    }
+  })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
+
 
 // Salva 1 administrador
  app.post('/administrador', (req, res, next) => {
@@ -404,10 +455,10 @@ app.put('/usuario', (req, res, next) => {
 
 
 // // Deleta Administrador
-app.delete('/administrador/:id', (req, res, next) => {
-  const admId = req.params.id;
+app.delete('/administrador', (req, res, next) => {
+  const adm = req.body; 
 
-  controlerAdm.excluirAdm_gerente(admId)
+  controlerAdm.excluirAdm_gerente(adm)
   .then(response => {
     if (response.isDeleted) {
       res.status(200).json({ message: 'Administrador excluído com sucesso' });
@@ -423,8 +474,67 @@ app.delete('/administrador/:id', (req, res, next) => {
 
 
 
+// Busca 1 usuario
+app.get('/gestor/:idgestor', (req, res, next) => {
+  const gestor = req.params.idgestor;
+  
+  controlerAdm.getGestor(gestor)
+  .then(response => {
+    if (response.usuarioEncontrado) {
+      res.status(200).json(response.usuarioEncontrado); // Return the usuario data
+    } else {
+      res.status(400).json(response);
+    }
+  })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
 
+// Salva 1 gestor
+app.post('/gestor', (req, res, next) => {
+  
+  if (!req.body) {
+    return res.status(400).send('Requisição inválida');
+  }
 
+  const gestor = req.body;
+  controlerAdm.putGestor(gestor)
+   .then(response => {
+      if (response.isSave) {
+        res.status(200).json({ 
+          isSave: true
+        });
+        
+      } else {
+        res.status(400).json(response);
+      }
+    })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
+
+// // Edita dados do administrador
+app.put('/administrador/:id', (req, res, next) => {
+  const admId = req.params.id;
+  const admEditado = req.body;
+  
+  controlerAdm.editarAdm_gerente(admId, admEditado)
+  .then(response => {
+    if (response.isUpdated) {
+      res.status(200).json({ message: 'Administrador atualizado com sucesso' });
+    } else {
+      res.status(404).json({ message: 'Administrador não encontrado' });
+    }
+  })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
 
 
 

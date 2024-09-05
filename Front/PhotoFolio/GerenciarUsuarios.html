@@ -70,14 +70,15 @@
           <li><a href="#">Galeria</a></li>
           <li class="dropdown"><a href="#"><span>Controle</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
+              <li><a href="GerenciarTurmas.html">Turmas</a></li>
+              <li><a href="GerenciarUsuarios.html" >Lista de Usuários</a></li>
               <li class="dropdown"><a href="#"><span>Cadastro de usuário</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                 <ul>
                   <li id="admin-btn"><a href="#">Administrador</a></li>
-                  <li id="gestor-btn"><a href="#">Gestor</a></li>
                   <li id="user-btn"><a href="#">Aluno</a></li>
                 </ul>
               </li>
-              <li><a href="GerenciarTurmas.html">Turmas</a></li>
+              
               <li class="dropdown"><a href="#"><span>Relatórios</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                 <ul>
                   <li><a href="#">Frequencia</a></li>
@@ -85,6 +86,7 @@
                 </ul>
               </li>
             </ul>
+          </li>
             <li><a href="#">Notificações</a></li>
           </li>
           
@@ -122,9 +124,9 @@
      <section id="services" class="services">
       <div class="container">
 
-        <div class="row gy-4"  >
+        <div class="row gy-xxl-5"  >
 
-          <div class="col-xl-3 col-md-6 d-flex" style="margin-left: 12.5%;" id="admin-btn-lista">
+          <div class="col-xl-6 col-md-6 d-flex" style="height: 15rem;" id="admin-btn-lista">
             <div class="service-item position-relative">
               <i class="bi bi-activity"></i>
               <h4><a href="#" class="stretched-link">Administradores</a></h4>
@@ -132,19 +134,11 @@
             </div>
           </div><!-- End Service Item -->
 
-          <div class="col-xl-3 col-md-6 d-flex" id="gestor-btn-lista">
-            <div class="service-item position-relative">
-              <i class="bi bi-activity"></i>
-              <h4><a href="#" class="stretched-link">Gerentes</a></h4>
-              <p>Acesse o controle de edição e exclusão de Gerentes</p>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-xl-3 col-md-6 d-flex" id="user-btn-lista">
+          <div class="col-xl-6 col-md-6 d-flex" style="height: 15rem;" id="user-btn-lista">
             <div class="service-item position-relative">
               <i class="bi bi-activity"></i>
               <h4><a href="#" class="stretched-link">Alunos</a></h4>
-              <p>Acesse o controle de edição e exclusão de Alunos</p>
+              <p>Acesse o controle de edição e exclusão de Alunos cadastrados</p>
             </div>
           </div><!-- End Service Item -->
 
@@ -161,7 +155,7 @@
       <div class="container">
         <div class="row justify-content-center mt-4">
 
-          <div class="col-lg-9">
+          <div class="row gy-xxl-0">
 
             <font face="Tahoma" color="white">
               <table id="tabelaAdministradores" border="1" align="center" cellspacing="2" cellpadding="1" width="80%"  class="table table-dark TabelaAdministradores" style="display: none; ">
@@ -190,28 +184,7 @@
 
 
 
-            <font face="Tahoma" color="white">
-              <table id="tabelaGerentes" border="1" align="center" cellspacing="2" cellpadding="1" width="80%"  class="table table-dark TabelaDeTurmas" style="display: none;">
-                      <tr align="center">
-                        <th>Id</th>
-                        <th>Área</th>
-                        <th>Nome</th>
-                        <th>email</th>
-                        <th>Telefone</th>
-                      </tr>
-                      
-                      <tbody id="corpoTabelaGerentes" align="center"></tbody>
-                    
-                    </div>
-
-              </table>
-            </font>
-            <script>
-              // window.onload = AtualizarTabelaCursos;
-              document.getElementById('tabelaGerentes').addEventListener('submit', (e) => {
-                e.preventDefault();
-              });
-            </script>
+           
 
 
 

@@ -67,7 +67,7 @@ async function novoUsuario(usuario) {
   
 }
 
-//Busca todos os usuarios
+//Verifica se o login do usuário já existe para outro usuario
 async function getUsuario(userLogin) {
   const connection = new Connection();
   
@@ -130,6 +130,70 @@ async function updateUsuario(usuario) {
 }
 
 
+//busca todos os usuários
+async function getUsuarios(userid) {
+  const connection = new Connection();
+  
+  try {
+    await connection.getConexao();
+    
+     
+    //seleciona todos os usuarios
+    const query = {
+      sql: 'SELECT * FROM usuario',
+      values: [userid]
+    };
+    const [result] = await connection.connection.execute(query.sql, query.values);
+
+    if (result.length > 0) {
+      return { usuarioEncontrado: result }; // Return the courses data
+    } else {
+      return { buscaRealizada: false }; // Return a failure response
+    }
+    
+  } catch (err) {
+    console.error(err);
+    return { buscaRealizada: false, error: err.message }; // Return an error response
+  } finally {
+    await connection.disconnect();
+  }
+}
+
+
+
+async function recuperarSenha(id, usuario) {
+  if (!id) {
+    throw new Error('ID do usuario is missing');
+  }
+
+
+  const connection = new Connection();
+  
+  try {
+    await connection.getConexao();
+
+    // Update da turma
+    const query = {
+      sql: 'UPDATE usuario SET login = ?, senha = ? WHERE idUsuario =?',
+      values: [usuario.login, usuario.senha, parseInt(id)] 
+    };
+    const [result] = await connection.connection.execute(query.sql, query.values);
+
+    if (result.affectedRows > 0) {
+      return { isUpdated: true }; // Return a success response
+    } else {
+      return { isUpdated: false }; // Return a failure response
+    }
+    
+  } catch (err) {
+    console.error(err);
+    return { isUpdated: false, error: err.message }; // Return an error response
+  } finally {
+    await connection.disconnect();
+  }
+}
+
+
 
 
 
@@ -138,5 +202,7 @@ module.exports = {
   getUser,
   novoUsuario,
   getUsuario,
-  updateUsuario
+  updateUsuario,
+  getUsuarios,
+  recuperarSenha
 };

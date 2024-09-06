@@ -224,3 +224,50 @@ function editarTurma(idTurma) {
 }
 
 
+function SelectTurma(selectDeTurmas){
+
+  
+
+  fetch("http://localhost:5500/Turmas")
+
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro na resposta do servidor');
+      }
+      return response.json();
+    })
+    .then(async data => {
+      
+      const selectCadastroAlunoTurma = document.getElementById(selectDeTurmas);
+      
+
+      // Limpa o select antes de adicionar as opções
+      // selectCadastroAlunoTurma.innerHTML = '';
+
+      for (const turmas of data) {
+        const cursosResponse = await fetch("http://localhost:5500/cursos");
+        const cursosData = await cursosResponse.json();
+  
+        let optionText = turmas.idCurso;
+        let optionValue = turmas.idTurma;
+        for (const cursos of cursosData) {
+          if (turmas.idCurso === cursos.idCurso) {
+            optionText = cursos.nome;
+          }
+        }
+  
+        const option = document.createElement('option');
+        option.value = optionValue;
+        option.text = optionText;
+        selectCadastroAlunoTurma.appendChild(option);
+      }
+
+        
+  
+    })
+    .catch(error => {
+      console.error("Erro ao obter os cursos:", error);
+  });
+
+}
+

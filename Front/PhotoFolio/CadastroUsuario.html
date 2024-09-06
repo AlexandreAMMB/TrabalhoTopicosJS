@@ -42,7 +42,11 @@
    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/js/multi-select-tag.js"></script>
    <script src="../../Front/PhotoFolio/assets/js/buttonsNewUser.js"></script>
    <script src="../../Front/PhotoFolio/assets/js/cadastroDeUsuario.js"></script>
+   <script type="module" src="../../back/src/Controlers/controlerTurmas.js"></script>
+   <script src="../PhotoFolio/js/RequisicoesUsuarioTurmas.js"></script>
+   
    <script src="../PhotoFolio/js/RequisicoesAdministrador.js"></script>
+   <script src="../PhotoFolio/js/RequisicoesAluno.js"></script>
 
    
   
@@ -222,14 +226,22 @@
                   </div>
 
                   <div class="form-linhaVcampos">
+                    
                     <div class="form-group">
-                      <label for="email">Email:</label>
-                      <input type="email" id="emailAluno" name="email" class="form-control" placeholder="exemploEmail@gmail.com"><br><br>
+                      <label for="Select-Turma">Turma:</label><br>
+                      <select name="Select-Turma" id="Select-Turma" class="form-control" style="margin-top: -1.5rem;" required><br><br>
+        
+                     </select>
                     </div>
                     <div class="form-group">
                       <label for="telefone">Telefone:</label>
                       <input type="tel" id="telefoneAluno" name="telefone" class="form-control" placeholder="xxxxx-xxxx" required><br><br>
                     </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="emailAluno" name="email" class="form-control" placeholder="exemploEmail@gmail.com"><br><br>
                   </div>
 
                   <div class="form-linha-completa">
@@ -271,7 +283,7 @@
 
                   <div class="form-linha-completa">
                     <p>Login</p>
-                    <input type="text" class="form-control" name="loginAluno" id="login" placeholder="Insira seu Login" required><br>
+                    <input type="text" class="form-control" name="loginAluno" id="loginAluno" placeholder="Insira seu Login" required><br>
                   </div>
                   <div class="form-linhaVcampos">
                     
@@ -286,7 +298,7 @@
                   </div>
                   <div id="error-message"></div>
                   
-                  <div class="text-center"><button type="submit">Cadastrar</button></div> 
+                  <div class="text-center"><button type="submit" onclick="storedAdminObject ? editarAluno() : inserirAluno()" id="salvarAluno">Cadastrar</button></div>
               </form>
             </div> 
           </div>

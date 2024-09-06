@@ -10,6 +10,7 @@ const controlerLogin = require('../src/Controlers/controlerLogin.js');
 const controlerCursos = require('../src/Controlers/controlerCursos.js');
 const controlerTurmas = require('../src/Controlers/controlerTurmas.js');
 const controlerAdm = require('../src/Controlers/Administrador.js');
+const controlerAluno = require('../src/Controlers/Aluno.js');
 const Sequelize = require('sequelize');
 const app = express();
 const bodyParser = require('body-parser');
@@ -56,6 +57,13 @@ app.options('/Turmas', (req, res) => {
   res.send(200);
 });
 
+// Define a rota OPTIONS para /responsavel
+app.options('/responsavel', (req, res) => {
+  res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.send(200);
+});
+
 
 // Define a rota OPTIONS para /user
 app.options('/usuario', (req, res) => {
@@ -71,6 +79,8 @@ app.options('/usuarios', (req, res) => {
   res.send(200);
 });
 
+
+
 // Define a rota OPTIONS para /user
 app.options('/administrador', (req, res) => {
   res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -84,6 +94,8 @@ app.options('/gestor', (req, res) => {
   res.header("Access-Control-Allow-Headers", "Content-Type");
   res.send(200);
 });
+
+
 
 
 
@@ -302,6 +314,7 @@ app.put('/Turmas/:id', (req, res, next) => {
 
 
 
+
 // Salva 1 usuário
 app.post('/usuario', (req, res, next) => {
   
@@ -383,6 +396,32 @@ app.put('/usuarios/:id', (req, res, next) => {
     });
 });
 
+// Salva 1 Responsavel
+app.post('/responsavel', (req, res, next) => {
+  
+  if (!req.body) {
+    return res.status(400).send('Requisição inválida');
+  }
+
+  const responsavel = req.body;
+  
+ 
+  controlerAluno.inserirResponsavel(responsavel)
+   .then(response => {
+     if (response.isSave) {
+       res.status(200).json({ 
+       isSave: true
+       });
+       
+     } else {
+        res.status(400).json(response);
+      }
+    })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
 
 // Salva 1 administrador
  app.post('/administrador', (req, res, next) => {
@@ -535,6 +574,8 @@ app.put('/administrador/:id', (req, res, next) => {
       res.status(500).send('Erro interno do servidor');
     });
 });
+
+
 
 
 

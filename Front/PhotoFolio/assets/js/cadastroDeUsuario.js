@@ -13,7 +13,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const input1 = document.getElementById('input1');
     const input2 = document.getElementById('input2');
 
+
+    
+
     if (tipo === 'admin') {
+
+
+
+
         adminForm.style.display = 'block';
        
         userForm.style.display = 'none';
@@ -111,6 +118,95 @@ document.addEventListener('DOMContentLoaded', () => {
         adminForm.style.display = 'none';
         
         userForm.style.display = 'block';
+        
+        
+        
+        const selectCadastroAlunoTurma = document.getElementById('Select-Turma');
+        selectCadastroAlunoTurma.innerHTML = '';
+        // Adiciona a opção de placeholder
+        const placeholderOption = document.createElement('option');
+        placeholderOption.disabled = true;
+        placeholderOption.selected = true;
+        placeholderOption.value = '';
+        placeholderOption.text = 'Selecione a turma do aluno';
+        selectCadastroAlunoTurma.appendChild(placeholderOption);
+        
+        SelectTurma('Select-Turma');
+
+
+        if (storedAdminObject) {
+            const Adm = JSON.parse(storedAdminObject);
+            
+            
+            // document.getElementById('titulopageCadastroDeUser').textContent = 'Edição de Usuário';
+            // document.getElementById('nomeAdm').value = Adm.nomeAD;
+            // document.getElementById('emailAdm').value = Adm.email;
+            // document.getElementById('telefoneAdm').value = Adm.telefone;
+
+            // if(Adm.idGestor != null){
+            //     radio.checked = true;
+            //     inputs.style.display = 'flex';
+            //     input1.required = true;
+            //     input2.required = true;
+                
+
+            //     fetch(`http://localhost:5500/gestor/${Adm.idGestor}`)
+            //     .then(response => {
+            //         if (!response.ok) {
+            //             throw new Error('Erro na resposta do servidor');
+            //         }
+            //         return response.json();
+            //         })
+            //         .then(data => {
+            //             document.getElementById('input1').value = data[0].idGestor;
+            //             document.getElementById('input2').value = data[0].area;
+            //         })
+            //         .catch(error => {
+            //             console.log(error);
+            //         });
+
+
+            // }
+
+            // fetch(`http://localhost:5500/usuarios/${Adm.idUsuario}`)
+            // .then(response => {
+            //     if (!response.ok) {
+            //         throw new Error('Erro na resposta do servidor');
+            //     }
+            //     return response.json();
+            //     })
+            //     .then(data => {
+            //         data.forEach(user => {
+            //             if(user.idUsuario === Adm.idUsuario){
+            //                 document.getElementById('loginAdm').value = user.login;
+            //                 document.getElementById('senhaAdm').value = user.senha;
+                            
+            //             }
+            //         });
+                    
+            //     })
+            //     .catch(error => {
+            //         console.log(error);
+            //     });
+
+            //     document.getElementById('salvarAdm').textContent = 'Salvar';
+
+
+            
+            
+            
+        } 
+
+        
+        // window.addEventListener('beforeunload', function() {
+        //     sessionStorage.removeItem('adminObject');
+        //   });
+
+        
+       
+
+
+
     }
 
     

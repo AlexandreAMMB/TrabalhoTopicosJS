@@ -124,6 +124,10 @@
       left: -100%;
     }
   }
+
+  .TabelaDeTurmas{
+    border-color: red;
+  }
   
   .TabelaDeTurmas button{
     border-radius: 5rem;
@@ -133,6 +137,10 @@
     background-color: transparent;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.TabelaDeCursos{
+  border-color: red;
 }
 
 .TabelaDeCursos button{

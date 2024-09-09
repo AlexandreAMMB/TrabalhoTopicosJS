@@ -1,10 +1,12 @@
 let storedAdminObject; //Declarando o stored no contexto global para que a página de cadastro saiba diferenciar salvar edição ou salvar novo usuário
+let storedAlunoinObject;
 
 document.addEventListener('DOMContentLoaded', () => {
     const tipo = new URLSearchParams(window.location.search).get('tipo');
     const adminForm = document.getElementById('admin-form');
     const userForm = document.getElementById('user-form');
     storedAdminObject = sessionStorage.getItem('adminObject');
+    storedAlunoinObject = sessionStorage.getItem('AlunoinObject');
 
     // Seleciona o checkbox e o div com os inputs
     const radio = document.querySelector('.chekGestor input[type="radio"]');
@@ -131,76 +133,118 @@ document.addEventListener('DOMContentLoaded', () => {
         placeholderOption.text = 'Selecione a turma do aluno';
         selectCadastroAlunoTurma.appendChild(placeholderOption);
         
-        SelectTurma('Select-Turma');
+        
 
 
-        if (storedAdminObject) {
-            const Adm = JSON.parse(storedAdminObject);
+        if (storedAlunoinObject) {
+            const Aluno = JSON.parse(storedAlunoinObject);
             
             
-            // document.getElementById('titulopageCadastroDeUser').textContent = 'Edição de Usuário';
-            // document.getElementById('nomeAdm').value = Adm.nomeAD;
-            // document.getElementById('emailAdm').value = Adm.email;
-            // document.getElementById('telefoneAdm').value = Adm.telefone;
-
-            // if(Adm.idGestor != null){
-            //     radio.checked = true;
-            //     inputs.style.display = 'flex';
-            //     input1.required = true;
-            //     input2.required = true;
-                
-
-            //     fetch(`http://localhost:5500/gestor/${Adm.idGestor}`)
-            //     .then(response => {
-            //         if (!response.ok) {
-            //             throw new Error('Erro na resposta do servidor');
-            //         }
-            //         return response.json();
-            //         })
-            //         .then(data => {
-            //             document.getElementById('input1').value = data[0].idGestor;
-            //             document.getElementById('input2').value = data[0].area;
-            //         })
-            //         .catch(error => {
-            //             console.log(error);
-            //         });
+            document.getElementById('titulopageCadastroDeUser').textContent = 'Edição de Usuário';
+            document.getElementById('nomeAluno').value = Aluno.nomeAl;
+            document.getElementById('cpfAluno').value = Aluno.cpf;
+            document.getElementById('idadeAluno').value = Aluno.idade;
+            document.getElementById('telefoneAluno').value = Aluno.telefone;
+            document.getElementById('emailAluno').value = Aluno.email;
+            document.getElementById('enderecoAluno').value = Aluno.endereco;
 
 
-            // }
+            fetch("http://localhost:5500/Turmas")
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Erro na resposta do servidor');
+                }
+                return response.json();
+            })
+            .then(async data => {
+                const selectElement = document.getElementById('Select-Turma');
+                selectElement.innerHTML = ''; // Limpa o select antes de adicionar as opções
 
-            // fetch(`http://localhost:5500/usuarios/${Adm.idUsuario}`)
-            // .then(response => {
-            //     if (!response.ok) {
-            //         throw new Error('Erro na resposta do servidor');
-            //     }
-            //     return response.json();
-            //     })
-            //     .then(data => {
-            //         data.forEach(user => {
-            //             if(user.idUsuario === Adm.idUsuario){
-            //                 document.getElementById('loginAdm').value = user.login;
-            //                 document.getElementById('senhaAdm').value = user.senha;
+                for (const turma of data) {
+                const option = document.createElement('option');
+                option.value = turma.idTurma;
+                option.text = turma.idCurso;
+
+                for (const curso of await (await fetch("http://localhost:5500/cursos")).json()) {
+                    if (turma.idCurso === curso.idCurso) {
+                    option.text = curso.nome;
+                    }
+                }
+
+                selectElement.appendChild(option);
+
+                if (turma.idTurma === Aluno.idTurma) {
+                    option.selected = true;
+                }
+                }
+            })
+            .catch(error => {
+                console.error("Erro ao obter os cursos:", error);
+            });
+
+
+            fetch(`http://localhost:5500/responsavel/${Aluno.idResponsavel}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na resposta do servidor');
+                    }
+                    return response.json();
+                    })
+                    .then(data => {
+
+                        const inputNomeResp = document.getElementById('nomeResponsavel');
+                        const inputtelefoneResp = document.getElementById('telefoneResponsavel');
+                        const inputEmailResp = document.getElementById('emailResponsavel');
+                        const inputEnderecoResp = document.getElementById('enderecoResponsavel');
+
+                        inputNomeResp.value = data[0].nomeResponsavel;
+                        inputtelefoneResp.value = data[0].telefone;
+                        inputEmailResp.value = data[0].email;
+                        inputEnderecoResp.value = data[0].endereco;
+
+
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+          
+
+
+            fetch(`http://localhost:5500/usuarios/${Aluno.idUsuario}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro na resposta do servidor');
+                }
+                return response.json();
+                })
+                .then(data => {
+                    data.forEach(user => {
+                        if(user.idUsuario === Aluno.idUsuario){
+                            document.getElementById('loginAluno').value = user.login;
+                            document.getElementById('senhaAluno').value = user.senha;
                             
-            //             }
-            //         });
+                        }
+                    });
                     
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //     });
+                })
+                .catch(error => {
+                    console.log(error);
+                });
 
-            //     document.getElementById('salvarAdm').textContent = 'Salvar';
+                document.getElementById('salvarAluno').textContent = 'Salvar';
 
 
             
             
             
+        }else{
+            SelectTurma('Select-Turma');
         } 
 
         
-        // window.addEventListener('beforeunload', function() {
-        //     sessionStorage.removeItem('adminObject');
-        //   });
+        window.addEventListener('beforeunload', function() {
+            sessionStorage.removeItem('AlunoinObject');
+          });
 
         
        

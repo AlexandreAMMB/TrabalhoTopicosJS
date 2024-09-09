@@ -11,6 +11,8 @@ const controlerCursos = require('../src/Controlers/controlerCursos.js');
 const controlerTurmas = require('../src/Controlers/controlerTurmas.js');
 const controlerAdm = require('../src/Controlers/Administrador.js');
 const controlerAluno = require('../src/Controlers/Aluno.js');
+const controlerMatriculas = require('../src/Controlers/Matriculas.js');
+const controlerAulas = require('../src/Controlers/Aula.js');
 const Sequelize = require('sequelize');
 const app = express();
 const bodyParser = require('body-parser');
@@ -57,12 +59,6 @@ app.options('/Turmas', (req, res) => {
   res.send(200);
 });
 
-// Define a rota OPTIONS para /responsavel
-app.options('/responsavel', (req, res) => {
-  res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-  res.send(200);
-});
 
 
 // Define a rota OPTIONS para /user
@@ -81,7 +77,8 @@ app.options('/usuarios', (req, res) => {
 
 
 
-// Define a rota OPTIONS para /user
+
+// Define a rota OPTIONS para /administrator
 app.options('/administrador', (req, res) => {
   res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Content-Type");
@@ -95,6 +92,26 @@ app.options('/gestor', (req, res) => {
   res.send(200);
 });
 
+// Define a rota OPTIONS para /gestor
+app.options('/aluno', (req, res) => {
+  res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.send(200);
+});
+
+// Define a rota OPTIONS para /matriculas
+app.options('/matriculas', (req, res) => {
+  res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.send(200);
+});
+
+// Define a rota OPTIONS para /matriculas
+app.options('/aula', (req, res) => {
+  res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.send(200);
+});
 
 
 
@@ -396,8 +413,18 @@ app.put('/usuarios/:id', (req, res, next) => {
     });
 });
 
+
+
+
+// Define a rota OPTIONS para /responsavel
+app.options('/responsavel/', (req, res) => {
+  res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.send(200);
+});
+
 // Salva 1 Responsavel
-app.post('/responsavel', (req, res, next) => {
+app.post('/responsavel/', (req, res, next) => {
   
   if (!req.body) {
     return res.status(400).send('Requisição inválida');
@@ -409,9 +436,7 @@ app.post('/responsavel', (req, res, next) => {
   controlerAluno.inserirResponsavel(responsavel)
    .then(response => {
      if (response.isSave) {
-       res.status(200).json({ 
-       isSave: true
-       });
+       res.status(200).json(response.isSave);
        
      } else {
         res.status(400).json(response);
@@ -422,6 +447,126 @@ app.post('/responsavel', (req, res, next) => {
       res.status(500).send('Erro interno do servidor');
     });
 });
+
+// Busca 1 responsavel
+app.get('/responsavel/:idResponsavel', (req, res, next) => {
+  const responsavel = req.params.idResponsavel;
+  
+  controlerAluno.getResponsavel(responsavel)
+  .then(response => {
+    if (response.usuarioEncontrado) {
+      res.status(200).json(response.usuarioEncontrado); // Return the usuario data
+    } else {
+      res.status(400).json(response);
+    }
+  })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
+
+// // Edita responsavel
+app.put('/responsavel', (req, res, next) => {
+  const responsavel = req.body; 
+
+  
+  controlerAluno.updateResponsavel(responsavel)
+  .then(response => {
+    if (response.isUpdated) {
+      res.status(200).json({ message: 'Responsavel atualizado com sucesso!' });
+    } else {
+      res.status(404).json({ message: 'Responsavel não encontrado' });
+    }
+  })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
+
+
+// Salva 1 Aluno
+app.post('/aluno', (req, res, next) => {
+  
+  if (!req.body) {
+    return res.status(400).send('Requisição inválida');
+  }
+
+  const aluno = req.body;
+  
+ 
+  controlerAluno.inserirAluno(aluno)
+   .then(response => {
+     if (response.isSave) {
+       res.status(200).json(response.isSave);
+       
+     } else {
+        res.status(400).json(response);
+      }
+    })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
+
+
+// Busca todos os Alunos
+app.get('/aluno', (req, res, next) => {
+  
+  controlerAluno.getAlunos()
+  .then(response => {
+    if (response.Alunos) {
+      res.status(200).json(response.Alunos); // Return Alunos data
+     
+    } else {
+      res.status(400).json(response);
+    }
+  })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+}); 
+
+// // Edita Aluno
+app.put('/aluno', (req, res, next) => {
+  const aluno = req.body; 
+
+  
+  controlerAluno.editarAluno(aluno)
+  .then(response => {
+    if (response.isUpdated) {
+      res.status(200).json({ message: 'Aluno atualizado com sucesso!' });
+    } else {
+      res.status(404).json({ message: 'Aluno não encontrado' });
+    }
+  })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
+
+// // Deleta Aaluno
+app.delete('/aluno', (req, res, next) => {
+  const aluno = req.body; 
+
+  controlerAluno.excluirAluno(aluno)
+  .then(response => {
+    if (response.isDeleted) {
+      res.status(200).json({ message: 'Aluno excluído com sucesso' });
+    } else {
+      res.status(404).json({ message: 'Aluno não encontrado' });
+    }
+  })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
+
 
 // Salva 1 administrador
  app.post('/administrador', (req, res, next) => {
@@ -513,7 +658,7 @@ app.delete('/administrador', (req, res, next) => {
 
 
 
-// Busca 1 usuario
+// Busca 1 gestor
 app.get('/gestor/:idgestor', (req, res, next) => {
   const gestor = req.params.idgestor;
   
@@ -569,6 +714,51 @@ app.put('/administrador/:id', (req, res, next) => {
       res.status(404).json({ message: 'Administrador não encontrado' });
     }
   })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
+
+
+// Busca todas as matriculas
+app.get('/matriculas', (req, res, next) => {
+  
+  controlerMatriculas.getMatriculas()
+  .then(response => {
+    if (response.Matriculas) {
+      res.status(200).json(response.Matriculas); // Return Alunos data
+     
+    } else {
+      res.status(400).json(response);
+    }
+  })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+}); 
+
+
+// Salva 1 Aula
+app.post('/aula', (req, res, next) => {
+  
+  if (!req.body) {
+    return res.status(400).send('Requisição inválida');
+  }
+
+  const aula = req.body;
+  
+ 
+  controlerAulas.inserirAula(aula)
+   .then(response => {
+     if (response.isSave) {
+       res.status(200).json(response.isSave);
+       
+     } else {
+        res.status(400).json(response);
+      }
+    })
    .catch(error => {
       console.error(error);
       res.status(500).send('Erro interno do servidor');

@@ -108,7 +108,29 @@ function AtualizarTabelaTurmas(){
   
   
         const opcoesCell = document.createElement("td");
-  
+
+        const gerenciarButton = document.createElement("button");
+        gerenciarButton.textContent = "";
+        gerenciarButton.className = "btn-lapis";
+          const buttonGerenciarUrl = getComputedStyle(gerenciarButton).backgroundImage;
+          const imageGerenciarUrl = buttonGerenciarUrl + '/back/imagens/iconesDoSistema/icons8-configurações-24.png';
+
+          gerenciarButton.style.backgroundImage = `url('${imageGerenciarUrl}')`;
+        opcoesCell.appendChild(gerenciarButton);
+
+        gerenciarButton.addEventListener("click", function() {
+          sessionStorage.setItem('TurmainObject', JSON.stringify(Turmas)); //armazeno objeto na session para que seja acessado pelo form de edição
+          window.location.href = '../../../../Front/PhotoFolio/GerenciarTurmaEspecifica.html';
+          selectedTurmaId = Turmas.idTurma;//Armazeno em uma variavel pra que não sobrecreva no loop
+        });
+
+        salvarBtn.addEventListener('click', () => {
+          if (selectedTurmaId !== null) { // valido se a turma foi selecionado
+            editarTurma(selectedTurmaId); // chamo editar turma para o id selecionado
+            modalEditar.style.display = 'none'; // fecho a modal
+            selectedTurmaId = null; // Reset a variavel local do curso selecionado.
+          }
+        });
 
   
         const editarButton = document.createElement("button");
@@ -149,7 +171,7 @@ function AtualizarTabelaTurmas(){
           
         });
 
-
+        opcoesCell.style.alignContent = 'center';
   
         row.appendChild(opcoesCell);
   
@@ -241,8 +263,6 @@ function SelectTurma(selectDeTurmas){
       const selectCadastroAlunoTurma = document.getElementById(selectDeTurmas);
       
 
-      // Limpa o select antes de adicionar as opções
-      // selectCadastroAlunoTurma.innerHTML = '';
 
       for (const turmas of data) {
         const cursosResponse = await fetch("http://localhost:5500/cursos");

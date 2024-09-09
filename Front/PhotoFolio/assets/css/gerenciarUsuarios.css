@@ -2,10 +2,38 @@
     width: 10%;
 }
 
+.cellGrandeAluno{
+    width: 20%;
+    
+}
+
+.alinharConteudoCell{
+    align-content: center;
+}
+
+
+
+
+@media (min-width: 1280px) {
+    .TabelaAdministradores {
+      width: 69rem;
+      border-color: red; 
+    } 
+}
+
+
+
+@media (min-width: 1400px) {
+    .TabelaAdministradores {
+      width: 80rem;
+    } 
+}
+
+
 .TabelaAdministradores button{
     border-radius: 5rem;
     height: 2rem;
-    width: 2re,;
+    width: 2rem;
     margin-right: 0.5rem;
     background-color: transparent;
     background-position: center;
@@ -34,3 +62,4 @@
     border: none;
     cursor: pointer;
 }
+

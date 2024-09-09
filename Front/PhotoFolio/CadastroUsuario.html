@@ -42,11 +42,12 @@
    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/js/multi-select-tag.js"></script>
    <script src="../../Front/PhotoFolio/assets/js/buttonsNewUser.js"></script>
    <script src="../../Front/PhotoFolio/assets/js/cadastroDeUsuario.js"></script>
-   <script type="module" src="../../back/src/Controlers/controlerTurmas.js"></script>
+   <!-- <script type="module" src="../../back/src/Controlers/controlerTurmas.js"></script> -->
+   <script src="../PhotoFolio/js/RequisicoesAluno.js"></script>
    <script src="../PhotoFolio/js/RequisicoesUsuarioTurmas.js"></script>
    
    <script src="../PhotoFolio/js/RequisicoesAdministrador.js"></script>
-   <script src="../PhotoFolio/js/RequisicoesAluno.js"></script>
+   
 
    
   
@@ -68,7 +69,7 @@
         <ul>
           <li><a href="indexADM.html" class="active">Inicio</a></li>
           <li><a href="#">Calendário</a></li>
-          <li><a href="#">Galeria</a></li>
+          <li><a href="galleria.html">Galeria</a></li>
           <li class="dropdown"><a href="#"><span>Controle</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               <li><a href="GerenciarTurmas.html">Turmas</a></li>
@@ -284,6 +285,7 @@
                   <div class="form-linha-completa">
                     <p>Login</p>
                     <input type="text" class="form-control" name="loginAluno" id="loginAluno" placeholder="Insira seu Login" required><br>
+                    <div id="errorLoginExistenteAluno" style="color: red; margin-top: -2rem; margin-bottom: 1rem; display: none;">Login já em utilização por outro usuário!</div>
                   </div>
                   <div class="form-linhaVcampos">
                     
@@ -296,10 +298,16 @@
                       <input type="password" class="form-control" name="Confirm-senha" id="Confirm-senhaAluno" placeholder="Confirme sua senha" required><br>
                     </div>
                   </div>
-                  <div id="error-message"></div>
+                  <div id="error-message-aluno"></div>
                   
-                  <div class="text-center"><button type="submit" onclick="storedAdminObject ? editarAluno() : inserirAluno()" id="salvarAluno">Cadastrar</button></div>
+                  <div class="text-center"><button type="submit" onclick="storedAlunoinObject ? editarAluno() :inserirAluno()" id="salvarAluno">Cadastrar</button></div>
               </form>
+              <script>
+                document.getElementById('user-form').addEventListener('submit', (e) => {
+                  e.preventDefault();
+                });
+              </script>
+            
             </div> 
           </div>
         </div>

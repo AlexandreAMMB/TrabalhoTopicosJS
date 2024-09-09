@@ -29,9 +29,9 @@
   <link href="assets/css/main.css" rel="stylesheet">
   <link href="assets/css/home.css" rel="stylesheet">
   <link href="assets/css/gerenciarTurmas.css" rel="stylesheet">
-  <link href="assets/css/modal.css" rel="stylesheet">
-  <link href="assets/css/modalTurmas.css" rel="stylesheet">
-  <link href="assets/css/modalTurmasEdit.css" rel="stylesheet">
+  <link href="assets/css/modalResponsavel.css" rel="stylesheet">
+  <!-- <link href="assets/css/modalTurmas.css" rel="stylesheet">
+  <link href="assets/css/modalTurmasEdit.css" rel="stylesheet"> -->
   <link href="assets/css/cadastroUsuarios.css" rel="stylesheet">
   <link href="assets/css/gerenciarUsuarios.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css">
@@ -41,9 +41,14 @@
    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/js/multi-select-tag.js"></script>
    <script src="../../Front/PhotoFolio/assets/js/buttonsNewUser.js"></script>
+   <script src="../PhotoFolio/js/RequisicoesAluno.js"></script>
    <script src="../PhotoFolio/js/RequisicoesAdministrador.js"></script>
+   <script src="../PhotoFolio/assets/js/listagemUsuarios.js.js"></script>
    <script src="../PhotoFolio/assets/js/buttonsListaUsers.js.js"></script>
-  <script src="../PhotoFolio/assets/js/listagemUsuarios.js.js"></script>
+
+  <script src="../PhotoFolio/assets/js/modalResponsavel.js"></script>
+  
+   <!-- <script src="../PhotoFolio/js/RequisicoesUsuarioTurmas.js"></script> -->
    
 
 
@@ -67,7 +72,7 @@
         <ul>
           <li><a href="indexADM.html" class="active">Inicio</a></li>
           <li><a href="#">Calendário</a></li>
-          <li><a href="#">Galeria</a></li>
+          <li><a href="galleria.html">Galeria</a></li>
           <li class="dropdown"><a href="#"><span>Controle</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               <li><a href="GerenciarTurmas.html">Turmas</a></li>
@@ -120,22 +125,24 @@
       </div>
     </div><!-- End Page Header -->
 
+    
+
      <!-- ======= Services Section ======= -->
      <section id="services" class="services">
-      <div class="container">
+      <div class="container" style="width: 82rem; padding-left: 1.2%;">
 
-        <div class="row gy-xxl-5"  >
+        <div class="row gy-xxl-6"  style=" padding: 0%;">
 
-          <div class="col-xl-6 col-md-6 d-flex" style="height: 15rem;" id="admin-btn-lista">
-            <div class="service-item position-relative">
+          <div class="col-xl-6 col-md-6 d-flex" style="height: 15rem; width: 50%;" id="admin-btn-lista">
+            <div class="service-item position-relative" style="width: 100%;">
               <i class="bi bi-activity"></i>
               <h4><a href="#" class="stretched-link">Administradores</a></h4>
               <p>Acesse o controle de edição e exclusão de administradores</p>
             </div>
           </div><!-- End Service Item -->
 
-          <div class="col-xl-6 col-md-6 d-flex" style="height: 15rem;" id="user-btn-lista">
-            <div class="service-item position-relative">
+          <div class="col-xl-6 col-md-6 d-flex" style="height: 15rem; width: 50%; margin-left: 0;" id="user-btn-lista">
+            <div class="service-item position-relative" style="width: 100%; margin-left: 0%;">
               <i class="bi bi-activity"></i>
               <h4><a href="#" class="stretched-link">Alunos</a></h4>
               <p>Acesse o controle de edição e exclusão de Alunos cadastrados</p>
@@ -147,19 +154,60 @@
       </div>
     </section><!-- End Services Section -->
 
+    <!-- ======= Modal de exibição de responsavel ======= -->
+    <section id="contact" class="contact">
+      <div id="modal-Responsavel" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="Modaltitulo">Dados de Responsavel</h5>
+              <button type="button" class="close" data-dismiss="modal"  id="Close-modal">
+                <span aria-hidden="true" style="align-content: center;  margin-right: 2rem; margin-bottom: 1rem; color: black;">x</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="curso-form" role="form" class="php-email-form">
+
+                
+                  <div  id="modal-responsavel-content">
+                    <label for="courseName">Nome do Responsavel:</label><br>
+                    <input type="text" name="nomeResponsavel" class="form-control" id="nomeResponsavel"  disabled><br>
+                    <label for="courseName">telefone:</label><br>
+                    <input type="text" name="telefoneResponsavel" class="form-control" id="telefoneResponsavel"  disabled><br>
+                    <label for="courseName">Email:</label><br>
+                    <input type="text" name="emailResponsavel" class="form-control" id="emailResponsavel" disabled><br>
+                    <label for="courseName">Endereço:</label><br>
+                    <input type="text" name="enderecoResponsavel" class="form-control" id="enderecoResponsavel" disabled><br>
+                  
+                  </div>
+                  
+                  
+                
+              
+            </div>
+            <div class="modal-footer">
+            
+            </div>
+          </form>
+          
+          </div>
+        </div>
+      </div>
+      <!-- ======= Modal end ======= -->
+
     <!-- ======= Contact Section ======= -->
     
 
 
     
-      <div class="container">
-        <div class="row justify-content-center mt-4">
+      <div class="container" style="width: max-content;"> 
+        <div class="row justify-content-center mt-4" >
 
-          <div class="row gy-xxl-0">
+          <div class="row gy-xxl-0" style="width: 100%">
 
             <font face="Tahoma" color="white">
-              <table id="tabelaAdministradores" border="1" align="center" cellspacing="2" cellpadding="1" width="80%"  class="table table-dark TabelaAdministradores" style="display: none; ">
-                      <tr align="center">
+              <table id="tabelaAdministradores" border="1" align="center" cellspacing="2" cellpadding="1"  class="table table-dark TabelaAdministradores" style="display: none;">
+                      <tr align="center" style="width: 100%;" class="celulasTabela">
                         <th>Id</th>
                         <th>Área</th>
                         <th>Nome</th>
@@ -168,7 +216,7 @@
                         <th>Opções</th>
                       </tr>
                       
-                      <tbody id="corpoTabelaAdministradores" align="center"></tbody>
+                      <tbody id="corpoTabelaAdministradores" align="center" class="TabelaAdministradores"></tbody>
                     
                     </div>
             
@@ -182,30 +230,37 @@
             </script>
 
 
+          <!-- </div> -->
 
+
+
+          
 
            
+        
 
-
-
+          <!-- <div class="row gy-md-3"> -->
             <font face="Tahoma" color="white">
-              <table id="tabelaAlunos" border="1" align="center" cellspacing="2" cellpadding="1" width="80%"  class="table table-dark TabelaDeTurmas" style="display: none;">
-                      <tr align="center">
-                        <th>Id</th>
-                        <th>Área</th>
-                        <th>Nome</th>
-                        <th>email</th>
+              <table id="tabelaAlunos" border="1" align="center" cellspacing="2" cellpadding="1" class="table table-dark TabelaAdministradores" style="display: none; ">
+                      <tr align="center" style="width: 100%;" class="celulasTabela">
+                        <th>Aluno</th>
+                        <th>Idade</th>
+                        <th>CPF</th>
                         <th>Telefone</th>
+                        <th>Email</th>
+                        <th>Endereço</th>
+                        <th>Responsável</th>
+                        <th>Opções</th>
                       </tr>
                       
-                      <tbody id="corpoTabelaAlunos" align="center"></tbody>
+                      <tbody id="corpoTabelaAlunos" align="center" class="TabelaAdministradores"></tbody>
                     
                     </div>
 
               </table>
             </font>
             <script>
-              // window.onload = AtualizarTabelaCursos;
+              AtualizarTabelaAlunos();
               document.getElementById('tabelaAlunos').addEventListener('submit', (e) => {
                 e.preventDefault();
               });
@@ -216,7 +271,7 @@
 
 
 
-          </div><!-- End Contact Form -->
+          <!-- </div>End Contact Form -->
 
         </div>
 

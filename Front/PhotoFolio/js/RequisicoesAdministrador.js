@@ -2,18 +2,49 @@
 
 function inserirAdm_gerente() {
     
+    const formElement = document.getElementById('admin-form');
     var login = document.getElementById("loginAdm").value;
     var senha = document.getElementById("senhaAdm").value;
     var nomeAdm = document.getElementById("nomeAdm").value;
     var emailAdm = document.getElementById("emailAdm").value;
     var telefone = document.getElementById("telefoneAdm").value;
     var idUsuario = null;
+    var errorLogin = document.getElementById("errorLoginExistente");
+    errorLogin.style.display = 'none';
 
     const radio = document.querySelector('.chekGestor input[type="radio"]');
 
     // Valida se o usuario selecionou as opções de gestor
     var idGestor = radio.checked ? document.getElementById("input1").value : null;
     var areaGestor = radio.checked ? document.getElementById("input2").value : null;
+
+
+    var confirmarSenha = document.getElementById("Confirm-senhaAdm").value;
+   
+    if(confirmarSenha != senha){
+      // Cria uma div de mensagem de erro para senha incorreta
+      var errorMessageDiv = document.createElement("div");
+      errorMessageDiv.innerHTML = "Senhas incompativeis!";
+      errorMessageDiv.style.color = "red";
+      errorMessageDiv.style.background = "transparent";
+      errorMessageDiv.style.marginTop = "-1rem";
+
+      // Obtem o elemento do botão
+      var buttonElementerror = document.getElementById("Confirm-senhaAdm");
+
+      // Insere a div da mensagem de sucesso abaixo do botão
+      buttonElementerror.parentNode.insertBefore(errorMessageDiv, buttonElementerror.nextSibling);
+
+
+      // Adiciona um tempo limite para remover a mensagem de sucesso após alguns segundos
+      setTimeout(function() {
+        errorMessageDiv.remove();
+      }, 5000);
+
+      return false;
+
+
+    }
 
     
     
@@ -92,6 +123,7 @@ function inserirAdm_gerente() {
             return response.json();
             })
             .then(data => {
+                errorLogin.style.display = 'block';
                 console.error('Login já utilizado!');
             })
             .catch(error => {
@@ -173,6 +205,30 @@ function inserirAdm_gerente() {
                                                     })
                                                     .then(data => {
                                                       console.log('sucesso:', data);
+                                                      // Cria uma div de mensagem de sucesso
+                                                      var successMessageDiv = document.createElement("div");
+                                                      successMessageDiv.innerHTML = "Usuário criado com sucesso!";
+                                                      successMessageDiv.style.color = "green";
+                                                      successMessageDiv.style.fontSize = "18px";
+                                                      successMessageDiv.style.padding = "10px";
+                                                      successMessageDiv.style.border = "1px solid green";
+                                                      successMessageDiv.style.borderRadius = "5px";
+                                                      successMessageDiv.style.background = "lightgreen";
+                                                      successMessageDiv.style.marginBottom = "1rem";
+
+                                                      // Obtem o elemento do botão
+                                                      var buttonElement = document.getElementById("salvarAdm");
+
+                                                      // Insere a div da mensagem de sucesso antes do elemento do botão
+                                                      buttonElement.parentNode.insertBefore(successMessageDiv, buttonElement);
+
+
+                                                      // Adiciona um tempo limite para remover a mensagem de sucesso após alguns segundos
+                                                      setTimeout(function() {
+                                                        successMessageDiv.remove();
+                                                      }, 5000);
+
+                                                      formElement.reset();
                                                     
                                                     })
                                                     .catch(error => {
@@ -363,6 +419,34 @@ function editarAdm_gerente() {
   // Valida se o usuario selecionou as opções de gestor, se estiver selecionado pega o value, se não atriubui false ao valor
   var idGestor = radio.checked ? document.getElementById("input1").value : null;
   var areaGestor = radio.checked ? document.getElementById("input2").value : null;
+
+
+  var confirmarSenha = document.getElementById("Confirm-senhaAdm").value;
+   
+    if(confirmarSenha != senha){
+      // Cria uma div de mensagem de erro para senha incorreta
+      var errorMessageDiv = document.createElement("div");
+      errorMessageDiv.innerHTML = "Senhas incompativeis!";
+      errorMessageDiv.style.color = "red";
+      errorMessageDiv.style.background = "transparent";
+      errorMessageDiv.style.marginTop = "-1rem";
+
+      // Obtem o elemento do botão
+      var buttonElementerror = document.getElementById("Confirm-senhaAdm");
+
+      // Insere a div da mensagem de sucesso abaixo do botão
+      buttonElementerror.parentNode.insertBefore(errorMessageDiv, buttonElementerror.nextSibling);
+
+
+      // Adiciona um tempo limite para remover a mensagem de sucesso após alguns segundos
+      setTimeout(function() {
+        errorMessageDiv.remove();
+      }, 5000);
+
+      return false;
+
+
+    }
 
   
   

@@ -3,13 +3,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const userBtn = document.getElementById('user-btn-lista');
   
     adminBtn.addEventListener('click', () => {
-      console.log('Clicou no botão de administradores');
       showTable('admin');
     });
   
   
     userBtn.addEventListener('click', () => {
-      console.log('Clicou no botão de alunos');
+      AtualizarTabelaAlunos;
       showTable('user');
+      
     });
   });

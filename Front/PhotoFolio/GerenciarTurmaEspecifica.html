@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -28,13 +28,29 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
   <link href="assets/css/home.css" rel="stylesheet">
+  <link href="assets/css/gerenciarTurmas.css" rel="stylesheet">
+  <link href="assets/css/modalAula.css" rel="stylesheet">
+  <link href="assets/css/Aulas.css" rel="stylesheet">
+ 
+  <link href="assets/css/modalTurmasEdit.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css">
 
    <!-- Javascript -->
+   <script src="../../back/src/dao/connection.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-   <script src="../PhotoFolio/js/RequisicoesCliente.js"></script>
-   <script src="../PhotoFolio/assets/js/autoplayGallery.js"></script>
+   <script src="../PhotoFolio/js/RequisicoesUsuarioAulas.js"></script>
+   <script src="../PhotoFolio/js/RequisicoesUsuario.js"></script>
+   <script src="../PhotoFolio/assets/js/gerenciarTurmaEspecifica.js"></script>
+   <script src="../PhotoFolio/assets/js/modalAula.js"></script>
+   <script src="../PhotoFolio/js/RequisicoesUsuarioMatricula.js"></script>
+   
+   <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/js/multi-select-tag.js"></script>
    <script src="../PhotoFolio/assets/js/buttonsNewUser.js"></script>
+   
+   
 
+   
+  
 </head>
 
 <body>
@@ -73,8 +89,7 @@
               </li>
             </ul>
           </li>
-            <li><a href="#">Notificações</a></li>
-          </li>
+          <li><a href="#">Notificações</a></li>
           
   
         </ul>
@@ -89,33 +104,116 @@
     </div>
   </header><!-- End Header -->
 
-  <!-- ======= Hero Section ======= -->
-  
+<body>
 
-  <div id="backbody" class="backbody">
+  <!-- ======= Header ======= -->
 
+  <main id="main" data-aos="fade" data-aos-delay="1500">
 
-    <div id="BemVindo" class="BemVindo">
-      <div id="hero" class="hero BemVindo" data-aos="fade" >
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-6 centralizar" >
-              <h2 id="preto-h2"><span>Bem Vindo!</span></h2>
-              <p id="preto-p">Gerencie a sua turma bem aqui:</p>
-              <a href="GerenciarTurmas.html" class="btn-get-started alinhar">Turmas</a>
-            </div>
-          </div> 
+    <!-- ======= End Page Header ======= -->
+    <div class="page-header d-flex align-items-center">
+      <div class="container position-relative">
+        <div class=" justify-content-center text-center" style="width: 100%; align-items: center;">
+          
+            <h2 >Gerenciar Turma: 
+            <div id="TituloGerenciarEspecifica">teste</div></h2>
         </div>
       </div>
-    </div>
-  
-    
-  
-  </div>
+    </div><!-- End Page Header -->
 
-  
-  <!-- End Hero Section -->
+    <!-- ======= Contact Section ======= -->
 
+
+      <nav id="navbar" class="menuLateralTurmas" style="margin-right: 15%;">
+
+        
+
+        <ul>
+          <li><a href="GerenciarTurmas.html" id="Open-modal-Turma">Turmas</a></li>
+          <li><a href="#" id="AdicionarAluno">Adicionar Matricula</a></li>
+          <li class="dropdown"><a href="#"><span>Gerenciar Aulas</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+            <ul>
+              <li><a href="#" id="lancar-aulas" >Lançar Aula</a></li>
+              <li><a href="#">Lançar Avaliação</a></li>
+            </ul>
+          </li>
+          <li class="aluno"><a href="GerenciarTurmaEspecifica.html" class="aula">Voltar</a></li>
+  
+        </ul>
+      </nav>
+
+    <form id="admin-form" role="form" class="php-email-form" method="post" >
+           <p></p>     
+           <p></p>  
+      <div class="aula">
+        <h2>Lançamento de Aula</h2><br><br>
+
+        <div class="form-linhaVcampos">
+          <div class="form-group">
+            <label for="aulaDia">Aula Realizada dia:</label><br>
+            <input type="date" name="nomeResponsavel" class="form-control" id="dataAula"><br>
+          </div>
+        </div>
+
+        <div class="form-linha-completa">
+          <label for="aulaDescricao">Descrição:</label><br>
+          <input type="textarea" name="descriçãoAula" class="form-control" id="descriçãoAula" style="height: 5rem;"><br>
+          <label for="aulaFrequencia">Frequência:</label><br>
+        </div>
+      </div>
+        <div class="container">
+          <div class="row justify-content-center mt-4">
+  
+          
+  
+              <font face="Tahoma" color="white">
+                <table id="tabelaTurmas" border="1" align="center" cellspacing="2" cellpadding="1" width="80%"  class="table table-dark TabelaDeTurmas">
+                        <tr align="center">
+                            <th>Aluno</th>
+                            <th>Faltas</th>
+                            <th>Resultado</th>
+                            <th class="aula">Presença</th>
+                        </tr>
+                        
+                        <tbody id="corpoTabelaTurmas" align="center"></tbody>
+                      
+                      </div>
+              
+                </table>
+              </font>
+              <script>
+                window.onload = AtualizarTabelaTurmas;
+                document.getElementById('tabelaTurmas').addEventListener('submit', (e) => {
+                  e.preventDefault();
+                });
+              </script>
+  
+  
+  
+          </div>
+        
+        
+        
+        <br>
+
+        <div class="text-center"><button type="submit" onclick="inserirAula()" id="salvarAdm">Salvar Aula</button></div>
+      
+    </form>
+    <script>
+      document.getElementById('admin-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+      });
+    </script>
+      
+      
+      
+
+      
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">

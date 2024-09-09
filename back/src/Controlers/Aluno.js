@@ -19,8 +19,16 @@ async function inserirResponsavel(responsavel) {
     };
     const [result] = await connection.connection.execute(query.sql, query.values);
 
+    const queryBuscaRecemCadastrado = {
+        sql: 'SELECT * FROM responsavel WHERE nomeResponsavel = ? AND telefone = ? AND email = ? AND endereco = ?',
+        values: [responsavel.nomeResponsavel, responsavel.telefoneResponsavel, responsavel.emailResponsavel, responsavel.enderecoResponsavel]
+      };
+    const [resultResponsavel] = await connection.connection.execute(queryBuscaRecemCadastrado.sql, queryBuscaRecemCadastrado.values);
+
+
+
     if (result.affectedRows > 0) {
-        return { isSave: true }; // Return a success response
+        return { isSave: resultResponsavel }; // Return a success response
       } else {
         return { isSave: false }; // Return a failure response
       }
@@ -33,202 +41,251 @@ async function inserirResponsavel(responsavel) {
     }
 }
 
-// //Busca todos os Adms
-// async function getAdministrador() {
-//   const connection = new Connection();
+
+//Cadastrar um aluno
+async function inserirAluno(aluno) {
+    const connection = new Connection();
+    
+    try {
+      await connection.getConexao();
+      
+       // Validate the input values
+       if (!aluno.nomeAluno||!aluno.telefoneAluno ||!aluno.idade ||!aluno.turmaAluno ||!aluno.idUsuario ||!aluno.idResponsavel) {
+        throw new Error('Nome, telefone, idade, turma, responsavel e usuario do aluno são obrigatórios');
+      }
   
-//   try {
-//     await connection.getConexao();
+      // Query to insert a new Responsavel
+      const query = {
+        sql: 'INSERT INTO aluno SET idTurma = ?, idUsuario = ?, idResponsavel = ?, nomeAl = ?, idade = ?, telefone = ?, email = ?, cpf = ?, endereco = ?',
+        values: [aluno.turmaAluno, aluno.idUsuario, aluno.idResponsavel, aluno.nomeAluno, aluno.idade, aluno.telefoneAluno, aluno.emailAluno, aluno.cpfAluno, aluno.enderecoAluno]
+      };
+      const [result] = await connection.connection.execute(query.sql, query.values);
+
+      
+  
+      const queryBuscaRecemCadastrado = {
+          sql: 'SELECT * FROM aluno WHERE idUsuario = ?',
+          values: [aluno.idUsuario]
+        };
+      const [resultResponsavel] = await connection.connection.execute(queryBuscaRecemCadastrado.sql, queryBuscaRecemCadastrado.values);
+        
+      let dataAtual = new Date();
+      const queryMatricula = {
+        sql: 'INSERT INTO matricula SET idTurma = ?, idAluno = ?, data = ?',
+        values: [aluno.turmaAluno, resultResponsavel[0].idAluno, dataAtual]
+      };
+      const [resultMatricula] = await connection.connection.execute(queryMatricula.sql, queryMatricula.values);
+  
+  
+      if (result.affectedRows > 0) {
+          return { isSave: resultResponsavel }; // Return a success response
+        } else {
+          return { isSave: false }; // Return a failure response
+        }
+        
+      } catch (err) {
+        console.error(err);
+        return { isSave: false, error: err.message }; // Return an error response
+      } finally {
+        await connection.disconnect();
+      }
+  }
+
+//Busca todos os Alunos
+async function getAlunos() {
+  const connection = new Connection();
+  
+  try {
+    await connection.getConexao();
     
      
-//     //seleciona todos os cursos
-//     const query = {
-//       sql: 'SELECT * FROM administrador'
-//     };
-//     const [result] = await connection.connection.execute(query.sql);
-//     if (result.length > 0) {
-//       return { Adm: result }; // Return the turma data
-//     } else {
-//       return { buscaRealizada: false }; // Return a failure response
-//     }
+    //seleciona todos os cursos
+    const query = {
+      sql: 'SELECT * FROM aluno'
+    };
+    const [result] = await connection.connection.execute(query.sql);
+    if (result.length > 0) {
+      return { Alunos: result }; // Return the turma data
+    } else {
+      return { buscaRealizada: false }; // Return a failure response
+    }
     
-//   } catch (err) {
-//     console.error(err);
-//     return { buscaRealizada: false, error: err.message }; // Return an error response
-//   } finally {
-//     await connection.disconnect();
-//   }
-// }
+  } catch (err) {
+    console.error(err);
+    return { buscaRealizada: false, error: err.message }; // Return an error response
+  } finally {
+    await connection.disconnect();
+  }
+}
 
-
-// //Deleta um administrador
-// async function excluirAdm_gerente(Adm) {
-//     const connection = new Connection();
+//Busca 1 responsavel
+async function getResponsavel(idResponsavel) {
+    const connection = new Connection();
     
-//     try {
-//       await connection.getConexao();
-      
-//       // Validate the input value
-//       if (!Adm) {
-//         throw new Error('ID do administrador é obrigatório');
-//       }
-    
-//       // Query to delete the administrator
-//       const queryAdm = {
-//         sql: 'DELETE FROM administrador WHERE idAdministrador = ?',
-//         values: [Adm.idAdministrador]
-//       };
-//       const [resultAdm] = await connection.connection.execute(queryAdm.sql, queryAdm.values);
-    
-//       // Query to delete the corresponding user records
-//       const queryUser = {
-//         sql: 'DELETE FROM usuario WHERE idAdministrador = ?',
-//         values: [Adm.idAdministrador]
-//       };
-//       const [resultUser] = await connection.connection.execute(queryUser.sql, queryUser.values);
-
-//       // Query to delete the corresponding user records
-//       if(Adm.idGestor != null){
-//         const queryGestor = {
-//             sql: 'DELETE FROM gestor WHERE idGestor = ?',
-//             values: [Adm.idGestor]
-//           };
-//         const [resultGestor] = await connection.connection.execute(queryGestor.sql, queryGestor.values);
-
-//       }
-      
-    
-//       if (resultAdm.affectedRows > 0 && resultUser.affectedRows > 0) {
-//         return { isDeleted: true }; // Return a success response
-//       } else {
-//         return { isDeleted: false }; // Return a failure response
-//       }
-      
-//     } catch (err) {
-//       console.error(err);
-//       return { isDeleted: false, error: err.message }; // Return an error response
-//     } finally {
-//       await connection.disconnect();
-//     }
-//   }
-
-
-// async function editarAdm_gerente(id, admin) {
-//   if (!id ) {
-//     throw new Error('ID is a object is missing');
-//   }
-
-
-//   const connection = new Connection();
-  
-//   try {
-//     await connection.getConexao();
-
-//     // Update da turma
-//     const query = {
-//       sql: 'UPDATE administrador SET nomeAD =?, email =?, telefone = ?, idGestor = ? WHERE idAdministrador = ?',
-//       values: [admin.nomeAdm, admin.emailAdm, admin.telefone, admin.idGestor, parseInt(id)] // Convert id to integer
-//     };
-//     const [result] = await connection.connection.execute(query.sql, query.values);
-
-//     if (result.affectedRows > 0) {
-//       return { isUpdated: true }; // Return a success response
-//     } else {
-//       return { isUpdated: false }; // Return a failure response
-//     }
-    
-//   } catch (err) {
-//     console.error(err);
-//     return { isUpdated: false, error: err.message }; // Return an error response
-//   } finally {
-//     await connection.disconnect();
-//   }
-// }
-
-
-// async function getGestor(gestor) {
-//     const connection = new Connection();
-  
-//     try {
-//       await connection.getConexao();
+    try {
+      await connection.getConexao();
       
        
-//       //seleciona todos os usuarios
-//       const query = {
-//         sql: 'SELECT * FROM gestor WHERE idGestor = ?',
-//         values: [gestor]
-//       };
-//       const [result] = await connection.connection.execute(query.sql, query.values);
+      //seleciona todos os usuarios
+      const query = {
+        sql: 'SELECT * FROM responsavel WHERE idResponsavel = ?',
+        values: [idResponsavel]
+      };
+      const [result] = await connection.connection.execute(query.sql, query.values);
   
-//       if (result.length > 0) {
-//         return { usuarioEncontrado: result }; // Return the courses data
-//       } else {
-//         return { buscaRealizada: false }; // Return a failure response
-//       }
+      if (result.length > 0) {
+        return { usuarioEncontrado: result }; // Return the responsavel data
+      } else {
+        return { buscaRealizada: false }; // Return a failure response
+      }
       
-//     } catch (err) {
-//       console.error(err);
-//       return { buscaRealizada: false, error: err.message }; // Return an error response
-//     } finally {
-//       await connection.disconnect();
-//     }
-  
-    
-//   }
+    } catch (err) {
+      console.error(err);
+      return { buscaRealizada: false, error: err.message }; // Return an error response
+    } finally {
+      await connection.disconnect();
+    }
+  }
 
-
-//   //Cadastra as informações de permissão do gestor
-//   async function putGestor(gestor) {
-//     const connection = new Connection();
+//Deleta um aluno
+async function excluirAluno(aluno) {
+    const connection = new Connection();
     
-    
-//     try {
-//       await connection.getConexao();
+    try {
+      await connection.getConexao();
       
-//        // Validate the input values
-//        if (!gestor.idGestor ||!gestor.areaGestor) {
-//         throw new Error('identificador do gestor e area de atuação são obrigatórios');
-//       }
-  
-//       // Query to insert a new course
-//       const query = {
-//         sql: 'INSERT INTO gestor SET idGestor = ?, area = ?',
-//         values: [gestor.idGestor, gestor.areaGestor]
-//       };
-//       const [result] = await connection.connection.execute(query.sql, query.values);
-  
-//       if (result.affectedRows > 0) {
-//         return { isSave: true }; // Return a success response
-//       } else {
-//         return { isSave: false }; // Return a failure response
-//       }
+      // Validate the input value
+      if (!aluno) {
+        throw new Error('Um aluno é obrigatório');
+      }
+    
+      // Query to delete the administrator
+      const queryAdm = {
+        sql: 'DELETE FROM aluno WHERE idAluno = ?',
+        values: [aluno.idAluno]
+      };
+      const [resultAluno] = await connection.connection.execute(queryAdm.sql, queryAdm.values);
+    
+      // Query to delete the corresponding user records
+      const queryResponsavel = {
+        sql: 'DELETE FROM responsavel WHERE idResponsavel = ?',
+        values: [aluno.idResponsavel]
+      };
+      const [resultResp] = await connection.connection.execute(queryResponsavel.sql, queryResponsavel.values);
+
+      // Query to delete the corresponding user records
+      const queryUser = {
+        sql: 'DELETE FROM usuario WHERE idUsuario = ?',
+        values: [aluno.idUsuario]
+      };
+      const [resultUser] = await connection.connection.execute(queryUser.sql, queryUser.values);
+
+      const queryMatricula = {
+        sql: 'DELETE FROM matricula WHERE idAluno = ?',
+        values: [aluno.idAluno]
+      };
+      const [resultMatricula] = await connection.connection.execute(queryMatricula.sql, queryMatricula.values);
       
-//     } catch (err) {
-//       console.error(err);
-//       return { isSave: false, error: err.message }; // Return an error response
-//     } finally {
-//       await connection.disconnect();
-//     }
-//   }
+    
+      if (resultAluno.affectedRows > 0 && resultUser.affectedRows > 0 && resultResp.affectedRows > 0) {
+        return { isDeleted: true }; // Return a success response
+      } else {
+        return { isDeleted: false }; // Return a failure response
+      }
+      
+    } catch (err) {
+      console.error(err);
+      return { isDeleted: false, error: err.message }; // Return an error response
+    } finally {
+      await connection.disconnect();
+    }
+  }
+
+//Edita Responsavel
+  async function updateResponsavel(responsavel) {
+    if (!responsavel.idResponsavel) {
+      throw new Error('ID do responsavel is missing');
+    }
+  
+  
+    const connection = new Connection();
+    
+    try {
+      await connection.getConexao();
+  
+      // Update do responsavel
+      const query = {
+        sql: 'UPDATE responsavel SET nomeResponsavel = ?, telefone = ?, email = ?, endereco = ? WHERE idResponsavel = ?',
+        values: [responsavel.nomeResponsavel, responsavel.telefoneResponsavel, responsavel.emailResponsavel, responsavel.enderecoResponsavel, parseInt(responsavel.idResponsavel)] 
+      };
+      const [result] = await connection.connection.execute(query.sql, query.values);
+      
+  
+      if (result.affectedRows > 0) {
+        return { isUpdated: true }; // Return a success response
+      } else {
+        return { isUpdated: false }; // Return a failure response
+      }
+      
+    } catch (err) {
+      console.error(err);
+      return { isUpdated: false, error: err.message }; // Return an error response
+    } finally {
+      await connection.disconnect();
+    }
+  }
 
 
+  //Edita aluno
+  async function editarAluno(aluno) {
+    if (!aluno.idAluno) {
+      throw new Error('ID do aluno is missing');
+    }
+  
+  
+    const connection = new Connection();
+    
+    try {
+      await connection.getConexao();
+  
+      // Update da turma
+      const query = {
+        sql: 'UPDATE aluno SET nomeAl = ?, idTurma = ?, idade = ?, telefone = ?, email = ?, cpf = ?, endereco = ? WHERE idAluno = ?',
+        values: [aluno.nomeAluno, aluno.turmaAluno, aluno.idade, aluno.telefoneAluno, aluno.emailAluno, aluno.cpfAluno, aluno.enderecoAluno, parseInt(aluno.idAluno)] 
+      };
+      const [result] = await connection.connection.execute(query.sql, query.values);
 
-
-
-
-
+      const queryMatricula = {
+        sql: 'UPDATE matricula SET idTurma = ? WHERE idAluno = ?',
+        values: [aluno.turmaAluno, parseInt(aluno.idAluno)]
+      };
+      const [resultMatricula] = await connection.connection.execute(queryMatricula.sql, queryMatricula.values);
+  
+      if (result.affectedRows > 0) {
+        return { isUpdated: true }; // Return a success response
+      } else {
+        return { isUpdated: false }; // Return a failure response
+      }
+      
+    } catch (err) {
+      console.error(err);
+      return { isUpdated: false, error: err.message }; // Return an error response
+    } finally {
+      await connection.disconnect();
+    }
+  }
 
 
 
 
   
 module.exports = {
-    inserirResponsavel
-    // getAdministrador,
-    // inserirAdm_gerente,
-    // excluirAdm_gerente,
-    // getGestor,
-    // putGestor,
-    // editarAdm_gerente
+    inserirResponsavel, 
+    inserirAluno,
+    getAlunos, 
+    getResponsavel,
+    excluirAluno,
+    updateResponsavel, 
+    editarAluno
     
 };

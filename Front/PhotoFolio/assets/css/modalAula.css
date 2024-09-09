@@ -1,17 +1,17 @@
 
-#modal {
+#modal-Aula {
   width: 30rem;
-  height: 15rem;
+  height: 30rem;
   background-color: #fff;
   color: black;
   border-radius: 8px;
   padding: 20px;
-  z-index: 1;
+  z-index: 900;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 5rem;
   left: 0;
   right: 0;
   bottom: 0;
@@ -44,13 +44,12 @@
 }
 
 
-
 #Close-modal {
   box-shadow : 0px 0 0px 0px white;
   border-radius: 20px;
   background-color: white;
   border-color: white;
-  z-index: 5;
+  z-index: 901;
   height: 2rem;
   width: 2rem;
  
@@ -70,35 +69,10 @@
   color: black;
 }
 
-#modal-curso-content{
-  margin-left: -7rem;
-
+#modal-responsavel-content input{
+  background-color: whitesmoke;
+  color: black;
 }
 
-.modal-body-Turma{
-  padding-top: 4rem;
-  height: 10rem;
-}
 
-.modal-footer-Turma{
-  padding-top: 3rem;
-}
 
-#btnCadastrarTurma{
-  margin-right: 2rem;
-  margin-left: 24rem;
-}
-
-#Close-modal-Responsavel {
-  box-shadow : 0px 0 0px 0px ;
-
-  background-color: transparent;
-  margin-right: 0.,5rem;
-  margin-bottom: 1rem;
-  border-radius: 40px;
-  align-items: center;
-  
-  height: 2rem;
-  width: 1rem;
- 
-}

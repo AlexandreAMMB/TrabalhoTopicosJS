@@ -1,0 +1,144 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+header {
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.backform{
+    margin-top: -5rem;
+    background-color: rgb(32, 31, 31);
+    padding: 5rem;
+    border-radius: 2rem;
+}
+
+button {
+    background-color: #4CAF50;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px; 
+}
+
+#admin-form label {
+    display: block;
+    text-align: left;
+    margin-bottom: 10px; /* add some margin between the label and input */
+}
+
+#user-form label {
+    display: block;
+    text-align: left;
+    margin-bottom: 10px; /* add some margin between the label and input */
+}
+
+.form-linha-completa{
+    width: 100%;
+}
+.form-linha-completa input{
+    display: block;
+    width: 100%;
+}
+
+.form-linhaVcampos{
+    
+    width: 30rem;
+    display: flex;
+}
+
+.form-linhaVcampos input{
+    
+    width: 10rem;
+    display: flex;
+}
+
+
+
+
+#admin-form {
+ 
+  padding-right: 5rem;
+  padding-left: 5rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background-color: transparent;
+  border-radius: 2rem;
+} 
+
+
+
+#admin-form table{
+  margin-left: -0.7rem;
+  margin-top: -3rem;
+  
+}
+
+#admin-form label{
+  font-size: 22px;
+  color: black;
+  
+}
+
+@media (min-width: 1280px) {
+  #admin-form {
+    width: 69rem;
+    border-color: red; 
+    background-color: transparent;
+  } 
+  #admin-form table{
+    width: 103%;
+  }
+}
+
+
+@media (min-width: 1400px) {
+  #admin-form {
+    width: 80rem;
+  } 
+
+  #admin-form table{
+    width: 70rem;
+  
+  }
+}
+
+
+#admin-form input {
+    flex: 1; /* to make the inputs equal width */
+    margin-bottom: 20px;
+    margin-top: -2rem;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-right: 0.5rem; /* add some margin between the groups */
+}
+  
+.form-group label {
+    text-align: left;
+    margin-bottom: 10px; /* add some margin between the label and input */
+}
+
+
+
+
+ 
+

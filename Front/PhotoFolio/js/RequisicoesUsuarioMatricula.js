@@ -1,39 +1,28 @@
 
 
 function inserirMatricula() {
-    
-    const formElement = document.getElementById('admin-form');
-    var dataAula = document.getElementById("dataAula").value;
-    var descricaoAula = document.getElementById("descriçãoAula").value;
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    
-    // Crie um objeto para armazenar os valores dos checkboxes selecionados
-    const selectedCheckboxes = {};
+    let addedAlunos = [];
+    addedAlunos = JSON.parse(sessionStorage.getItem('SelectedsAlunosinObject'));
 
-    // Loop pelos checkboxes e adicione os valores dos checkboxes selecionados ao objeto
-    checkboxes.forEach((checkbox) => {
-      if (checkbox.checked) {
-        selectedCheckboxes[checkbox.id] = checkbox.value;
-      }
-    });
-
+    var idAluno = document.getElementById("Select-Aluno").value;
+    
     storedTurmainObject = sessionStorage.getItem('TurmainObject');
     const turma = JSON.parse(storedTurmainObject);
 
-    var Aula = {
+    var matricula = {
         idTurma : turma.idTurma,
-        dataAula : dataAula,
-        descricaoAula : descricaoAula,
-        frequencia : selectedCheckboxes
+        idAluno : idAluno
     };
 
+    console.log(matricula);
+
     
-    fetch('http://localhost:5500/aula', {
+    fetch('http://localhost:5500/matriculas', {
         method: "POST",
         headers: {
         'Content-Type': 'application/json'
         },
-        body: JSON.stringify(Aula)
+        body: JSON.stringify(matricula)
     })
     .then(response => {
         if (!response.ok) {
@@ -43,39 +32,11 @@ function inserirMatricula() {
     })
     .then(data=> {
         if (data.isSave) {
-        // // Redireciona para a função desejada
-        // const aulas = document.getElementsByClassName('aula');
-        // for (let i = 0; i < aulas.length; i++) {
-        //   aulas[i].style.display = 'none';
-        // }
-        // document.getElementById('salvarAdm').style.display = 'none';
-
-
-        // // Cria uma div de mensagem de sucesso
-        // var successMessageDiv = document.createElement("div");
-        // successMessageDiv.innerHTML = "Aula cadastrada com sucesso!";
-        // successMessageDiv.style.color = "green";
-        // successMessageDiv.style.fontSize = "18px";
-        // successMessageDiv.style.padding = "10px";
-        // successMessageDiv.style.border = "1px solid green";
-        // successMessageDiv.style.borderRadius = "5px";
-        // successMessageDiv.style.background = "lightgreen";
-        // successMessageDiv.style.marginBottom = "1rem";
-
-        // // Obtem o elemento do botão
-        // var buttonElement = document.getElementById("salvarAdm");
-
-        // // Insere a div da mensagem de sucesso antes do elemento do botão
-        // buttonElement.parentNode.insertBefore(successMessageDiv, buttonElement);
-
-
-        // // Adiciona um tempo limite para remover a mensagem de sucesso após alguns segundos
-        // setTimeout(function() {
-        //   successMessageDiv.remove();
-        // }, 5000);
-
-        // formElement.reset();
-
+        
+          document.getElementById('modalMatricula').style.display = 'none';
+          addedAlunos.push(matricula.idAluno);
+          sessionStorage.setItem('SelectedsAlunosinObject', JSON.stringify(addedAlunos)); // update session storage
+          AtualizarTabelaTurmas();
         
         
         }
@@ -91,127 +52,84 @@ function inserirMatricula() {
 
 
 
-// function AtualizarTabelaTurmas(){
 
-//   fetch("http://localhost:5500/matriculas")
 
-//     .then(response => {
-//       if (!response.ok) {
-//         throw new Error('Erro na resposta do servidor');
-//       }
-//       return response.json();
-//     })
-//     .then(data => {
-      
+function SelectAlunos(){
 
-//       storedTurmainObject = sessionStorage.getItem('TurmainObject');
-//       const turma = JSON.parse(storedTurmainObject);
-      
-//        const corpoTabelaTurmas = document.getElementById("corpoTabelaTurmas");
-//       //  const modalEditar = document.getElementById('modalTurmaEdit');
-//       //  const salvarBtn = document.getElementById('btnEditarTurma');
-//        let selectedTurmaId = null;
-
-//       corpoTabelaTurmas.innerHTML = '';
+  let addedAlunos = [];
+  addedAlunos = JSON.parse(sessionStorage.getItem('SelectedsAlunosinObject'));
   
-//       data.forEach(matricula => {
-//         const row = document.createElement("tr");
+  storedTurmainObject = sessionStorage.getItem('TurmainObject');
+  const turma = JSON.parse(storedTurmainObject);
+  const selectAluno = document.getElementById('Select-Aluno');
   
-  
-//         const alunoCell = document.createElement("td");
 
-//         if(matricula.idTurma == turma.idTurma){
-//           console.log(matricula.idTurma);
+  // Limpa o select antes de adicionar as opções
+  selectAluno.innerHTML = '';
+  const option = document.createElement('option');
+  option.text = 'Selecione um aluno';
 
-//           fetch("http://localhost:5500/aluno")
-//             .then(response => {
-//               if (!response.ok) {
-//                 throw new Error('Erro na resposta do servidor');
-//               }
-//               return response.json();
-//             })
-//             .then(data => {
+  option.disabled = true;
+  option.selected = true;
+  selectAluno.appendChild(option);
+
+          fetch("http://localhost:5500/aluno")
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Erro na resposta do servidor');
+              }
+              return response.json();
+            })
+            .then(data => {
         
-          
-//               data.forEach(aluno => {
-              
-//                 if(matricula.idAluno == aluno.idAluno ){
+              data.forEach(aluno => {
 
-//                     alunoCell.textContent = aluno.nomeAl;
-//                     alunoCell.style.width = "40%";
-//                     row.appendChild(alunoCell);
-      
-//                     const faltasTurmaCell = document.createElement("td");
-//                     faltasTurmaCell.textContent = 'faltas';
-//                     row.appendChild(faltasTurmaCell);
+                fetch("http://localhost:5500/matriculas")
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error('Erro na resposta do servidor');
+                  }
+                  return response.json();
+                })
+                .then(data => {
+                  
               
-//                     const ResultadoCell = document.createElement("td");
-//                     ResultadoCell.textContent = 'resultado';
-//                     row.appendChild(ResultadoCell);
-              
-//                     corpoTabelaTurmas.appendChild(row);
-              
-              
-//                     const opcoesCell = document.createElement("td");
-
-//                     const checkboxContainer = document.createElement("span"); // Criar um container para o checkbox e label
-
-//                     const presencaCheck = document.createElement("input");
-//                     presencaCheck.type = "checkbox";
-
-//                     const label = document.createElement("label");
-//                     label.textContent = "Presente";
-//                     label.style.color = "white";
-//                     label.style.fontSize = "16px";
-//                     label.style.marginRight = "40%";
-//                     presencaCheck.id = aluno.idAluno;
-//                     presencaCheck.value = aluno.idAluno;
-//                     label.htmlFor = presencaCheck.id;
-//                     presencaCheck.style.width = "1rem";
-//                     presencaCheck.style.height = "1rem";
-//                     presencaCheck.style.marginTop= "0.2rem";
-//                     presencaCheck.style.paddingRight= "0%";
-//                     label.style.marginLeft = "-18%";
-//                     presencaCheck.style.alignContent = "right";
-//                     opcoesCell.style.display = "none";
-                    
-//                    opcoesCell.className = "frequencia";
-                    
-//                     opcoesCell.appendChild(presencaCheck); // Adicionar o checkbox ao container
-//                     opcoesCell.appendChild(label); // Adicionar o label ao container
-
-                    
-//                     opcoesCell.style.alignContent = 'center';
+                  data.forEach(matricula => {
                    
+                    
 
-//                     row.appendChild(opcoesCell);
+                      if(matricula.idAluno == aluno.idAluno && matricula.idTurma != turma.idTurma){
+                        if (!addedAlunos.includes(aluno.idAluno)) { // check if ID is in the array
+                          const option = document.createElement('option');
+                          option.value = aluno.idAluno;
+                          option.text = aluno.nomeAl;
+                          selectAluno.appendChild(option);
+                          addedAlunos.push(aluno.idAluno);
+                          
+                        } else if(matricula.idAluno == aluno.idAluno && matricula.idTurma == turma.idTurma){
+                          addedAlunos.push(aluno.idAluno);
+                          sessionStorage.setItem('SelectedsAlunosinObject', JSON.stringify(addedAlunos));
+                        }
 
+                      }
+                  })
+                  .catch(error => {
+                    console.error("Erro ao obter os alunos:", error);
+                  });
 
-//                 }
+                  
           
-//               });
-//             })
-//             .catch(error => {
-//               console.error("Erro ao obter os cursos:", error);
-//           });
+              });
+            })
+            .catch(error => {
+              console.error("Erro ao obter os cursos:", error);
+            });
         
-            
-           
-
-
-
-//         }
-        
+          });
   
-  
-  
-//       });
-//     })
-//     .catch(error => {
-//       console.error("Erro ao obter os Turmas:", error);
-//   });
+      
 
-// }
+}
 
 // function excluirTurma(idTurma) {
 //     fetch(`http://localhost:5500/Turmas/${idTurma}`, {

@@ -765,6 +765,52 @@ app.post('/aula', (req, res, next) => {
     });
 });
 
+// Salva 1 matricula
+app.post('/matriculas', (req, res, next) => {
+  
+  if (!req.body) {
+    return res.status(400).send('Requisição inválida');
+  }
+
+  const matricula = req.body;
+  controlerMatriculas.inserirMatricula(matricula)
+   .then(response => {
+      if (response.isSave) {
+        res.status(200).json({ 
+          isSave: true
+        });
+        
+      } else {
+        res.status(400).json(response);
+      }
+    })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
+
+
+
+// // Deleta Administrador
+app.delete('/matriculas', (req, res, next) => {
+  const matricula = req.body; 
+
+  controlerMatriculas.excluirMatricula(matricula)
+  .then(response => {
+    if (response.isDeleted) {
+      res.status(200).json({ message: 'Aluno desmatriculado com sucesso' });
+    } else {
+      res.status(404).json({ message: 'Matricula não encontrada' });
+    }
+  })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
+
+
 
 
 

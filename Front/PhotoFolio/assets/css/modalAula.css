@@ -35,11 +35,13 @@
   
 }
 
-.modal-body{
+.modal-body-matricula{
   font-family:Arial, Helvetica, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 10rem;
+  margin-bottom: 4rem;
   
 }
 
@@ -72,6 +74,131 @@
 #modal-responsavel-content input{
   background-color: whitesmoke;
   color: black;
+}
+
+
+#modalMatricula {
+  width: 33rem;
+  height: 20rem;
+  background-color: #fff;
+  color: black;
+  border-radius: 8px;
+  padding: 20px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+
+#Close-modal {
+  box-shadow : 0px 0 0px 0px gray;
+  border-radius: 20px;
+  background-color: white;
+  border-color: rgb(12, 11, 11);
+  z-index: 800;
+  height: 2rem;
+  width: 2rem;
+  color: black;
+  align-items: center;
+  padding-bottom: 2rem;
+  padding-right: 1.5rem;
+ 
+}
+
+#Close-modal span{
+  align-items: center;
+  margin-bottom: 2rem;
+ 
+}
+
+
+#ModaltituloMatricula{
+  color: gray;
+}
+
+
+#rowModalMatricula{
+  margin-left: -8rem;
+}
+
+
+
+#btnCadastrarMatricula {
+ margin-top: -2rem;
+}
+
+.SelectAluno {
+  position: relative;
+  display: inline-block;
+}
+
+.SelectAluno select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  width: 30.5rem;
+}
+
+.SelectAluno ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+.SelectAluno li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.SelectAluno li:hover {
+  background-color: #f0f0f0;
+}
+
+.SelectAluno li:last-child {
+  border-bottom: none;
+}
+
+.TabelaAdministradores input{
+  
+  color: black;
+  background-color: white;
+  
+}
+
+
+.TabelaAdministradores button{
+  border-radius: 5rem;
+  height: 2rem;
+  width: 2rem;
+  margin-right: 0.5rem;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+
+.btn-lixo {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
+ 
+  width: 24px;
+  height: 24px;
+  border: none;
+  cursor: pointer;
 }
 
 

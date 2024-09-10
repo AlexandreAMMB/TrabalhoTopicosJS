@@ -270,6 +270,7 @@ function AtualizarTabelaAlunos(){
           const enderecoCell = document.createElement("td");
           enderecoCell.textContent = Aluno.endereco;
           enderecoCell.className = "cellGrandeAluno";
+          enderecoCell.className = "alinharConteudoCell";
           row.appendChild(enderecoCell);
 
           const responsavelCell = document.createElement("td");

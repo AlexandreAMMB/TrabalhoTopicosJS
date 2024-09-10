@@ -31,7 +31,7 @@
   <link href="assets/css/gerenciarTurmas.css" rel="stylesheet">
   <link href="assets/css/modalAula.css" rel="stylesheet">
   <link href="assets/css/Aulas.css" rel="stylesheet">
- 
+  <link href="assets/css/modalTurmas.css" rel="stylesheet">
   <link href="assets/css/modalTurmasEdit.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css">
 
@@ -124,6 +124,10 @@
     <!-- ======= Contact Section ======= -->
 
 
+
+
+
+
       <nav id="navbar" class="menuLateralTurmas" style="margin-right: 15%;">
 
         
@@ -134,13 +138,83 @@
           <li class="dropdown"><a href="#"><span>Gerenciar Aulas</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               <li><a href="#" id="lancar-aulas" >Lançar Aula</a></li>
-              <li><a href="#">Lançar Avaliação</a></li>
+              <li><a href="#">Histórico de Aulas</a></li>
             </ul>
           </li>
           <li class="aluno"><a href="GerenciarTurmaEspecifica.html" class="aula">Voltar</a></li>
   
         </ul>
       </nav>
+
+
+
+
+
+      <!-- ======= Modal de cadastro de Turma ======= -->
+      <section id="contactTurma" class="contact">
+        <div id="modalMatricula" role="dialog" aria-hidden="true" style="display: none;">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="ModaltituloMatricula">Matricular Aluno:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="Close-modal">
+                  <span >x</span>
+                </button>
+              </div>
+              <div class="modal-body-matricula" >
+                <form id="matricula-form" role="form" class="php-email-form" >
+                 
+                  
+                  <div class="SelectAluno">
+                    <label for="alunoSelect">Aluno a ser matriculado:</label><br>
+                    <select name="Select-Aluno" id="Select-Aluno" required>
+                    
+                    </select>
+                  </div>
+                  
+  
+                
+              </div>
+  
+              <div class="modal-footer">
+                <!-- <button type="reset" class="btn btn-secondary" data-dismiss="modal" id="btnCancelarTurma">Cancelar</button> -->
+                <button type="submit" value="Submit" class="btn btn-primary" id="btnCadastrarMatricula" onclick="inserirMatricula()">Cadastrar</button>
+              </div>
+              </form>
+              <script>
+                // window.onload = AtualizarTabelaTurmas;
+                document.getElementById('matricula-form').addEventListener('submit', (e) => {
+                  e.preventDefault();
+                });
+                
+              </script> 
+              
+            </div> 
+            
+            </div>
+          </div>
+        </div>
+        <!-- ======= Modal de cadastro de Turma END ======= -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <form id="admin-form" role="form" class="php-email-form" method="post" >
            <p></p>     
@@ -150,14 +224,14 @@
 
         <div class="form-linhaVcampos">
           <div class="form-group">
-            <label for="aulaDia">Aula Realizada dia:</label><br>
-            <input type="date" name="nomeResponsavel" class="form-control" id="dataAula"><br>
+            <label for="aulaDia" style="margin-left: -4rem;">Aula Realizada dia:</label><br>
+            <input type="date" name="nomeResponsavel" class="form-control" id="dataAula" style="background-color: white; color: black; margin-left: -4rem;"><br>
           </div>
         </div>
 
         <div class="form-linha-completa">
           <label for="aulaDescricao">Descrição:</label><br>
-          <input type="textarea" name="descriçãoAula" class="form-control" id="descriçãoAula" style="height: 5rem;"><br>
+          <input type="textarea" name="descriçãoAula" class="form-control" id="descriçãoAula" style="height: 5rem; background-color: white; color: black;"><br>
           <label for="aulaFrequencia">Frequência:</label><br>
         </div>
       </div>
@@ -173,6 +247,7 @@
                             <th>Faltas</th>
                             <th>Resultado</th>
                             <th class="aula">Presença</th>
+                            <th class="desmatricula">Opções</th>
                         </tr>
                         
                         <tbody id="corpoTabelaTurmas" align="center"></tbody>
@@ -196,7 +271,7 @@
         
         <br>
 
-        <div class="text-center"><button type="submit" onclick="inserirAula()" id="salvarAdm">Salvar Aula</button></div>
+        <div class="text-center"><button type="submit" onclick="inserirAula()" id="salvarAdm" style="background-color: #4CAF50;">Salvar Aula</button></div>
       
     </form>
     <script>

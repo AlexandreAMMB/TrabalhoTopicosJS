@@ -1,7 +1,7 @@
 
 
 document.addEventListener('DOMContentLoaded', () => {
-
+  
 
 
   document.getElementById('Open-modal-Turma').addEventListener('click', function(event) {

@@ -120,6 +120,7 @@ function AtualizarTabelaTurmas(){
 
         gerenciarButton.addEventListener("click", function() {
           sessionStorage.setItem('TurmainObject', JSON.stringify(Turmas)); //armazeno objeto na session para que seja acessado pelo form de edição
+          sessionStorage.setItem('SelectedsAlunosinObject', JSON.stringify([]));// inicia seesionStorage pra armazenar ids dos usuários já matriculados
           window.location.href = '../../../../Front/PhotoFolio/GerenciarTurmaEspecifica.html';
           selectedTurmaId = Turmas.idTurma;//Armazeno em uma variavel pra que não sobrecreva no loop
         });

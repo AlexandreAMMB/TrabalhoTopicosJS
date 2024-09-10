@@ -92,6 +92,7 @@ function inserirAula() {
 
 
 function AtualizarTabelaTurmas(){
+  let addedAlunos = JSON.parse(sessionStorage.getItem('SelectedsAlunosinObject'));
 
   fetch("http://localhost:5500/matriculas")
 
@@ -137,6 +138,9 @@ function AtualizarTabelaTurmas(){
               
                 if(matricula.idAluno == aluno.idAluno ){
 
+                    
+                  
+
                     alunoCell.textContent = aluno.nomeAl;
                     alunoCell.style.width = "40%";
                     row.appendChild(alunoCell);
@@ -150,7 +154,11 @@ function AtualizarTabelaTurmas(){
                     row.appendChild(ResultadoCell);
               
                     corpoTabelaTurmas.appendChild(row);
-              
+
+                    const opcoesMatriculaCell = document.createElement("td");
+
+
+                    corpoTabelaTurmas.appendChild(row);
               
                     const opcoesCell = document.createElement("td");
 
@@ -187,9 +195,45 @@ function AtualizarTabelaTurmas(){
                     row.appendChild(opcoesCell);
 
 
+
+                    const desmatricularCell = document.createElement("td");
+                    desmatricularCell.textContent = 'Desmatricular';
+                    desmatricularCell.className = 'desmatricula';
+                    const excluirButton = document.createElement("button");
+                    excluirButton.textContent = "";
+                    excluirButton.className = "btn-lixo";
+                    const buttonUrl = getComputedStyle(excluirButton).backgroundImage;
+                    const imagelixoUrl = buttonUrl + '/back/imagens/iconesDoSistema/icons8-checkbox-indeterminado-24.png';
+
+                    excluirButton.style.backgroundImage = `url('${imagelixoUrl}')`;
+              
+                    desmatricularCell.appendChild(excluirButton);
+                  
+                    excluirButton.addEventListener("click", function() {
+                      var matricula = {
+                        idAluno : aluno.idAluno,
+                        idTurma : turma.idTurma
+                      }
+                      excluirMatricula(matricula);
+                      
+                    });
+
+                    desmatricularCell.style.alignContent = 'center';
+                    row.appendChild(desmatricularCell);
+
+
+
+
+
+
+                    addedAlunos.push(aluno.idAluno);
+
+
+
                 }
           
               });
+              sessionStorage.setItem('SelectedsAlunosinObject', JSON.stringify(addedAlunos));
             })
             .catch(error => {
               console.error("Erro ao obter os cursos:", error);
@@ -213,109 +257,40 @@ function AtualizarTabelaTurmas(){
 
 }
 
-// function excluirTurma(idTurma) {
-//     fetch(`http://localhost:5500/Turmas/${idTurma}`, {
-//       method: 'DELETE'
-//     })
-//       .then(response => {
-//         if (response.ok) {
-//           console.log('Turma excluída com sucesso');
-//           AtualizarTabelaTurmas();
-//         } else {
-//           console.error('Erro ao excluir a Turma');
-//         }
-//       })
-//       .catch(error => {
-//         console.error('Erro ao excluir a Turma:', error);
-//       });
+function excluirMatricula(matricula) {
+
+
+  let addedAlunos = [];
+  addedAlunos = JSON.parse(sessionStorage.getItem('SelectedsAlunosinObject'));
+
+    var matricula = {
+      idAluno : matricula.idAluno,
+      idTurma : matricula.idTurma
+    }
+
+
+
+    fetch(`http://localhost:5500/matriculas`, {
+      method: 'DELETE',
+      headers: {
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(matricula)
+    })
+      .then(response => {
+        if (response.ok) {
+          console.log('Matricula excluída com sucesso');
+          addedAlunos = addedAlunos.filter(id => id !== matricula.idAluno);
+          sessionStorage.setItem('SelectedsAlunosinObject', JSON.stringify(addedAlunos));
+          AtualizarTabelaTurmas();
+        } else {
+          console.error('Erro ao excluir a Turma');
+        }
+      })
+      .catch(error => {
+        console.error('Erro ao excluir a Turma:', error);
+      });
 
       
-// }
-
-// function editarTurma(idTurma) {
-//     var horarioDaTurma = document.getElementById("turmaHorario-Edit").value;
-//     var diasDeAulaDaTurma = document.getElementById("DiasDeAula-Edit").value;
-//     var cursoDaTurma = document.getElementById("Select-Curso-Edit").value;
-    
-
-        
-//     var Turma = {
-//         horarioDaTurma : horarioDaTurma,
-//         diasDeAulaDaTurma : diasDeAulaDaTurma ,
-//         cursoDaTurma: cursoDaTurma
-//     };
-
- 
-    
-//   fetch(`http://localhost:5500/Turmas/${idTurma}`, {
-//     method: 'PUT',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(Turma)
-//     })
-//     .then(response => {
-//       if (response.ok) {
-//         return response.json();
-//       } else {
-//         throw new Error('Erro ao editar o curso');
-//       }
-//     })
-//     .then(data => {
-//       console.log('Turma editada com sucesso:', data);
-//       document.getElementById('modalTurmaEdit').style.display = 'none';
-//       AtualizarTabelaTurmas(); // Call the function to update the table
-//     })
-//     .catch(error => {
-//       console.error('Erro ao editar Turma:', error);
-//     });
-
-    
-// }
-
-
-// function SelectTurma(selectDeTurmas){
-
-  
-
-//   fetch("http://localhost:5500/Turmas")
-
-//     .then(response => {
-//       if (!response.ok) {
-//         throw new Error('Erro na resposta do servidor');
-//       }
-//       return response.json();
-//     })
-//     .then(async data => {
-      
-//       const selectCadastroAlunoTurma = document.getElementById(selectDeTurmas);
-      
-
-
-//       for (const turmas of data) {
-//         const cursosResponse = await fetch("http://localhost:5500/cursos");
-//         const cursosData = await cursosResponse.json();
-  
-//         let optionText = turmas.idCurso;
-//         let optionValue = turmas.idTurma;
-//         for (const cursos of cursosData) {
-//           if (turmas.idCurso === cursos.idCurso) {
-//             optionText = cursos.nome;
-//           }
-//         }
-  
-//         const option = document.createElement('option');
-//         option.value = optionValue;
-//         option.text = optionText;
-//         selectCadastroAlunoTurma.appendChild(option);
-//       }
-
-        
-  
-//     })
-//     .catch(error => {
-//       console.error("Erro ao obter os cursos:", error);
-//   });
-
-// }
+}
 

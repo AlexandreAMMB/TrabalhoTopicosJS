@@ -106,8 +106,15 @@ app.options('/matriculas', (req, res) => {
   res.send(200);
 });
 
-// Define a rota OPTIONS para /matriculas
+// Define a rota OPTIONS para /aula
 app.options('/aula', (req, res) => {
+  res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.send(200);
+});
+
+// Define a rota OPTIONS para /frequencia
+app.options('/frequencia', (req, res) => {
   res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Content-Type");
   res.send(200);
@@ -422,6 +429,8 @@ app.options('/responsavel/', (req, res) => {
   res.header("Access-Control-Allow-Headers", "Content-Type");
   res.send(200);
 });
+
+
 
 // Salva 1 Responsavel
 app.post('/responsavel/', (req, res, next) => {
@@ -753,7 +762,8 @@ app.post('/aula', (req, res, next) => {
   controlerAulas.inserirAula(aula)
    .then(response => {
      if (response.isSave) {
-       res.status(200).json(response.isSave);
+      
+      res.status(200).json(response.isSave);
        
      } else {
         res.status(400).json(response);
@@ -764,6 +774,9 @@ app.post('/aula', (req, res, next) => {
       res.status(500).send('Erro interno do servidor');
     });
 });
+
+
+
 
 // Salva 1 matricula
 app.post('/matriculas', (req, res, next) => {
@@ -792,7 +805,7 @@ app.post('/matriculas', (req, res, next) => {
 
 
 
-// // Deleta Administrador
+// // Deleta matricula
 app.delete('/matriculas', (req, res, next) => {
   const matricula = req.body; 
 
@@ -809,6 +822,86 @@ app.delete('/matriculas', (req, res, next) => {
       res.status(500).send('Erro interno do servidor');
     });
 });
+
+// Busca todas as aulas
+app.get('/aula', (req, res, next) => {
+  
+  controlerAulas.getAulas()
+  .then(response => {
+    if (response.Aulas) {
+      res.status(200).json(response.Aulas); // Return Alunos data
+     
+    } else {
+      res.status(400).json(response);
+    }
+  })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
+
+
+// // Deleta Aula
+app.delete('/aula/:id', (req, res, next) => {
+  const aulaId = req.params.id;
+
+  controlerAulas.excluirAula(aulaId)
+  .then(response => {
+
+    if (response.isDeleted) {
+      console.log('foi deletado');
+      res.status(200).json({ message: 'Aula excluida com sucesso' });
+    } else {
+      res.status(404).json({ message: 'Aula não encontrada' });
+    }
+  })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
+
+
+// Busca todas as frequencias
+app.get('/frequencia', (req, res, next) => {
+  
+  controlerAulas.getFrequencias()
+  .then(response => {
+    if (response.frequencia) {
+      res.status(200).json(response.frequencia); // Return Alunos data
+     
+    } else {
+      res.status(400).json(response);
+    }
+  })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
+
+
+// // Edita dados da aula
+app.put('/aula/:id', (req, res, next) => {
+  const aulaId = req.params.id;
+  const aulaEditada = req.body;
+  
+  controlerAulas.editarAula(aulaId, aulaEditada)
+  .then(response => {
+    if (response.isUpdated) {
+      res.status(200).json({ message: 'Aula atualizada com sucesso' });
+    } else {
+      res.status(404).json({ message: 'Aula não encontrado' });
+    }
+  })
+   .catch(error => {
+      console.error(error);
+      res.status(500).send('Erro interno do servidor');
+    });
+});
+
+
 
 
 

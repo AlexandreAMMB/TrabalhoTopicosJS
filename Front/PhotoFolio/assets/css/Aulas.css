@@ -101,9 +101,18 @@ button {
     border-color: red; 
     background-color: transparent;
   } 
+
+  #historicoAula-form table {
+    width: 69rem;
+    border-color: red; 
+    background-color: transparent;
+    
+  } 
   #admin-form table{
     width: 103%;
   }
+
+  
 }
 
 
@@ -112,11 +121,22 @@ button {
     width: 80rem;
   } 
 
+  #historicoAula-form {
+    width: 80rem;
+  } 
+
   #admin-form table{
     width: 70rem;
   
   }
+  #historicoAula-form table{
+    width: 70rem;
+  
+  }
 }
+
+
+
 
 
 #admin-form input {

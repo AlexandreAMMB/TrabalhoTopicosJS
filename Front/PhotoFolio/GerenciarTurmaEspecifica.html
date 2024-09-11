@@ -40,8 +40,9 @@
    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
    <script src="../PhotoFolio/js/RequisicoesUsuarioAulas.js"></script>
    <script src="../PhotoFolio/js/RequisicoesUsuario.js"></script>
-   <script src="../PhotoFolio/assets/js/gerenciarTurmaEspecifica.js"></script>
    <script src="../PhotoFolio/assets/js/modalAula.js"></script>
+   <script src="../PhotoFolio/assets/js/gerenciarTurmaEspecifica.js"></script>
+   
    <script src="../PhotoFolio/js/RequisicoesUsuarioMatricula.js"></script>
    
    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/js/multi-select-tag.js"></script>
@@ -138,20 +139,93 @@
           <li class="dropdown"><a href="#"><span>Gerenciar Aulas</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               <li><a href="#" id="lancar-aulas" >Lançar Aula</a></li>
-              <li><a href="#">Histórico de Aulas</a></li>
+              <li><a href="#" id="histórico-de-aulas">Histórico de Aulas</a></li>
             </ul>
           </li>
-          <li class="aluno"><a href="GerenciarTurmaEspecifica.html" class="aula">Voltar</a></li>
+          <li ><a href="GerenciarTurmaEspecifica.html" class="aula" id="voltar">Voltar</a></li>
   
         </ul>
       </nav>
 
 
-
-
-
-      <!-- ======= Modal de cadastro de Turma ======= -->
       <section id="contactTurma" class="contact">
+
+        <form id="admin-form" role="form" class="php-email-form" method="post" >
+              <p></p>     
+              <p></p>  
+          <div class="aula">
+            <h2>Lançamento de Aula</h2><br><br>
+
+            <div class="form-linhaVcampos">
+              <div class="form-group">
+                <label for="aulaDia" style="margin-left: -4rem" >Aula Realizada dia:</label><br>
+                <input type="date" name="nomeResponsavel" class="form-control" id="dataAula" style="background-color: white; color: black; margin-left: -4rem" required><br>
+              </div>
+            </div>
+
+            <div class="form-linha-completa">
+              <label for="aulaDescricao">Descrição:</label><br>
+              <input type="textarea" name="descriçãoAula" class="form-control" id="descriçãoAula" style="height: 5rem; background-color: white; color: black;"><br>
+              <label for="aulaFrequencia">Frequência:</label><br>
+            </div>
+          </div>
+            <div class="container">
+              <div class="row justify-content-center mt-4">
+      
+              
+      
+                  <font face="Tahoma" color="white">
+                    <table id="tabelaTurmas" border="1" align="center" cellspacing="2" cellpadding="1" width="80%"  class="table table-dark TabelaDeTurmas">
+                            <tr align="center">
+                                <th>Aluno</th>
+                                <th>Faltas</th>
+                                <th>Resultado</th>
+                                <th class="aula">Presença</th>
+                                <th class="desmatricula">Opções</th>
+                            </tr>
+                            
+                            <tbody id="corpoTabelaTurmas" align="center"></tbody>
+                          
+                          </div>
+                  
+                    </table>
+                  </font>
+                  <script>
+                    window.onload = AtualizarTabelaTurmas;
+                    document.getElementById('tabelaTurmas').addEventListener('submit', (e) => {
+                      e.preventDefault();
+                    });
+                  </script>
+      
+      
+      
+              </div>
+            
+            
+            
+            <br>
+            <div class="text-center"><button type="submit" id="editarAula" style="background-color: #4CAF50; display: none; margin-left: 40%;">Salvar Edição</button></div>
+            <div class="text-center"><button type="submit" onclick="inserirAula()" id="salvarAdm" style="background-color: #4CAF50;">Salvar Aula</button></div>
+
+            <!-- <div class="text-center"><button type="submit" onclick="editarAula()" id="editarAula" style="background-color: #4CAF50; display: none; margin-left: 40%;">Salvar Edição</button></div> -->
+        </form>
+        <script>
+          document.getElementById('admin-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+          });
+        </script>
+
+
+   
+    </section><!-- End Contact Section -->
+
+
+
+
+       <!-- ======= Modal de cadastro de Aula ======= -->
+       
+
+
         <div id="modalMatricula" role="dialog" aria-hidden="true" style="display: none;">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -194,7 +268,7 @@
             </div>
           </div>
         </div>
-        <!-- ======= Modal de cadastro de Turma END ======= -->
+        <!-- ======= Modal de cadastro de Aula END ======= -->
 
 
 
@@ -203,90 +277,48 @@
 
 
 
+      
 
-
-
-
-
-
-
-
-
-
-
-
-
-    <form id="admin-form" role="form" class="php-email-form" method="post" >
-           <p></p>     
-           <p></p>  
-      <div class="aula">
-        <h2>Lançamento de Aula</h2><br><br>
-
-        <div class="form-linhaVcampos">
-          <div class="form-group">
-            <label for="aulaDia" style="margin-left: -4rem;">Aula Realizada dia:</label><br>
-            <input type="date" name="nomeResponsavel" class="form-control" id="dataAula" style="background-color: white; color: black; margin-left: -4rem;"><br>
-          </div>
-        </div>
-
-        <div class="form-linha-completa">
-          <label for="aulaDescricao">Descrição:</label><br>
-          <input type="textarea" name="descriçãoAula" class="form-control" id="descriçãoAula" style="height: 5rem; background-color: white; color: black;"><br>
-          <label for="aulaFrequencia">Frequência:</label><br>
-        </div>
-      </div>
-        <div class="container">
+      <form id="historicoAula-form" role="form" class="php-email-form" method="post">
+        <p></p>     
+        <p></p>  
+        <div class="aulaHistorico">
+          <h2>Histórico de Aulas</h2>
+    
+    
           <div class="row justify-content-center mt-4">
-  
-          
-  
-              <font face="Tahoma" color="white">
-                <table id="tabelaTurmas" border="1" align="center" cellspacing="2" cellpadding="1" width="80%"  class="table table-dark TabelaDeTurmas">
-                        <tr align="center">
-                            <th>Aluno</th>
-                            <th>Faltas</th>
-                            <th>Resultado</th>
-                            <th class="aula">Presença</th>
-                            <th class="desmatricula">Opções</th>
-                        </tr>
-                        
-                        <tbody id="corpoTabelaTurmas" align="center"></tbody>
+    
+            
+    
+            <font face="Tahoma" color="white">
+              <table id="tabelaHistoricoAulas" border="1" align="center" cellspacing="2" cellpadding="1" width="80%"  class="table table-dark TabelaDeTurmas">
+                      <tr align="center">
+                          <th>Data da Aula</th>
+                          <th>Descrição</th>
+                          <th>Detalhes</th>
+                      </tr>
                       
-                      </div>
+                      <tbody id="corpoTabelaAulas" align="center"></tbody>
+                    
+                    </div>
+            
+              </table>
+            </font>
+            <script>
               
-                </table>
-              </font>
-              <script>
-                window.onload = AtualizarTabelaTurmas;
-                document.getElementById('tabelaTurmas').addEventListener('submit', (e) => {
-                  e.preventDefault();
-                });
-              </script>
-  
-  
-  
+              document.getElementById('historicoAula-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+              });
+              
+            </script> 
+
+    
           </div>
-        
-        
-        
-        <br>
+      </form>
 
-        <div class="text-center"><button type="submit" onclick="inserirAula()" id="salvarAdm" style="background-color: #4CAF50;">Salvar Aula</button></div>
-      
-    </form>
-    <script>
-      document.getElementById('admin-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-      });
-    </script>
-      
-      
-      
+
 
       
-
-      </div>
-    </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
 

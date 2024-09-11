@@ -8,7 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
       aulas[i].style.display = 'none';
     }
     document.getElementById('salvarAdm').style.display = 'none';
-   
+    document.getElementById('editarAula').style.display = 'none';
+    document.getElementById('admin-form').style.display = 'block';
+    document.getElementById('historicoAula-form').style.display = 'none';
     
     storedTurmainObject = sessionStorage.getItem('TurmainObject');
 
@@ -44,6 +46,25 @@ document.addEventListener('DOMContentLoaded', () => {
       
 
     }
+
+    document.getElementById('AdicionarAluno').addEventListener('click', function(event) {
+        event.preventDefault(); // prevent the default link behavior
+    
+        // show the modal
+        document.getElementById('modalMatricula').style.display = 'flex';
+        SelectAlunos();
+    
+        
+    });
+
+      document.getElementById('Close-modal').addEventListener('click', function(event) {
+        event.preventDefault(); // prevent the default link behavior
+    
+        // show the modal
+        document.getElementById('modalMatricula').style.display = 'none';
+    
+        
+      });
 
 
 

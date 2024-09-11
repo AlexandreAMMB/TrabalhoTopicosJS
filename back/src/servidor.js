@@ -20,7 +20,7 @@ const fs = require('fs');
 const base64 = require('base64-js');
 const serveStatic = require('serve-static');
 const upload = multer();
-const bancoDados = require('./bancoDados');
+
 const { SourceTextModule } = require('vm');
 const { sourceMapsEnabled } = require('process');
 const baseDir = path.join(__dirname, '..');
@@ -149,7 +149,7 @@ app.use(session({
 // login do usuário
 app.post('/login', (req, res) => {
   const user = req.body;
-  console.log('teste de chegada no servidor');
+  
   controlerLogin.getUser(user)
     .then(response => {
       if (response.isLoggedIn) {
@@ -850,7 +850,7 @@ app.delete('/aula/:id', (req, res, next) => {
   .then(response => {
 
     if (response.isDeleted) {
-      console.log('foi deletado');
+      
       res.status(200).json({ message: 'Aula excluida com sucesso' });
     } else {
       res.status(404).json({ message: 'Aula não encontrada' });

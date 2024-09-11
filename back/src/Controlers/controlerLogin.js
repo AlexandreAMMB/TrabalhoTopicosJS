@@ -4,7 +4,7 @@ const Connection = require('../dao/connection.js');
 // Define your function to search for user
 
 async function getUser(user) {
-  console.log('User data:', user);
+  
   const connection = new Connection();
   let dbUser = null;
 

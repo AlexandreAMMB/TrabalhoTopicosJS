@@ -66,11 +66,11 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a href="indexADM.html" class="active">Inicio</a></li>
-          <li><a href="#">Calendário</a></li>
+          
           <li><a href="galleria.html">Galeria</a></li>
+          <li><a href="GerenciarTurmas.html">Turmas</a></li>
           <li class="dropdown"><a href="#"><span>Controle</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
-              <li><a href="GerenciarTurmas.html">Turmas</a></li>
               <li><a href="GerenciarUsuarios.html" >Lista de Usuários</a></li>
               <li class="dropdown"><a href="#"><span>Cadastro de usuário</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                 <ul>
@@ -82,12 +82,12 @@
               <li class="dropdown"><a href="#"><span>Relatórios</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                 <ul>
                   <li><a href="#">Frequencia</a></li>
-                  <li><a href="#">Notas</a></li>
+                  
                 </ul>
               </li>
             </ul>
           </li>
-          <li><a href="#">Notificações</a></li>
+         
           
   
         </ul>
@@ -193,8 +193,8 @@
 
                 <div class="row">
                   <div class="col-md-6 form-group modal-Turma-content" id="rowModalTurma" >
-                    <label for="turmaHorario">Selecione os Dias de Aula:</label><br>
-                    <select name="DiasDeAula" id="DiasDeAula" class="DiasDeAula" multiple>
+                    <label for="turmaHorario">Selecione o Dia da Turma:</label><br>
+                    <select name="DiasDeAula" id="DiasDeAula" class="DiasDeAula SelectTurm" >
                       <option value="segunda">Segunda</option>
                       <option value="terça">Terça</option>
                       <option value="Quarta">Quarta</option>
@@ -203,21 +203,7 @@
                       <option value="Sábado">Sábado</option>
                       <option value="domingo">Domingo</option>
                     </select>
-                    <script>
-                      new MultiSelectTag('DiasDeAula', {
-                          rounded: true,    // default true
-                          shadow: true,      // default false
-                          placeholder: 'Search',  // default Search...
-                          tagColor: {
-                              textColor: '#327b2c',
-                              borderColor: '#92e681',
-                              bgColor: '#eaffe6',
-                          },
-                          onChange: function(values) {
-                              console.log(values)
-                          }
-                      })
-                    </script>
+                    
                   </div>
 
 
@@ -288,7 +274,7 @@
                 <div class="row">
                   <div class="col-md-6 form-group modal-Turma-content" id="rowModalTurma-Edit" >
                     <label for="turmaHorario">Selecione os Dias de Aula:</label><br>
-                    <select name="DiasDeAula-Edit" id="DiasDeAula-Edit" class="DiasDeAula" multiple required>
+                    <select name="DiasDeAula-Edit" id="DiasDeAula-Edit" class="DiasDeAula SelectTurm"  required>
                       <option value="segunda">Segunda</option>
                       <option value="terça">Terça</option>
                       <option value="Quarta">Quarta</option>
@@ -297,21 +283,7 @@
                       <option value="Sábado">Sábado</option>
                       <option value="domingo">Domingo</option>
                     </select>
-                    <script>
-                      new MultiSelectTag('DiasDeAula-Edit', {
-                          rounded: true,    // default true
-                          shadow: true,      // default false
-                          placeholder: 'Search',  // default Search...
-                          tagColor: {
-                              textColor: '#327b2c',
-                              borderColor: '#92e681',
-                              bgColor: '#eaffe6',
-                          },
-                          onChange: function(values) {
-                              console.log(values)
-                          }
-                      })
-                    </script>
+                    
                   </div>
 
 

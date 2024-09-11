@@ -88,7 +88,7 @@ function inserirAula() {
 
 function AtualizarTabelaTurmas(){
   let addedAlunos = JSON.parse(sessionStorage.getItem('SelectedsAlunosinObject'));
-
+  var numeroAulasDaturma = 0;
   fetch("http://localhost:5500/matriculas")
 
     .then(response => {
@@ -117,7 +117,7 @@ function AtualizarTabelaTurmas(){
         const alunoCell = document.createElement("td");
 
         if(matricula.idTurma == turma.idTurma){
-          console.log(matricula.idTurma);
+          
 
           fetch("http://localhost:5500/aluno")
             .then(response => {
@@ -130,7 +130,7 @@ function AtualizarTabelaTurmas(){
         
           
               data.forEach(aluno => {
-              
+                var numeroPresencas = 0;
                 if(matricula.idAluno == aluno.idAluno ){
 
                     
@@ -141,11 +141,75 @@ function AtualizarTabelaTurmas(){
                     row.appendChild(alunoCell);
       
                     const faltasTurmaCell = document.createElement("td");
-                    faltasTurmaCell.textContent = 'faltas';
+                    
+
+
+                    fetch("http://localhost:5500/aula")
+
+                    .then(response => {
+                      if (!response.ok) {
+                          throw new Error('Erro na resposta do servidor');
+                      }
+                      return response.json();
+                    })
+                    .then(data => {
+                          
+                      
+                      const storedTurmainObject = sessionStorage.getItem('TurmainObject');
+                      const turma = JSON.parse(storedTurmainObject);
+
+
+                      numeroAulasDaturma = 0;   
+                      data.forEach(aula => {
+                        
+                      
+                        if(aula.idTurma == turma.idTurma){
+                              
+                          numeroAulasDaturma = numeroAulasDaturma + 1;
+
+                          fetch("http://localhost:5500/frequencia")
+                          .then(response => {
+                            if (!response.ok) {
+                              throw new Error('Erro na resposta do servidor');
+                            }
+                            return response.json();
+                          })
+                          .then(data => {
+                            data.forEach(presenca => {
+                              if (presenca.idAula == aula.idAula && presenca.idAluno == aluno.idAluno) {
+                                numeroPresencas = numeroPresencas + 1; 
+                                
+                              }
+                            });
+                            var faltas = numeroAulasDaturma - numeroPresencas;
+                            faltasTurmaCell.textContent = faltas;
+                            
+                          })
+                          .catch(error => {
+                            console.error("Erro ao obter os Turmas:", error);
+                          });       
+
+
+                        }
+                        
+ 
+                        
+                      });
+
+  
+                    })
+                    .catch(error => {
+                      console.error("Erro ao obter os Turmas:", error);
+                    });
+
+                    
+
+                    
+
                     row.appendChild(faltasTurmaCell);
               
                     const ResultadoCell = document.createElement("td");
-                    ResultadoCell.textContent = 'resultado';
+                    ResultadoCell.textContent = '-';
                     row.appendChild(ResultadoCell);
               
                     corpoTabelaTurmas.appendChild(row);
@@ -380,10 +444,7 @@ function HistoricoDeAulasPorTurma(){
               sessionStorage.setItem('SelectedAulaEditinObject', JSON.stringify(aula));
               document.getElementById('salvarAdm').style.display = 'none';
               document.getElementById('editarAula').style.display = 'flex';
-              // var checkboxes = document.querySelectorAll('input[type="checkbox"]');
               
-              // Crie um objeto para armazenar os valores dos checkboxes selecionados
-              // const selectedCheckboxes = {};
 
 
                 
